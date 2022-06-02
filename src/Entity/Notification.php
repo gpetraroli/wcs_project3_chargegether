@@ -3,10 +3,11 @@
 namespace App\Entity;
 
 use App\Repository\NotificationsRepository;
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: NotificationsRepository::class)]
-class Notifications
+class Notification
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -20,7 +21,12 @@ class Notifications
     private bool $isRead;
 
     #[ORM\Column(type: 'datetime_immutable')]
-    private \DateTimeImmutable $createdAt;
+    private DateTimeImmutable $createdAt;
+
+    public function __construct()
+    {
+        $this->createdAt = new DateTimeImmutable();
+    }
 
     public function getId(): int
     {
@@ -42,7 +48,7 @@ class Notifications
         $this->body = $body;
     }
 
-    public function getIsRead(): bool
+    public function isRead(): bool
     {
         return $this->isRead;
     }

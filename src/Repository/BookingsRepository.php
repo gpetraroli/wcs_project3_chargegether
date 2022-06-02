@@ -2,26 +2,26 @@
 
 namespace App\Repository;
 
-use App\Entity\Bookings;
+use App\Entity\Booking;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Bookings>
+ * @extends ServiceEntityRepository<Booking>
  *
- * @method Bookings|null find($id, $lockMode = null, $lockVersion = null)
- * @method Bookings|null findOneBy(array $criteria, array $orderBy = null)
- * @method Bookings[]    findAll()
- * @method Bookings[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Booking|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Booking|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Booking[]    findAll()
+ * @method Booking[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class BookingsRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Bookings::class);
+        parent::__construct($registry, Booking::class);
     }
 
-    public function add(Bookings $entity, bool $flush = false): void
+    public function add(Booking $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -30,7 +30,7 @@ class BookingsRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(Bookings $entity, bool $flush = false): void
+    public function remove(Booking $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
 
@@ -40,7 +40,7 @@ class BookingsRepository extends ServiceEntityRepository
     }
 
 //    /**
-//     * @return Bookings[] Returns an array of Bookings objects
+//     * @return Booking[] Returns an array of Booking objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -54,7 +54,7 @@ class BookingsRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?Bookings
+//    public function findOneBySomeField($value): ?Booking
 //    {
 //        return $this->createQueryBuilder('b')
 //            ->andWhere('b.exampleField = :val')

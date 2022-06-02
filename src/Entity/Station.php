@@ -6,7 +6,7 @@ use App\Repository\StationsRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: StationsRepository::class)]
-class Stations
+class Station
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

@@ -3,11 +3,12 @@
 namespace App\Entity;
 
 use App\Repository\UsersRepository;
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints\Date;
 
 #[ORM\Entity(repositoryClass: UsersRepository::class)]
-class Users
+class User
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -44,17 +45,22 @@ class Users
     #[ORM\Column(type: 'string', length: 45)]
     private string $gender;
 
-    #[ORM\Column(type: 'string', length: 20)]
+    #[ORM\Column(type: 'string', length: 20, unique: true)]
     private string $phoneNumber;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(type: 'string', length: 255, unique: true)]
     private string $email;
 
     #[ORM\Column(type: 'string', length: 255)]
     private string $avatar;
 
     #[ORM\Column(type: 'datetime_immutable')]
-    private \DateTimeImmutable $createdAt;
+    private DateTimeImmutable $createdAt;
+
+    public function __construct()
+    {
+        $this->createdAt = new DateTimeImmutable();
+    }
 
     public function getId(): int
     {

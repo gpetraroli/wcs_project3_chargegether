@@ -2,26 +2,26 @@
 
 namespace App\Repository;
 
-use App\Entity\Reviews;
+use App\Entity\StationReview;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Reviews>
+ * @extends ServiceEntityRepository<StationReview>
  *
- * @method Reviews|null find($id, $lockMode = null, $lockVersion = null)
- * @method Reviews|null findOneBy(array $criteria, array $orderBy = null)
- * @method Reviews[]    findAll()
- * @method Reviews[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method StationReview|null find($id, $lockMode = null, $lockVersion = null)
+ * @method StationReview|null findOneBy(array $criteria, array $orderBy = null)
+ * @method StationReview[]    findAll()
+ * @method StationReview[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class ReviewsRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Reviews::class);
+        parent::__construct($registry, StationReview::class);
     }
 
-    public function add(Reviews $entity, bool $flush = false): void
+    public function add(StationReview $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -30,7 +30,7 @@ class ReviewsRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(Reviews $entity, bool $flush = false): void
+    public function remove(StationReview $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
 
@@ -40,7 +40,7 @@ class ReviewsRepository extends ServiceEntityRepository
     }
 
 //    /**
-//     * @return Reviews[] Returns an array of Reviews objects
+//     * @return StationReview[] Returns an array of StationReview objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -54,7 +54,7 @@ class ReviewsRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?Reviews
+//    public function findOneBySomeField($value): ?StationReview
 //    {
 //        return $this->createQueryBuilder('r')
 //            ->andWhere('r.exampleField = :val')

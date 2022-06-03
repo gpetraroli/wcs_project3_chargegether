@@ -1,58 +1,53 @@
-let currentPosition = null;
-let map = L.map('map', {
-    markerZoomAnimation: true,
-    zoom: 15,
-});
-let markersCurrentPosition = L.layerGroup([]);
-let markers = L.layerGroup([]);
+import {Loader} from "@googlemaps/js-api-loader"
 
-navigator.geolocation.getCurrentPosition((position) => {
-    currentPosition = [position.coords.latitude, position.coords.longitude];
-
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 19,
-        attribution: '© OpenStreetMap'
-    }).addTo(map);
-
-    map.setView(currentPosition);
-
-    renderCurrentPosition(currentPosition);
+const loader = new Loader({
+    apiKey: "AIzaSyBbtrv8jzucorK_HSES4B-P6Ci8GVOSArk",
+    version: "weekly",
 });
 
-document.querySelector('#geoloc-target').addEventListener('click', ev => {
-    navigator.geolocation.getCurrentPosition((position) => {
-        currentPosition = [position.coords.latitude, position.coords.longitude];
+let map;
+let currentPositionMarker;
 
-        map.flyTo(currentPosition);
-        markersCurrentPosition.clearLayers();
-        renderCurrentPosition(currentPosition);
-    })
-});
+loader.load().then(renderMap);
 
-function renderCurrentPosition(currentPosition) {
+function renderMap() {
+    map = new google.maps.Map(document.getElementById("map"), {
+        zoom: 15,
+        disableDefaultUI: true,
+        zoomControl: true,
+        mapTypeControl: true,
+        scaleControl: true,
+        rotateControl: true,
+    });
 
-    let circleOuter = L.circleMarker(currentPosition, {
-        color: 'rgba(6,63,116,0)',
-        fillColor: '#063f74',
-        fillOpacity: 0.3,
-        radius: 30,
-    })
+    const locationButton = document.querySelector('#geoloc-target');
+    locationButton.addEventListener('click', setCurrentPosition);
+    map.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(locationButton);
 
-    let circleInner = L.circleMarker(currentPosition, {
-        color: '#ffffff',
-        fillColor: '#6ddff3',
-        fillOpacity: 1,
-        radius: 10
-    })
+    setCurrentPosition();
+}// renderMap
 
-    markersCurrentPosition
-        .addLayer(circleOuter)
-        .addLayer(circleInner)
-        .addTo(map);
+function setCurrentPosition() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition((position) => {
+            const pos = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude,
+            }
+            map.setCenter(pos);
+            currentPositionMarker = new google.maps.Marker({
+                position: pos,
+                map: map,
+            });
+        },() => {
+            handleLocationError()
+        });
+    } else {
+        handleLocationError();
+    }
 }
 
-function renderPins(pins) {
-    pins.forEach(el => {
-        markers.addLayer(el);
-    });
+function handleLocationError(browserHasGeolocation, infoWindow, pos)
+{
+    // TODO: handle location errors
 }

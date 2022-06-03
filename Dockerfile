@@ -61,8 +61,8 @@ RUN APP_ENV=prod APP_DEBUG=0 composer install --no-dev --optimize-autoloader \
 
 RUN yarn install
 RUN yarn run build
-RUN chmod 777 -R var
-chmod -R 777 public
+RUN chmod -R 777 var
+RUN chmod -R 777 public
 
 EXPOSE 80
 

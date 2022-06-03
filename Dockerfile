@@ -25,15 +25,15 @@ RUN apk update \
     nginx nodejs npm \
     git \
     # intl
-    libicu-dev \
+    icu-dev \
     # pour php gd
-    zlib1g-dev \
+    zlib-dev \
     libpng-dev \
     # pour zip
     libzip-dev \
     zip \
     # pour xsl
-    libxslt1-dev
+    libxslt-dev
 
 RUN docker-php-ext-install gd intl pdo pdo_mysql zip xsl opcache
 

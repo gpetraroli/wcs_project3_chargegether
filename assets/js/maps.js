@@ -1,3 +1,4 @@
+/*global google*/
 import {Loader} from "@googlemaps/js-api-loader"
 
 const googleApiKey = document.querySelector('#map').dataset.google_api_key;
@@ -11,7 +12,8 @@ let currentPositionMarker;
 
 loader.load().then(renderMap);
 
-function renderMap() {
+function renderMap()
+{
     map = new google.maps.Map(document.getElementById("map"), {
         zoom: 15,
         disableDefaultUI: true,
@@ -28,7 +30,8 @@ function renderMap() {
     setCurrentPosition();
 }// renderMap
 
-function setCurrentPosition() {
+function setCurrentPosition()
+{
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition((position) => {
             const pos = {

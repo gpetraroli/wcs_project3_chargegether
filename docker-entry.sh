@@ -2,7 +2,7 @@
 
 # composer
 if [ ${APP_ENV} != "prod" ]; then
-  composer install
+  # composer install
 fi
 
 # migrations

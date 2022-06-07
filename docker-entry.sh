@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# env
+echo "DATABASE_URL=$DATABASE_URL" >> .env.local
+
 # composer
 if [ ${APP_ENV} = "prod" ]; then
   APP_ENV=prod APP_DEBUG=0 composer install --no-dev --optimize-autoloader

@@ -43,7 +43,7 @@ ENV DATABASE_URL=${DATABASE_URL}
 
 RUN if [ "$APP_ENV" = "prod" ]; \
     then APP_ENV=prod APP_DEBUG=0 composer install --no-dev --optimize-autoloader; \
-    else composer install \
+    else composer install; \
     fi
 
 RUN composer dump-env ${APP_ENV}

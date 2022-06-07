@@ -31,9 +31,6 @@ WORKDIR /var/www
 
 COPY . .
 
-RUN chmod -R 777 var
-RUN chmod -R 777 public
-
 ARG APP_ENV=${APP_ENV}
 ENV APP_ENV=${APP_ENV}
 
@@ -48,6 +45,10 @@ RUN if [ "$APP_ENV" = "prod" ]; \
     fi
 
 RUN composer dump-env ${APP_ENV}
+
+
+RUN chmod -R 777 var
+RUN chmod -R 777 public
 
 RUN yarn install
 RUN yarn run build

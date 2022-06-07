@@ -1,21 +1,3 @@
-#
-# Prep App's PHP Dependencies
-#
-#FROM composer:2.1 as vendor
-#
-#WORKDIR /app
-#
-#COPY composer.json composer.json
-#COPY composer.lock composer.lock
-#
-#RUN composer install \
-#    --ignore-platform-reqs \
-#    --no-interaction \
-#    --no-plugins \
-#    --no-scripts \
-#    --prefer-dist \
-#    --quiet
-
 FROM php:8.1-fpm-alpine as phpserver
 
 # add cli tools
@@ -61,9 +43,10 @@ RUN APP_ENV=prod APP_DEBUG=0 composer install --no-dev --optimize-autoloader \
 
 RUN yarn install
 RUN yarn run build
+
 RUN chmod -R 777 var
 RUN chmod -R 777 public
 
 EXPOSE 80
 
-# ENTRYPOINT ["sh", "/etc/entrypoint.sh"]
+ENTRYPOINT ["sh", "docker-entry.sh"]

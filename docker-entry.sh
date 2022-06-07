@@ -1,10 +1,5 @@
 #!/bin/sh
 
-# composer
-if [ ${APP_ENV} != "prod" ]; then
-  # composer install
-fi
-
 # migrations
 if [ ${APP_ENV} != "prod" ]; then
   php bin/console doctrine:database:drop --force --if-exists --no-interaction

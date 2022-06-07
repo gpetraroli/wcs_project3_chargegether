@@ -39,7 +39,6 @@ ENV APP_ENV=${APP_ENV}
 
 ARG DATABASE_URL=${DATABASE_URL}
 ENV DATABASE_URL=${DATABASE_URL}
-#RUN echo "DATABASE_URL=$DATABASE_URL" >> .env.local
 
 RUN if [ "$APP_ENV" = "prod" ]; \
     then APP_ENV=prod APP_DEBUG=0 composer install --no-dev --optimize-autoloader; \

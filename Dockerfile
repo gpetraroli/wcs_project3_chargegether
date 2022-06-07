@@ -49,9 +49,6 @@ RUN composer dump-env ${APP_ENV}
 RUN yarn install
 RUN yarn run build
 
-RUN chmod -R 777 var
-RUN chmod -R 777 public
-
 EXPOSE 80
 
 ENTRYPOINT ["sh", "docker-entry.sh"]

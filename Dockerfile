@@ -52,4 +52,6 @@ RUN composer dump-env ${APP_ENV}
 RUN yarn install
 RUN yarn run build
 
+EXPOSE 80
+
 ENTRYPOINT ["sh", "docker-entry.sh"]

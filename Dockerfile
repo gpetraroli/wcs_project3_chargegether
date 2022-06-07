@@ -34,11 +34,11 @@ WORKDIR /var/www
 COPY . .
 
 # Some secret from ENV
-ARG APP_ENV=${APP_ENV}
-ENV APP_ENV=${APP_ENV}
-
-ARG DATABASE_URL=${DATABASE_URL}
-ENV DATABASE_URL=${DATABASE_URL}
+#ARG APP_ENV=${APP_ENV}
+#ENV APP_ENV=${APP_ENV}
+#
+#ARG DATABASE_URL=${DATABASE_URL}
+#ENV DATABASE_URL=${DATABASE_URL}
 
 #RUN if [ "$APP_ENV" = "prod" ]; \
 #    then APP_ENV=prod APP_DEBUG=0 composer install --no-dev --optimize-autoloader; \

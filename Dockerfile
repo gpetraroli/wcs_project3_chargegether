@@ -40,18 +40,18 @@ ENV APP_ENV=${APP_ENV}
 ARG DATABASE_URL=${DATABASE_URL}
 ENV DATABASE_URL=${DATABASE_URL}
 
-RUN if [ "$APP_ENV" = "prod" ]; \
-    then APP_ENV=prod APP_DEBUG=0 composer install --no-dev --optimize-autoloader; \
-    else composer install; \
-    fi
-
-RUN composer dump-env ${APP_ENV}
-
-RUN yarn install
-RUN yarn run build
-
-RUN chmod -R 777 var
-RUN chmod -R 777 public
+#RUN if [ "$APP_ENV" = "prod" ]; \
+#    then APP_ENV=prod APP_DEBUG=0 composer install --no-dev --optimize-autoloader; \
+#    else composer install; \
+#    fi
+#
+#RUN composer dump-env ${APP_ENV}
+#
+#RUN yarn install
+#RUN yarn run build
+#
+#RUN chmod -R 777 var
+#RUN chmod -R 777 public
 
 EXPOSE 80
 

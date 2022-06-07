@@ -11,7 +11,7 @@ composer dump-env ${APP_ENV}
 
 # yarn
 yarn install
-yarn run build
+yarn build
 
 # chmods
 chmod -R 777 var

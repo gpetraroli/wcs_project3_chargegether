@@ -19,7 +19,6 @@ RUN apk update \
 
 RUN docker-php-ext-install gd intl pdo pdo_mysql zip xsl opcache
 
-#RUN npm install npm@latest -g
 RUN npm install yarn@latest -g
 
 RUN curl -sSk https://getcomposer.org/installer | php -- --disable-tld && \
@@ -36,9 +35,6 @@ COPY . .
 # Some secret from ENV
 #ARG APP_ENV=${APP_ENV}
 #ENV APP_ENV=${APP_ENV}
-#
-#ARG DATABASE_URL=${DATABASE_URL}
-#ENV DATABASE_URL=${DATABASE_URL}
 
 #RUN if [ "$APP_ENV" = "prod" ]; \
 #    then APP_ENV=prod APP_DEBUG=0 composer install --no-dev --optimize-autoloader; \

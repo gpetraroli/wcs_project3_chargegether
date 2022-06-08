@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
-use Symfony\Component\Validator\Constraints\DateTime as ConstraintsDateTime;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UsersRepository::class)]
 #[UniqueEntity(fields: ['email'], message: 'Il existe déjà un compte avec cet email')]
@@ -21,48 +21,65 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private int $id;
 
     #[ORM\Column(type: 'string', length: 45)]
+    #[Assert\Length(min: 2, max: 45)]
     private string $userName;
 
     #[ORM\Column(type: 'string', length: 500)]
+    #[Assert\NotBlank()]
     private string $password;
 
     #[ORM\Column(type: 'json')]
+    #[Assert\NotNull()]
     private array $roles = [];
 
     #[ORM\Column(type: 'string', length: 80)]
+    #[Assert\NotBlank()]
+    #[Assert\Length(min: 2, max: 80)]
     private string $firstName;
 
     #[ORM\Column(type: 'string', length: 80)]
+    #[Assert\NotBlank()]
+    #[Assert\Length(min: 2, max: 80)]
     private string $lastName;
 
     #[ORM\Column(type: 'date')]
     private DateTime $birthDate;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Assert\Length(min: 2, max: 255)]
+    #[Assert\NotBlank()]
     private string $address;
 
     #[ORM\Column(type: 'string', length: 10)]
+    #[Assert\NotBlank()]
     private string $zipcode;
 
     #[ORM\Column(type: 'string', length: 80)]
+    #[Assert\NotBlank()]
     private string $city;
 
     #[ORM\Column(type: 'string', length: 80)]
+    #[Assert\NotBlank()]
     private string $country;
 
     #[ORM\Column(type: 'string', length: 45)]
+    #[Assert\NotBlank()]
     private string $gender;
 
     #[ORM\Column(type: 'string', length: 20, unique: true)]
+    #[Assert\NotBlank()]
     private string $phoneNumber;
 
     #[ORM\Column(type: 'string', length: 255, unique: true)]
+    #[Assert\Email()]
+    #[Assert\Length(min: 2, max: 255)]
     private string $email;
 
     #[ORM\Column(type: 'string', length: 255)]
     private string $avatar;
 
     #[ORM\Column(type: 'datetime_immutable')]
+    #[Assert\NotNull()]
     private DateTimeImmutable $createdAt;
 
     public function __construct()

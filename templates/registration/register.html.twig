@@ -15,12 +15,14 @@
 <fieldset class="mb-3">
 <legend>Mon Identité</legend>
         {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.username) }}
-        {{ form_row(registrationForm.lastname) }}
-        {{ form_row(registrationForm.firstname) }}
-        {{ form_row(registrationForm.birthdate) }}
+        {{ form_row(registrationForm.userName) }}
+        {{ form_row(registrationForm.lastName) }}
+        {{ form_row(registrationForm.firstName) }}
         {{ form_row(registrationForm.gender) }}
         {{ form_row(registrationForm.avatar) }}
+<div class="my-3">
+        {{ form_row(registrationForm.birthDate) }}
+</div>
 </fieldset>
 
 <fieldset class="mb-3">
@@ -28,7 +30,7 @@
         {{ form_row(registrationForm.address) }}
         {{ form_row(registrationForm.zipcode) }}
         {{ form_row(registrationForm.country) }}
-        {{ form_row(registrationForm.phonenumber) }}
+        {{ form_row(registrationForm.phoneNumber) }}
         {{ form_row(registrationForm.city) }}
 </fieldset>
 

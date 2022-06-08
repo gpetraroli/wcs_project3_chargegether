@@ -14,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class RegistrationFormType extends AbstractType
 {
@@ -23,55 +24,122 @@ class RegistrationFormType extends AbstractType
     ): void {
         $builder
             ->add('email', EmailType::class, [
-                'attr' => ['class' => 'form-control'],
-                'label' => '@mail',
+                'attr' => [
+                    'class' => 'form-control',
+                    'minlenght' => '2',
+                    'maxlenght' => '255',
+                ],
+                'constraints' => [
+                    new Assert\NotBlank(),
+                    new Assert\Email(),
+                    new Assert\Length(['min' => 2, 'max' => 255])
+                ],
+                'label' => 'Email',
             ])
-            ->add('lastname', TextType::class, [
-                'attr' => ['class' => 'form-control'],
+            ->add('lastName', TextType::class, [
+                'attr' => [
+                    'class' => 'form-control'
+                ],
+                'constraints' => [
+                    new Assert\NotBlank(),
+                    new Assert\Length(['min' => 2, 'max' => 80])
+                ],
                 'label' => 'Nom',
             ])
-            ->add('firstname', TextType::class, [
-                'attr' => ['class' => 'form-control'],
+            ->add('firstName', TextType::class, [
+                'attr' => [
+                    'class' => 'form-control'
+                ],
+                'constraints' => [
+                    new Assert\NotBlank(),
+                    new Assert\Length(['min' => 2, 'max' => 80])
+                ],
                 'label' => 'Prénom',
             ])
-            ->add('username', TextType::class, [
-                'attr' => ['class' => 'form-control'],
+            ->add('userName', TextType::class, [
+                'attr' => [
+                    'class' => 'form-control'
+                ],
+                'constraints' => [
+                    new Assert\Length(['min' => 2, 'max' => 45])
+                ],
                 'label' => 'Pseudo',
             ])
             ->add('address', TextType::class, [
-                'attr' => ['class' => 'form-control'],
+                'attr' => [
+                    'class' => 'form-control'
+                ],
+                'constraints' => [
+                    new Assert\NotBlank(),
+                    new Assert\Length(['min' => 2, 'max' => 255])
+                ],
                 'label' => 'Adresse',
             ])
-            ->add('birthdate', DateType::class, [
-                'attr' => [
-                    'placeholder' => 'dd/mm/yyyy',
-                    'format' => 'dd/MM/yyyy',
-                    'input' => 'datetime',
-                    'html5' => false,],
+            ->add('birthDate', DateType::class, [
                 'label' => 'Date de Naissance',
+                'widget' => 'single_text',
+                'constraints' => [
+                    new NotBlank(),
+                ],
             ])
             ->add('zipcode', TextType::class, [
-                'attr' => ['class' => 'form-control'],
+                'attr' => [
+                    'class' => 'form-control'
+                ],
+                'constraints' => [
+                    new Assert\NotBlank(),
+                    new Assert\Length(['min' => 2, 'max' => 10])
+                ],
                 'label' => 'Code Postal'
             ])
             ->add('city', TextType::class, [
-                'attr' => ['class' => 'form-control'],
+                'attr' => [
+                    'class' => 'form-control'
+                ],
+                'constraints' => [
+                    new Assert\NotBlank(),
+                    new Assert\Length(['min' => 2, 'max' => 80])
+                ],
                 'label' => 'Ville',
             ])
             ->add('country', TextType::class, [
-                'attr' => ['class' => 'form-control'],
+                'attr' => [
+                    'class' => 'form-control'
+                ],
+                'constraints' => [
+                    new Assert\NotBlank(),
+                    new Assert\Length(['min' => 2, 'max' => 80])
+                ],
                 'label' => 'Pays',
             ])
             ->add('gender', TextType::class, [
-                'attr' => ['class' => 'form-control'],
+                'attr' => [
+                    'class' => 'form-control'
+                ],
+                'constraints' => [
+                    new Assert\NotBlank(),
+                    new Assert\Length(['min' => 2, 'max' => 45])
+                ],
                 'label' => 'Genre',
             ])
-            ->add('phonenumber', TextType::class, [
-                'attr' => ['class' => 'form-control'],
+            ->add('phoneNumber', TextType::class, [
+                'attr' => [
+                    'class' => 'form-control'
+                ],
+                'constraints' => [
+                    new Assert\NotBlank(),
+                    new Assert\Length(['min' => 2, 'max' => 20])
+                ],
                 'label' => 'Téléphone',
             ])
             ->add('avatar', TextType::class, [
-                'attr' => ['class' => 'form-control'],
+                'attr' => [
+                    'class' => 'form-control'
+                ],
+                'constraints' => [
+                    new Assert\NotBlank(),
+                    new Assert\Length(['min' => 2, 'max' => 255])
+                ],
                 'label' => 'Photo de Profile'
             ])
             ->add('agreeTerms', CheckboxType::class, [

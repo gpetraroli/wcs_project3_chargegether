@@ -3,12 +3,17 @@
 namespace App\Entity;
 
 use App\Repository\UsersRepository;
+use DateTime;
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints\Date;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Validator\Constraints\DateTime as ConstraintsDateTime;
 
 #[ORM\Entity(repositoryClass: UsersRepository::class)]
-class User
+#[UniqueEntity(fields: ['email'], message: 'Il existe déjà un compte avec cet email')]
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -21,6 +26,9 @@ class User
     #[ORM\Column(type: 'string', length: 500)]
     private string $password;
 
+    #[ORM\Column(type: 'json')]
+    private array $roles = [];
+
     #[ORM\Column(type: 'string', length: 80)]
     private string $firstName;
 
@@ -28,7 +36,7 @@ class User
     private string $lastName;
 
     #[ORM\Column(type: 'date')]
-    private Date $birthDate;
+    private DateTime $birthDate;
 
     #[ORM\Column(type: 'string', length: 255)]
     private string $address;
@@ -112,12 +120,12 @@ class User
         $this->lastName = $lastName;
     }
 
-    public function getBirthDate(): Date
+    public function getBirthDate(): DateTime
     {
         return $this->birthDate;
     }
 
-    public function setBirthDate(Date $birthDate): void
+    public function setBirthDate(DateTime $birthDate): void
     {
         $this->birthDate = $birthDate;
     }
@@ -210,5 +218,42 @@ class User
     public function setCreatedAt(\DateTimeImmutable $createdAt): void
     {
         $this->createdAt = $createdAt;
+    }
+
+    /**
+     * A visual identifier that represents this user.
+     *
+     * @see UserInterface
+     */
+    public function getUserIdentifier(): string
+    {
+        return (string) $this->email;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function getRoles(): array
+    {
+        $roles = $this->roles;
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
+    }
+
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function eraseCredentials(): void
+    {
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
     }
 }

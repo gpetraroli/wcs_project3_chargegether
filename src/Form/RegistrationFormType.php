@@ -17,7 +17,8 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 
 class RegistrationFormType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options): void
+    public function buildForm(FormBuilderInterface $builder,
+     array $options): void
     {
         $builder
             ->add('email', EmailType::class, [
@@ -50,12 +51,15 @@ class RegistrationFormType extends AbstractType
                 ],
                 'label' => 'Adresse',
             ])
-             ->add('birthdate', DateType::class, [
-                 'attr' => [
-                    'year' => 'Year', 'month' => 'Month', 'day' => 'Day',
-                 ],
-                 'label' => 'Date de Naissance',
-             ])
+            ->add('birthdate', DateType::class, [
+                'attr' => [
+                    'placeholder' => 'dd/mm/yyyy',
+                    'format' => 'dd/MM/yyyy',
+                    'input' => 'datetime',
+                    'html5' => false,
+                ],
+                'label' => 'Date de Naissance',
+            ])
             ->add('zipcode', TextType::class, [
                 'attr' => [
                     'class' => 'form-control'
@@ -121,8 +125,7 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
                 'label' => 'Mot de Passe'
-            ])
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

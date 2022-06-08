@@ -46,7 +46,6 @@ RUN if [ "$APP_ENV" = "prod" ]; \
 
 RUN composer dump-env ${APP_ENV}
 
-
 RUN chmod -R 777 var
 RUN chmod -R 777 public
 

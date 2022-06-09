@@ -9,12 +9,14 @@ use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 
 class RegistrationFormType extends AbstractType
 {
@@ -82,16 +84,6 @@ class RegistrationFormType extends AbstractType
                     new NotBlank(),
                 ],
             ])
-            ->add('zipcode', TextType::class, [
-                'attr' => [
-                    'class' => 'form-control'
-                ],
-                'constraints' => [
-                    new Assert\NotBlank(),
-                    new Assert\Length(['min' => 2, 'max' => 10])
-                ],
-                'label' => 'Code Postal'
-            ])
             ->add('city', TextType::class, [
                 'attr' => [
                     'class' => 'form-control'
@@ -101,6 +93,16 @@ class RegistrationFormType extends AbstractType
                     new Assert\Length(['min' => 2, 'max' => 80])
                 ],
                 'label' => 'Ville',
+            ])
+            ->add('zipcode', TextType::class, [
+                'attr' => [
+                    'class' => 'form-control'
+                ],
+                'constraints' => [
+                    new Assert\NotBlank(),
+                    new Assert\Length(['min' => 2, 'max' => 10])
+                ],
+                'label' => 'Code Postal'
             ])
             ->add('country', TextType::class, [
                 'attr' => [
@@ -112,15 +114,19 @@ class RegistrationFormType extends AbstractType
                 ],
                 'label' => 'Pays',
             ])
-            ->add('gender', TextType::class, [
+            ->add('gender', ChoiceType::class, [
                 'attr' => [
-                    'class' => 'form-control'
+                    'class' => 'form-control mt-3'
                 ],
-                'constraints' => [
-                    new Assert\NotBlank(),
-                    new Assert\Length(['min' => 2, 'max' => 45])
+                'required' => true,
+                'expanded' => true,
+                'multiple' => false,
+                'label' => false,
+                'choices' => [
+                    'Homme' => 'homme',
+                    'Femme' => 'Femme',
+                    'Autres' => 'Autres',
                 ],
-                'label' => 'Genre',
             ])
             ->add('phoneNumber', TextType::class, [
                 'attr' => [
@@ -146,32 +152,34 @@ class RegistrationFormType extends AbstractType
                 'mapped' => false,
                 'constraints' => [
                     new IsTrue([
-                        'message' => 'You should agree to our terms.',
+                        'message' => 'Veuillez accepter nos conditions.',
                     ]),
                 ],
-                'label' => 'En m\'inscrivant sur ce site j\'accepte les termes...'
+                'label' => 'En m\'inscrivant sur ce site j\'accepte les conditions...'
             ])
-            ->add('plainPassword', PasswordType::class, [
-                'mapped' => false,
-                'attr' => [
-                    'autocomplete' => 'new-password',
-                    'class' => 'form-control',
+            ->add('plainPassword', RepeatedType::class, [
+                'type' => PasswordType::class,
+                'first_options' => [
+                    'attr' => [
+                        'class' => 'form-control'
+                    ],
+                    'label' => 'Mot de Passe',
+                    'label_attr' => [
+                        'class' => 'form-label'
+                    ]
                 ],
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Please enter a password',
-                    ]),
-                    new Length([
-                        'min' => 6,
-                        'minMessage' => 'Your password should be at least {{ limit }} characters',
-                        // max length allowed by Symfony for security reasons
-                        'max' => 4096,
-                    ]),
+                'second_options' => [
+                    'attr' => [
+                        'class' => 'form-control'
+                    ],
+                    'label' => 'Confirmation du mot de passe',
+                    'label_attr' => [
+                        'class' => 'form-label'
+                    ]
                 ],
-                'label' => 'Mot de Passe'
+                'invalid_message' => 'Les mots de passe ne correspondent pas.'
             ]);
     }
-
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

@@ -26,7 +26,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: 'string', length: 500)]
     #[Assert\NotBlank()]
-    private string $password;
+    private string $password = 'password';
+
+    // private ?string $plainPassword = null;
+
+    #[Assert\NotBlank()]
+    #[Assert\Length(max: 4096)]
+    private string $plainPassword;
 
     #[ORM\Column(type: 'json')]
     #[Assert\NotNull()]
@@ -272,5 +278,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    public function getPlainPassword(): string
+    {
+        return $this->plainPassword;
+    }
+
+    public function setPlainPassword(string $password): void
+    {
+        $this->plainPassword = $password;
     }
 }

@@ -44,5 +44,4 @@ class ProfilController extends AbstractController
     {
         return $this->render('profil/hote.html.twig');
     }
-
 }

@@ -125,11 +125,11 @@ class RegistrationFormType extends AbstractType
                     'class' => 'form-control mt-3'
                 ],
                 'choices'  => [
-                    'Homme' => true,
-                    'Femme' => false,
+                    'Un Homme' => true,
+                    'Une Femme' => false,
                     'Autres' => 'null',
                 ],
-                'label' => 'Genre à la Naissance',
+                'label' => 'Je suis...',
             ])
             ->add('phoneNumber', TextType::class, [
                 'attr' => [

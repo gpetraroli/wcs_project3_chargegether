@@ -2,17 +2,22 @@
 
 namespace App\Entity;
 
-use App\Repository\UsersRepository;
 use DateTime;
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\UsersRepository;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\Validator\Constraints as Assert;
+use Vich\UploaderBundle\Mapping\Annotation\Uploadable;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Vich\UploaderBundle\Mapping\Annotation\UploadableField;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
-use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UsersRepository::class)]
 #[UniqueEntity(fields: ['email'], message: 'Il existe déjà un compte avec cet email')]
+#[Vich\Uploadable]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -49,6 +54,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private string $lastName;
 
     #[ORM\Column(type: 'date')]
+    #[Assert\NotNull()]
     private DateTime $birthDate;
 
     #[ORM\Column(type: 'string', length: 255)]
@@ -81,16 +87,26 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\Length(min: 2, max: 255)]
     private string $email;
 
-    #[ORM\Column(type: 'string', length: 255)]
-    private string $avatar;
-
     #[ORM\Column(type: 'datetime_immutable')]
     #[Assert\NotNull()]
     private DateTimeImmutable $createdAt;
 
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private string $avatar;
+
+    #[Vich\UploadableField(mapping: 'profile_image', fileNameProperty: 'imageName')]
+    private ?File $imageFile = null;
+
+    #[ORM\Column(type: 'string', nullable: true)]
+    private ?string $imageName = null;
+
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+    private DateTimeImmutable $updatedAt;
+
     public function __construct()
     {
         $this->createdAt = new DateTimeImmutable();
+        $this->updatedAt = new DateTimeImmutable();
     }
 
     public function getId(): int
@@ -223,16 +239,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->email = $email;
     }
 
-    public function getAvatar(): string
-    {
-        return $this->avatar;
-    }
-
-    public function setAvatar(string $avatar): void
-    {
-        $this->avatar = $avatar;
-    }
-
     public function getCreatedAt(): \DateTimeImmutable
     {
         return $this->createdAt;
@@ -288,5 +294,53 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPlainPassword(string $password): void
     {
         $this->plainPassword = $password;
+    }
+
+    public function getAvatar(): string
+    {
+        return $this->avatar;
+    }
+
+    public function setAvatar(string $avatar): void
+    {
+        $this->avatar = $avatar;
+    }
+
+    public function setImageFile(?File $imageFile = null): void
+    {
+        $this->imageFile = $imageFile;
+
+        if (null !== $imageFile) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->updatedAt = new \DateTimeImmutable();
+        }
+    }
+
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
+    public function setImageName(?string $imageName): void
+    {
+        $this->imageName = $imageName;
+    }
+
+    public function getImageName(): ?string
+    {
+        return $this->imageName;
+    }
+
+    public function getUpdatedAt(): \DateTimeImmutable
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(\DateTimeImmutable $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
     }
 }

@@ -3,15 +3,14 @@
 namespace App\Entity;
 
 use DateTime;
-use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UsersRepository;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation\Uploadable;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Vich\UploaderBundle\Mapping\Annotation\UploadableField;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
@@ -85,13 +84,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\Length(min: 2, max: 255)]
     private string $email;
 
-    #[ORM\Column(type: 'datetime_immutable')]
+    #[ORM\Column(type: 'datetime')]
     #[Assert\NotNull()]
-    private \DateTimeImmutable $createdAt;
+    private DateTime $createdAt;
 
-    #[ORM\Column(type: 'datetime_immutable')]
-    #[Assert\NotNull()]
-    private \DateTimeImmutable $updatedAt;
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    private DateTime $updatedAt;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private string $avatar;
@@ -104,8 +102,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function __construct()
     {
-        $this->createdAt = new \DateTimeImmutable();
-        $this->updatedAt = new \DateTimeImmutable();
+        $this->createdAt = new DateTime();
+        $this->updatedAt = new DateTime();
     }
 
     public function getId(): int
@@ -238,16 +236,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->email = $email;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
-    {
-        return $this->createdAt;
-    }
-
-    public function setCreatedAt(\DateTimeImmutable $createdAt): void
-    {
-        $this->createdAt = $createdAt;
-    }
-
     /**
      * A visual identifier that represents this user.
      *
@@ -305,7 +293,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->avatar = $avatar;
     }
 
-     /**
+    /**
      * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
      * of 'UploadedFile' is injected into this setter to trigger the update. If this
      * bundle's configuration parameter 'inject_on_load' is set to 'true' this setter
@@ -321,7 +309,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         if (null !== $imageFile) {
             // It is required that at least one field changes if you are using doctrine
             // otherwise the event listeners won't be called and the file is lost
-            $this->updatedAt = new \DateTimeImmutable();
+            $this->updatedAt = new DateTime();
         }
     }
 
@@ -340,12 +328,40 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->imageName;
     }
 
-    public function getUpdatedAt(): ?\DateTimeImmutable
+    /**
+     * Get the value of createdAt
+     */
+    public function getCreatedAt(): DateTime
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * Set the value of createdAt
+     *
+     * @return  self
+     */
+    public function setCreatedAt(datetime $createdAt)
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of updatedAt
+     */
+    public function getUpdatedAt(): DateTime
     {
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(\DateTimeImmutable $updatedAt): self
+    /**
+     * Set the value of updatedAt
+     *
+     * @return  self
+     */
+    public function setUpdatedAt(datetime $updatedAt)
     {
         $this->updatedAt = $updatedAt;
 

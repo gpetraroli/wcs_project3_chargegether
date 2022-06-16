@@ -30,7 +30,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: 'string', length: 500)]
     #[Assert\NotBlank()]
-    private string $password = 'password';
+    private string $password;
 
     #[Assert\NotBlank()]
     #[Assert\Length(max: 4096)]
@@ -99,6 +99,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: 'string', nullable: true)]
     private ?string $imageName = null;
+
+    #[ORM\Column(type: 'string', nullable: true)]
+    private ?string $trrdt = null;
+
 
     public function __construct()
     {
@@ -326,9 +330,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->imageName;
     }
 
-    /**
-     * Get the value of createdAt
-     */
     public function getCreatedAt(): DateTime
     {
         return $this->createdAt;
@@ -346,9 +347,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * Get the value of updatedAt
-     */
     public function getUpdatedAt(): DateTime
     {
         return $this->updatedAt;

@@ -100,10 +100,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string', nullable: true)]
     private ?string $imageName = null;
 
-    #[ORM\Column(type: 'string', nullable: true)]
-    private ?string $trrdt = null;
-
-
     public function __construct()
     {
         $this->createdAt = new DateTime();

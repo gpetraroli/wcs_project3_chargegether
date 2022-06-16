@@ -22,9 +22,6 @@ class RegistrationController extends AbstractController
     public function register(
         Request $request,
         UserPasswordHasherInterface $userPasswordHasher,
-        UserAuthenticatorInterface $userAuthenticator,
-        UserAuthenticator $authenticator,
-        EntityManagerInterface $entityManager,
         UsersRepository $usersRepository
     ): Response {
         $user = new User();

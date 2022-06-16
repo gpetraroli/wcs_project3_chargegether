@@ -32,7 +32,6 @@ class RegistrationFormType extends AbstractType
         $builder
             ->add('email', EmailType::class, [
                 'attr' => [
-                    'class' => 'form-control',
                     'minlenght' => '2',
                     'maxlenght' => '255',
                 ],
@@ -44,9 +43,6 @@ class RegistrationFormType extends AbstractType
                 'label' => 'Email',
             ])
             ->add('lastName', TextType::class, [
-                'attr' => [
-                    'class' => 'form-control'
-                ],
                 'constraints' => [
                     new Assert\NotBlank(),
                     new Assert\Length(['min' => 2, 'max' => 80])
@@ -54,9 +50,6 @@ class RegistrationFormType extends AbstractType
                 'label' => 'Nom',
             ])
             ->add('firstName', TextType::class, [
-                'attr' => [
-                    'class' => 'form-control'
-                ],
                 'constraints' => [
                     new Assert\NotBlank(),
                     new Assert\Length(['min' => 2, 'max' => 80])
@@ -64,18 +57,12 @@ class RegistrationFormType extends AbstractType
                 'label' => 'Prénom',
             ])
             ->add('userName', TextType::class, [
-                'attr' => [
-                    'class' => 'form-control'
-                ],
                 'constraints' => [
                     new Assert\Length(['min' => 2, 'max' => 45])
                 ],
                 'label' => 'Pseudo',
             ])
             ->add('address', TextType::class, [
-                'attr' => [
-                    'class' => 'form-control'
-                ],
                 'constraints' => [
                     new Assert\NotBlank(),
                     new Assert\Length(['min' => 2, 'max' => 255])
@@ -91,9 +78,6 @@ class RegistrationFormType extends AbstractType
             ])
 
             ->add('city', TextType::class, [
-                'attr' => [
-                    'class' => 'form-control'
-                ],
                 'constraints' => [
                     new Assert\NotBlank(),
                     new Assert\Length(['min' => 2, 'max' => 80])
@@ -101,9 +85,6 @@ class RegistrationFormType extends AbstractType
                 'label' => 'Ville',
             ])
             ->add('zipcode', TextType::class, [
-                'attr' => [
-                    'class' => 'form-control'
-                ],
                 'constraints' => [
                     new Assert\NotBlank(),
                     new Assert\Length(['min' => 2, 'max' => 10])
@@ -111,9 +92,6 @@ class RegistrationFormType extends AbstractType
                 'label' => 'Code Postal'
             ])
             ->add('country', CountryType::class, [
-                'attr' => [
-                    'class' => 'form-control'
-                ],
                 'constraints' => [
                     new Assert\NotBlank(),
                     new Assert\Length(['min' => 2, 'max' => 80])
@@ -121,9 +99,6 @@ class RegistrationFormType extends AbstractType
                 'label' => 'Pays',
             ])
             ->add('gender', ChoiceType::class, [
-                'attr' => [
-                    'class' => 'form-control mt-3'
-                ],
                 'choices'  => [
                     'Un Homme' => true,
                     'Une Femme' => false,
@@ -132,9 +107,6 @@ class RegistrationFormType extends AbstractType
                 'label' => 'Je suis...',
             ])
             ->add('phoneNumber', TextType::class, [
-                'attr' => [
-                    'class' => 'form-control'
-                ],
                 'constraints' => [
                     new Assert\NotBlank(),
                     new Assert\Length(['min' => 2, 'max' => 20])
@@ -142,9 +114,6 @@ class RegistrationFormType extends AbstractType
                 'label' => 'Téléphone',
             ])
             ->add('avatar', TextType::class, [
-                'attr' => [
-                    'class' => 'form-control'
-                ],
                 'constraints' => [
                     new Assert\NotBlank(),
                     new Assert\Length(['min' => 2, 'max' => 255])
@@ -179,9 +148,6 @@ class RegistrationFormType extends AbstractType
                     ]
                 ],
                 'second_options' => [
-                    'attr' => [
-                        'class' => 'form-control'
-                    ],
                     'label' => 'Confirmation du mot de passe',
                     'label_attr' => [
                         'class' => 'form-label'

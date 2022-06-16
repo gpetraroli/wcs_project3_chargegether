@@ -25,67 +25,45 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private int $id;
 
     #[ORM\Column(type: 'string', length: 45)]
-    #[Assert\Length(min: 2, max: 45)]
     private string $userName;
 
     #[ORM\Column(type: 'string', length: 500)]
-    #[Assert\NotBlank()]
     private string $password;
 
-    #[Assert\NotBlank()]
-    #[Assert\Length(max: 4096)]
-    private string $plainPassword;
-
     #[ORM\Column(type: 'json')]
-    #[Assert\NotNull()]
     private array $roles = [];
 
     #[ORM\Column(type: 'string', length: 80)]
-    #[Assert\NotBlank()]
-    #[Assert\Length(min: 2, max: 80)]
     private string $firstName;
 
     #[ORM\Column(type: 'string', length: 80)]
-    #[Assert\NotBlank()]
-    #[Assert\Length(min: 2, max: 80)]
     private string $lastName;
 
     #[ORM\Column(type: 'date')]
-    #[Assert\NotNull()]
     private DateTime $birthDate;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Assert\Length(min: 2, max: 255)]
-    #[Assert\NotBlank()]
     private string $address;
 
     #[ORM\Column(type: 'string', length: 10)]
-    #[Assert\NotBlank()]
     private string $zipcode;
 
     #[ORM\Column(type: 'string', length: 80)]
-    #[Assert\NotBlank()]
     private string $city;
 
     #[ORM\Column(type: 'string', length: 80)]
-    #[Assert\NotBlank()]
     private string $country;
 
     #[ORM\Column(type: 'string', length: 45)]
-    #[Assert\NotBlank()]
     private string $gender;
 
     #[ORM\Column(type: 'string', length: 20, unique: true)]
-    #[Assert\NotBlank()]
     private string $phoneNumber;
 
     #[ORM\Column(type: 'string', length: 255, unique: true)]
-    #[Assert\Email()]
-    #[Assert\Length(min: 2, max: 255)]
     private string $email;
 
     #[ORM\Column(type: 'datetime')]
-    #[Assert\NotNull()]
     private DateTime $createdAt;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
@@ -236,19 +214,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->email = $email;
     }
 
-    /**
-     * A visual identifier that represents this user.
-     *
-     * @see UserInterface
-     */
     public function getUserIdentifier(): string
     {
         return (string) $this->email;
     }
 
-    /**
-     * @see UserInterface
-     */
     public function getRoles(): array
     {
         $roles = $this->roles;
@@ -264,21 +234,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @see UserInterface
-     */
     public function eraseCredentials(): void
     {
-    }
-
-    public function getPlainPassword(): string
-    {
-        return $this->plainPassword;
-    }
-
-    public function setPlainPassword(string $password): void
-    {
-        $this->plainPassword = $password;
     }
 
     public function getAvatar(): string
@@ -291,15 +248,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->avatar = $avatar;
     }
 
-    /**
-     * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
-     * of 'UploadedFile' is injected into this setter to trigger the update. If this
-     * bundle's configuration parameter 'inject_on_load' is set to 'true' this setter
-     * must be able to accept an instance of 'File' as the bundle will inject one here
-     * during Doctrine hydration.
-     *
-     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile|null $imageFile
-     */
     public function setImageFile(?File $imageFile = null): void
     {
         $this->imageFile = $imageFile;
@@ -331,12 +279,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->createdAt;
     }
 
-    /**
-     * Set the value of createdAt
-     *
-     * @return  self
-     */
-    public function setCreatedAt(datetime $createdAt)
+    public function setCreatedAt(datetime $createdAt): self
     {
         $this->createdAt = $createdAt;
 
@@ -348,12 +291,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->updatedAt;
     }
 
-    /**
-     * Set the value of updatedAt
-     *
-     * @return  self
-     */
-    public function setUpdatedAt(datetime $updatedAt)
+    public function setUpdatedAt(datetime $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
 

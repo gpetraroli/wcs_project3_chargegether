@@ -69,14 +69,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'datetime', nullable: true)]
     private DateTime $updatedAt;
 
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private string $avatar;
-
     #[Vich\UploadableField(mapping: 'profile_image', fileNameProperty: 'imageName')]
     private ?File $imageFile = null;
 
-    #[ORM\Column(type: 'string', nullable: true)]
-    private ?string $imageName = 'default.png';
+    #[ORM\Column(type: 'string')]
+    private ?string $imageName;
 
     public function __construct()
     {
@@ -237,16 +234,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function eraseCredentials(): void
     {
-    }
-
-    public function getAvatar(): string
-    {
-        return $this->avatar;
-    }
-
-    public function setAvatar(string $avatar): void
-    {
-        $this->avatar = $avatar;
     }
 
     public function setImageFile(?File $imageFile = null): void

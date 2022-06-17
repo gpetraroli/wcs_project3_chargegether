@@ -4,6 +4,7 @@ namespace App\DataFixtures;
 
 use App\Entity\Vehicle;
 use Faker\Factory;
+use Faker\Generator;
 use App\Entity\User;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -123,7 +124,8 @@ class AppFixtures extends Fixture
         $vehicule->setImage("merco.jpg");
         $manager->persist($vehicule);
 
-
         $manager->flush();
     }
 }
+
+gi

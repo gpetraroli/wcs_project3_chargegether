@@ -7,6 +7,7 @@ use App\Config\StationPower;
 use App\Entity\Station;
 use App\Form\StationType;
 use App\Repository\StationsRepository;
+use App\Repository\UsersRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,7 +19,9 @@ class ProfilController extends AbstractController
     #[Route('/', name: 'index')]
     public function index(): Response
     {
-        return $this->render('profil/index.html.twig');
+        return $this->render('profil/index.html.twig', [
+            'user' => $this->getUser()
+        ]);
     }
 
     #[Route('/infos', name: 'infos')]

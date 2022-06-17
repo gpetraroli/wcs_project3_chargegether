@@ -32,6 +32,10 @@ It's symfony website-skeleton project with some additional library (webpack, fix
 2. Run `composer install`
 3. Run `yarn install`
 4. Run `yarn encore dev` to build assets
+5. create the .env.local with the good database and the google API khey
+6. Create your database
+7. Launch doctrine:migration:migrate
+8.
 
 ### Working
 

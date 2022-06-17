@@ -106,7 +106,7 @@ class AppFixtures extends Fixture
         $manager->persist($vehicule);
 
         $vehicule = new Vehicle();
-        $vehicule->setBrand("Hyudai");
+        $vehicule->setBrand("Hyundai");
         $vehicule->setModel("Ioniq 5");
         $vehicule->setBatteryCapacity('58');
         $vehicule->setPlugType("to_definite");

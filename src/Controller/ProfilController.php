@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\UsersRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -12,7 +13,9 @@ class ProfilController extends AbstractController
     #[Route('/', name: 'index')]
     public function index(): Response
     {
-        return $this->render('profil/index.html.twig');
+        return $this->render('profil/index.html.twig', [
+            'user' => $this->getUser()
+        ]);
     }
 
     #[Route('/infos', name: 'infos')]

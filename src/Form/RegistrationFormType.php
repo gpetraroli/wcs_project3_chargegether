@@ -114,7 +114,7 @@ class RegistrationFormType extends AbstractType
             ])
             ->add('imageFile', VichImageType::class, [
                 'label' => 'Photo de Profile',
-                // 'mapped' => false,
+                'required' => false,
                 'label_attr' => [
                     'class' => 'form-label my-3',
                 ]

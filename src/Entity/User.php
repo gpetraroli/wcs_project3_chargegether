@@ -72,14 +72,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Vich\UploadableField(mapping: 'profile_image', fileNameProperty: 'imageName')]
     private ?File $imageFile = null;
 
-    #[ORM\Column(type: 'string')]
+    #[ORM\Column(type: 'string', nullable: true)]
     private ?string $imageName;
 
     public function __construct()
     {
         $this->createdAt = new DateTime();
         $this->updatedAt = new DateTime();
-        $this->imageName = 'default.png';
+        $this->imageName = null;
     }
 
     public function getId(): int

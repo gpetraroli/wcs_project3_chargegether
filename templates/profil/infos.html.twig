@@ -1,9 +1,67 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Mes infos - Chargether{% endblock %}
+{% block title %}Mes infos - Chargether
+{% endblock %}
+
+{% block specific_javascript %}
+	<script src="https://kit.fontawesome.com/47e5d2715e.js" crossorigin="anonymous"></script>
+{% endblock %}
 
 {% block body %}
-INFOS
-    {% include 'components/_navbar.html.twig' %}
+	<section class="h-100 position-relative d-flex flex-column justify-content-between">
 
-{% endblock %}
+		<header class="bg-primary d-flex justify-content-center">
+			<h3 class="text-white my-3">
+				<i class="bi bi-arrow-left-circle-fill"></i>
+				Informations personnelles
+			</h3>
+		</header>
+
+		<div class="d-flex justify-content-start align-items-center m-3 mb-0">
+			<div class="d-flex flex-column"></div>
+
+			<h5 class="ms-5">
+				INFORMATIONS DU COMPTE
+			</h5>
+		</div>
+
+		<hr class="mx-3">
+
+		<div class="list-group">
+              <button type="button" class="list-group-item list-group-item-action">Nom d'utilisateur</button>
+          <button type="button" class="list-group-item list-group-item-action">Email</button>
+
+		<hr class="mx-3">
+
+		<div class="d-flex justify-content-start align-items-center m-3 mb-0">
+			<h5 class="ms-5">
+				INFORMATIONS PERSONNELLES
+			</h5>
+		</div>
+
+		<div class="list-group">
+		   <button type="button" class="list-group-item list-group-item-action">Prénom</button>
+		   <button type="button" class="list-group-item list-group-item-action">Nom</button>
+		   <button type="button" class="list-group-item list-group-item-action">Genre</button>
+		   <button type="button" class="list-group-item list-group-item-action">Adresse</button>
+		   <button type="button" class="list-group-item list-group-item-action">Ville</button>
+		   <button type="button" class="list-group-item list-group-item-action">Pays</button>
+		   <button type="button" class="list-group-item list-group-item-action">Date de Naissance</button>
+		   <button type="button" class="list-group-item list-group-item-action">Numéro de téléphone</button>
+		</div>
+
+		<div class="d-flex justify-content-center">
+			<a href="{{ path('app_profil_hote') }}" class="m-4 text-center col-9 d-flex align-items-center justify-content-center
+					            rounded-pill
+					            bg-primary
+					            gap-3">
+				<i class="bi bi-check-circle-fill"></i>
+				<h3 class="text-white my-2 ">
+					<i class="bi bi-check-circle-fill"></i>
+					Enregistrer</h3>
+			</a>
+		</div>
+
+		{% include 'components/_navbar.html.twig' %}
+
+	{% endblock %}

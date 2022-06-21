@@ -45,15 +45,15 @@ class ProfilController extends AbstractController
     public function hoteInscription(Request $request, StationsRepository $stationsRepository): Response
     {
         $station = new Station();
+        $station->setOwner($this->getUser());
 
         $form = $this->createForm(StationType::class, $station);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $station = $form->getData();
-            $station->setOwner($this->getUser());
-
             $stationsRepository->add($station, true);
+
+            $this->addFlash('success', 'hôte correctement ajouté');
 
             return $this->redirectToRoute('app_profil_hote');
         }
@@ -62,7 +62,7 @@ class ProfilController extends AbstractController
             'form' => $form,
             'plugsType' => PlugType::cases(),
             'stationPowers' => StationPower::cases(),
-            ]);
+        ]);
     }
 
     #[Route('/hote', name: 'hote')]

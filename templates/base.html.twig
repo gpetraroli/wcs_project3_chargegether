@@ -19,9 +19,18 @@
     {% endblock %}
 </head>
 <body>
+
+{% include 'components/_flesh-messages.html.twig' %}
+
 <div class="container-fluid d-flex flex-column p-0 vh-100">
-    {% block body %}
-    {% endblock %}
+
+    <div style="height: 90vh;">
+        {% block body %}
+        {% endblock %}
+    </div>
+    <div style="height: 10vh">
+        {{ include('components/_navbar.html.twig') }}
+    </div>
 </div>
 </body>
 </html>

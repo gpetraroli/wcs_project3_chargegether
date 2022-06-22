@@ -83,7 +83,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function __construct()
     {
         $this->createdAt = new DateTime();
-        $this->updatedAt = new DateTime();
+        $this->updatedAt = $this->createdAt;
         $this->stations = new ArrayCollection();
         $this->imageName = null;
     }

@@ -39,7 +39,7 @@ class RegistrationFormType extends AbstractType
                     new Assert\Email(),
                     new Assert\Length(['min' => 2, 'max' => 255])
                 ],
-                'label' => 'Email',
+                 'label' => 'Email',
             ])
             ->add('lastName', TextType::class, [
                 'constraints' => [
@@ -59,7 +59,7 @@ class RegistrationFormType extends AbstractType
                 'constraints' => [
                     new Assert\Length(['min' => 2, 'max' => 45])
                 ],
-                'label' => 'Pseudo',
+                 'label' => 'Pseudo',
             ])
             ->add('address', TextType::class, [
                 'constraints' => [

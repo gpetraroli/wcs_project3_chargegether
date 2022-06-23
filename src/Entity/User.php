@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UsersRepository;
 use Symfony\Component\HttpFoundation\File\File;
@@ -69,19 +71,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'datetime', nullable: true)]
     private DateTime $updatedAt;
 
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private string $avatar;
-
     #[Vich\UploadableField(mapping: 'profile_image', fileNameProperty: 'imageName')]
     private ?File $imageFile = null;
 
     #[ORM\Column(type: 'string', nullable: true)]
-    private ?string $imageName = null;
+    private ?string $imageName;
+
+    #[ORM\OneToMany(mappedBy: 'owner', targetEntity: Station::class, orphanRemoval: true)]
+    private Collection $stations;
 
     public function __construct()
     {
         $this->createdAt = new DateTime();
-        $this->updatedAt = new DateTime();
+        $this->updatedAt = clone $this->createdAt;
+        $this->stations = new ArrayCollection();
+        $this->imageName = null;
     }
 
     public function getId(): int
@@ -238,16 +242,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
     }
 
-    public function getAvatar(): string
-    {
-        return $this->avatar;
-    }
-
-    public function setAvatar(string $avatar): void
-    {
-        $this->avatar = $avatar;
-    }
-
     public function setImageFile(?File $imageFile = null): void
     {
         $this->imageFile = $imageFile;
@@ -294,6 +288,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setUpdatedAt(datetime $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Station>
+     */
+    public function getStations(): Collection
+    {
+        return $this->stations;
+    }
+
+    public function addStation(Station $station): self
+    {
+        if (!$this->stations->contains($station)) {
+            $this->stations[] = $station;
+            $station->setOwner($this);
+        }
+
+        return $this;
+    }
+
+    public function removeStation(Station $station): self
+    {
+        if ($this->stations->removeElement($station)) {
+            // set the owning side to null (unless already changed)
+            if ($station->getOwner() === $this) {
+                $station->setOwner(null);
+            }
+        }
 
         return $this;
     }

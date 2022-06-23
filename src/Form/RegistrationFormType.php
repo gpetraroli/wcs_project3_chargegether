@@ -21,7 +21,6 @@ use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
-use Symfony\Component\Validator\Constraints\LessThanOrEqual;
 
 class RegistrationFormType extends AbstractType
 {
@@ -113,15 +112,9 @@ class RegistrationFormType extends AbstractType
                 ],
                 'label' => 'Téléphone',
             ])
-            ->add('avatar', TextType::class, [
-                'constraints' => [
-                    new Assert\NotBlank(),
-                    new Assert\Length(['min' => 2, 'max' => 255])
-                ],
-                'label' => 'Avatar'
-            ])
             ->add('imageFile', VichImageType::class, [
                 'label' => 'Photo de Profile',
+                'required' => false,
                 'label_attr' => [
                     'class' => 'form-label my-3',
                 ]

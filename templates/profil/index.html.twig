@@ -1,98 +1,112 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Profil - Chargether{% endblock %}
+{% block title %}Profil - Chargether
+{% endblock %}
 
 {% block specific_javascript %}
-    <script src="https://kit.fontawesome.com/47e5d2715e.js" crossorigin="anonymous"></script>
+	<script src="https://kit.fontawesome.com/47e5d2715e.js" crossorigin="anonymous"></script>
 {% endblock %}
 
 {% block body %}
-    <section class="h-100 position-relative d-flex flex-column justify-content-between">
 
-        <header class="bg-primary d-flex justify-content-center">
-            <h1 class="text-white my-3"> Profil </h1>
-        </header>
+	<section class="h-100 position-relative d-flex flex-column justify-content-between">
 
+		<header class="bg-primary d-flex justify-content-center">
+			<h1 class="text-white my-3">
+				Profil
+			</h1>
+		</header>
 
-        <div class="d-flex justify-content-start align-items-center m-3 mb-0">
-            <div class="d-flex flex-column">
-                <img src="/images/profile/{{ user.imageName }}"
-                     alt="Image de profil de Michel"
-                     class="bd-placeholder-img rounded-circle border border-2 border-info"
-                     width="100"
-                     height="100"
-                     style="object-fit: cover">
-                <a href="#" class="text-decoration-none text-info"><small> Changer de photo</small></a>
-            </div>
+		<div class="d-flex justify-content-start align-items-center m-3 mb-0">
+			<div class="d-flex flex-column">
 
-            <h1 class="ms-5"> {{ user.firstName ~ ' ' ~ user.lastName }} </h1>
-        </div>
+				<img
+                {% if user.imageName is not null %}
+                    src="/images/profile_images/{{ user.imageName }}"
+                {% else %}
+                  src="/images/default_images/default_Users_Profile.png"
+                {% endif %}
 
-        <hr class="mx-3">
+                     alt="Image de profil de Michel" class="bd-placeholder-img rounded-circle border border-2 border-info" width="100" height="100" style="object-fit: cover">
+				<a href="#" class="text-decoration-none text-info">
+					<small>
+						Changer de photo</small>
+				</a>
+			</div>
 
-        <div class="d-flex flex-column gap-4">
+			<h1 class="ms-5">
+				{{ user.firstName ~ ' ' ~ user.lastName }}
+			</h1>
+		</div>
 
-            <div class="d-flex align-items-center">
-                <i class="fa-solid fa-user fa-2xl col-3 text-center"></i>
-                <a class="col-9 text-center text-dark text-decoration-none" href="{{ path('app_profil_infos') }}">
-                    <h4 >Informations personnelles</h4>
-                </a>
-            </div>
-            <div class="d-flex align-items-center">
-                <i class="fa-solid fa-key fa-2xl  col-3 text-center"></i>
-                <a class="col-9 text-center text-dark text-decoration-none" href="#">
-                    <h4 >Mot De Passe</h4>
-                </a>
-            </div>
-            <div class="d-flex align-items-center">
-                <i class="fa-solid fa-car-rear fa-2xl  col-3 text-center"></i>
-                <a class="col-9 text-center text-dark text-decoration-none" href="{{ path('app_profil_vehicules') }}">
-                    <h4 >Véhicules</h4>
-                </a>
-            </div>
-        </div>
+		<hr class="mx-3">
 
-        <div class="d-flex justify-content-center">
-            <a class="m-4 text-center col-9 d-flex align-items-center justify-content-center rounded-pill bg-primary
-            gap-3" href="{{ path('app_profil_hote_inscription') }}">
-{#            <div class="m-4 text-center col-9 d-flex align-items-center justify-content-center rounded-pill bg-primary gap-3">#}
-                <i class="fa-solid fa-car-rear fa-2xl text-white"></i>
-                <h3 class="text-white my-2"> DEVENIR HÔTE </h3>
-{#            </div>#}
-            </a>
-        </div>
+		<div class="d-flex flex-column gap-4">
 
-        <div class="d-flex justify-content-center">
-            <a href="{{ path('app_profil_hote') }}" class="m-4 text-center col-9 d-flex align-items-center justify-content-center
-            rounded-pill
-            bg-primary
-            gap-3">
-                <i class="bi bi-plugin text-white fs-1"></i>
-                <h3 class="text-white my-2 "> Ma borne </h3>
-            </a>
-        </div>
+			<div class="d-flex align-items-center">
+				<i class="fa-solid fa-user fa-2xl col-3 text-center"></i>
+				<a class="col-9 text-center text-dark text-decoration-none" href="{{ path('app_profil_infos') }}">
+					<h4>Informations personnelles</h4>
+				</a>
+			</div>
+			<div class="d-flex align-items-center">
+				<i class="fa-solid fa-key fa-2xl  col-3 text-center"></i>
+				<a class="col-9 text-center text-dark text-decoration-none" href="#">
+					<h4>Mot De Passe</h4>
+				</a>
+			</div>
+			<div class="d-flex align-items-center">
+				<i class="fa-solid fa-car-rear fa-2xl  col-3 text-center"></i>
+				<a class="col-9 text-center text-dark text-decoration-none" href="{{ path('app_profil_vehicules') }}">
+					<h4>Véhicules</h4>
+				</a>
+			</div>
+		</div>
 
-        <hr class="mx-3">
+		<div class="d-flex justify-content-center">
+			<a
+				class="m-4 text-center col-9 d-flex align-items-center justify-content-center rounded-pill bg-primary
+					            gap-3" href="{{ path('app_profil_hote_inscription') }}">
+				{#            <div class="m-4 text-center col-9 d-flex align-items-center justify-content-center rounded-pill bg-primary gap-3">#}
+				<i class="fa-solid fa-car-rear fa-2xl text-white"></i>
+				<h3 class="text-white my-2">
+					DEVENIR HÔTE
+				</h3>
+				{#            </div>#}
+			</a>
+		</div>
 
-        <div class="d-flex justify-content-center align-items-center gap-3">
+		<div class="d-flex justify-content-center">
+			<a href="{{ path('app_profil_hote') }}" class="m-4 text-center col-9 d-flex align-items-center justify-content-center
+					            rounded-pill
+					            bg-primary
+					            gap-3">
+				<i class="bi bi-plugin text-white fs-1"></i>
+				<h3 class="text-white my-2 ">
+					Ma borne
+				</h3>
+			</a>
+		</div>
 
-            <div class="d-flex align-items-center gap-2">
-                <i class="fa-regular fa-envelope"></i>
-                <a class="text-decoration-none text-dark" href="{{ path('app_contact') }}">
-                    <h5 class="text-center m-0">Contactez-nous</h5>
-                </a>
-            </div>
+		<hr class="mx-3">
 
-            <div class="d-flex align-items-center gap-2">
-                <i class="fa-solid fa-square-share-nodes"></i>
-                <h5 class="text-center m-0">Partagez</h5>
-            </div>
+		<div class="d-flex justify-content-center align-items-center gap-3">
 
-        </div>
+			<div class="d-flex align-items-center gap-2">
+				<i class="fa-regular fa-envelope"></i>
+				<a class="text-decoration-none text-dark" href="{{ path('app_contact') }}">
+					<h5 class="text-center m-0">Contactez-nous</h5>
+				</a>
+			</div>
 
-        <hr class="mx-3">
+			<div class="d-flex align-items-center gap-2">
+				<i class="fa-solid fa-square-share-nodes"></i>
+				<h5 class="text-center m-0">Partagez</h5>
+			</div>
 
-        <div class="d-flex flex-column align-items-center justify-content-center">
+		</div>
+
+		<hr class="mx-3">
 
             <p> Suivez Chargether sur les réseaux sociaux </p>
             <div class="d-flex gap-5 mb-3">
@@ -108,6 +122,8 @@
             </div>
         </div>
     </section>
-    {% include 'components/_navbar.html.twig' %}
+
+	{% include 'components/_navbar.html.twig' %}
+
 
 {% endblock %}

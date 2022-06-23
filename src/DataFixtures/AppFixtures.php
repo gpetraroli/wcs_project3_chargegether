@@ -137,7 +137,7 @@ class AppFixtures extends Fixture
             $user->setCountry($faker->country);
             $user->setEmail($faker->email);
             $user->setPassword($this->hasher->hashPassword($user, 'user'));
-            $user->setVehicle( $this->getReference('merco'));
+            $user->addVehicle( $this->getReference('merco'));
             $manager->persist($user);
         }
 
@@ -154,7 +154,7 @@ class AppFixtures extends Fixture
         $user->setCountry($faker->country);
         $user->setEmail("admin@admin.fr");
         $user->setPassword($this->hasher->hashPassword($user, 'password'));
-        $user->setVehicle( $this->getReference('focus'));
+        $user->addVehicle( $this->getReference('focus'));
 
         $manager->persist($user);
 

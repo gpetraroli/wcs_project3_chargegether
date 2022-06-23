@@ -80,6 +80,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'owner', targetEntity: Station::class, orphanRemoval: true)]
     private Collection $stations;
 
+    #[ORM\ManyToOne(targetEntity: Vehicle::class)]
+    #[ORM\JoinColumn(nullable: false)]
+    private Vehicle $vehicle;
+
+
+
     public function __construct()
     {
         $this->createdAt = new DateTime();
@@ -92,7 +98,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->id;
     }
-
     public function setId(int $id): void
     {
         $this->id = $id;
@@ -102,17 +107,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->userName;
     }
-
     public function setUserName(string $userName): void
     {
         $this->userName = $userName;
     }
 
+
     public function getPassword(): string
     {
         return $this->password;
     }
-
     public function setPassword(string $password): void
     {
         $this->password = $password;
@@ -122,7 +126,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->firstName;
     }
-
     public function setFirstName(string $firstName): void
     {
         $this->firstName = $firstName;
@@ -132,7 +135,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->lastName;
     }
-
     public function setLastName(string $lastName): void
     {
         $this->lastName = $lastName;
@@ -142,7 +144,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->birthDate;
     }
-
     public function setBirthDate(DateTime $birthDate): void
     {
         $this->birthDate = $birthDate;
@@ -152,7 +153,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->address;
     }
-
     public function setAddress(string $address): void
     {
         $this->address = $address;
@@ -162,7 +162,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->zipcode;
     }
-
     public function setZipcode(string $zipcode): void
     {
         $this->zipcode = $zipcode;
@@ -172,7 +171,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->city;
     }
-
     public function setCity(string $city): void
     {
         $this->city = $city;
@@ -182,7 +180,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->country;
     }
-
     public function setCountry(string $country): void
     {
         $this->country = $country;
@@ -192,7 +189,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->gender;
     }
-
     public function setGender(string $gender): void
     {
         $this->gender = $gender;
@@ -202,7 +198,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->phoneNumber;
     }
-
     public function setPhoneNumber(string $phoneNumber): void
     {
         $this->phoneNumber = $phoneNumber;
@@ -212,7 +207,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->email;
     }
-
     public function setEmail(string $email): void
     {
         $this->email = $email;
@@ -230,7 +224,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return array_unique($roles);
     }
-
     public function setRoles(array $roles): self
     {
         $this->roles = $roles;
@@ -252,7 +245,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             $this->updatedAt = new DateTime();
         }
     }
-
     public function getImageFile(): ?File
     {
         return $this->imageFile;
@@ -262,7 +254,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $this->imageName = $imageName;
     }
-
     public function getImageName(): ?string
     {
         return $this->imageName;
@@ -272,7 +263,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->createdAt;
     }
-
     public function setCreatedAt(datetime $createdAt): self
     {
         $this->createdAt = $createdAt;
@@ -284,7 +274,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->updatedAt;
     }
-
     public function setUpdatedAt(datetime $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
@@ -292,14 +281,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @return Collection<int, Station>
-     */
+
     public function getStations(): Collection
     {
         return $this->stations;
     }
-
     public function addStation(Station $station): self
     {
         if (!$this->stations->contains($station)) {
@@ -309,7 +295,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-
     public function removeStation(Station $station): self
     {
         if ($this->stations->removeElement($station)) {
@@ -318,6 +303,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $station->setOwner(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getVehicle(): ?Vehicle
+    {
+        return $this->vehicle;
+    }
+
+    public function setVehicle(?Vehicle $vehicle): self
+    {
+        $this->vehicle = $vehicle;
 
         return $this;
     }

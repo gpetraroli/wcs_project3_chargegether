@@ -11,8 +11,10 @@ class HomeController extends AbstractController
     #[Route('/', name: 'app_home')]
     public function index(): Response
     {
+        $user = $this->getUser();
         return $this->render('home/index.html.twig', [
             'googleApiKey' => $this->getParameter('google_api_key'),
+            'user' => $user,
         ]);
     }
 }

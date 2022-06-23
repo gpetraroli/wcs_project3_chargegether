@@ -34,4 +34,4 @@ yarn-error.log
 .phpunit.result.cache
 ###< phpunit/phpunit ###
 /public/images/profile_images/
-
+/public/images/profile/

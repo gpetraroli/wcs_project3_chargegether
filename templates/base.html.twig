@@ -1,31 +1,33 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="icon" type="image/png" href="{{ asset('build/images/favicon.png') }}"/>
-    <title>
-        {% block title %}Chargether{% endblock %}
-    </title>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<link rel="icon" type="image/png" href="{{ asset('build/images/favicon.png') }}"/>
+		<title>
+			{% block title %}Chargether
+			{% endblock %}
+		</title>
 
-    {% block stylesheets %}
-        {% block specific_stylesheets %}{% endblock %}
-        {{ encore_entry_link_tags('app') }}
-    {% endblock %}
+		{% block stylesheets %}
+			{% block specific_stylesheets %}{% endblock %}
+			{{ encore_entry_link_tags('app') }}
+		{% endblock %}
 
-    {% block javascripts %}
-        {% block specific_javascript %}{% endblock %}
-        {{ encore_entry_script_tags('app') }}
-    {% endblock %}
-</head>
-<body>
-<div class="container-fluid d-flex flex-column p-0 vh-100">
-    {% block body %}
-    {% endblock %}
+		{% block javascripts %}
+			{% block specific_javascript %}{% endblock %}
+			{{ encore_entry_script_tags('app') }}
+		{% endblock %}
+	</head>
+	<body>
 
-    {% if (app.user) %}
-        {% include 'components/_navbar.html.twig' %}
-    {% endif %}
-</div>
-</body>
+		{% include 'components/_flesh-messages.html.twig' %}
+
+		<div class="container-fluid d-flex flex-column p-0 vh-100">
+			<div style="height: 90vh;"> {% block body %}{% endblock %}</div>
+            <div style="height: 10vh">
+                {% include('components/_navbar.html.twig') %}
+            </div>
+		</div>
+	</body>
 </html>

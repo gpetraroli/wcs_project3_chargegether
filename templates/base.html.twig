@@ -22,6 +22,10 @@
 <div class="container-fluid d-flex flex-column p-0 vh-100">
     {% block body %}
     {% endblock %}
+
+    {% if (app.user) %}
+        {% include 'components/_navbar.html.twig' %}
+    {% endif %}
 </div>
 </body>
 </html>

@@ -80,9 +80,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'owner', targetEntity: Station::class, orphanRemoval: true)]
     private Collection $stations;
 
-    #[ORM\ManyToOne(targetEntity: Vehicle::class)]
-    #[ORM\JoinColumn(nullable: false)]
-    private Vehicle $vehicle;
+    #[ORM\ManyToMany(targetEntity: Vehicle::class)]
+    private $Vehicles;
 
 
 
@@ -92,6 +91,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->updatedAt = clone $this->createdAt;
         $this->stations = new ArrayCollection();
         $this->imageName = null;
+        $this->Vehicles = new ArrayCollection();
     }
 
     public function getId(): int
@@ -307,15 +307,26 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getVehicle(): ?Vehicle
+    /**
+     * @return Collection<int, Vehicle>
+     */
+    public function getVehicles(): Collection
     {
-        return $this->vehicle;
+        return $this->Vehicles;
     }
-
-    public function setVehicle(?Vehicle $vehicle): self
+    public function addVehicle(Vehicle $vehicle): self
     {
-        $this->vehicle = $vehicle;
+        if (!$this->Vehicles->contains($vehicle)) {
+            $this->Vehicles[] = $vehicle;
+        }
 
         return $this;
     }
+    public function removeVehicle(Vehicle $vehicle): self
+    {
+        $this->Vehicles->removeElement($vehicle);
+
+        return $this;
+    }
+
 }

@@ -14,7 +14,6 @@ class HomeController extends AbstractController
         $user = $this->getUser();
         return $this->render('home/index.html.twig', [
             'googleApiKey' => $this->getParameter('google_api_key'),
-            'user' => $user,
         ]);
     }
 }

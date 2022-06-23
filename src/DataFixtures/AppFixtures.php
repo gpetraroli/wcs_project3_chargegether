@@ -38,6 +38,21 @@ class AppFixtures extends Fixture
             $manager->persist($user);
         }
 
+        $user = new User();
+        $user->setUserName("admin");
+        $user->setFirstname("firstname");
+        $user->setLastname("lastname");
+        $user->setGender('M');
+        $user->setBirthDate($faker->dateTimeBetween('-80 years', '-18 years'));
+        $user->setAddress($faker->address);
+        $user->setPhoneNumber($faker->phoneNumber);
+        $user->setCity($faker->city);
+        $user->setZipcode($faker->postcode);
+        $user->setCountry($faker->country);
+        $user->setEmail("admin@admin.fr");
+        $user->setPassword($this->hasher->hashPassword($user, 'password'));
+
+        $manager->persist($user);
         // Vehicules fixtures
         $vehicule = new Vehicle();
         $vehicule->setBrand("Renault");

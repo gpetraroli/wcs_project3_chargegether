@@ -30,7 +30,8 @@ class ProfilController extends AbstractController
     #[Security("is_granted('ROLE_USER')")]
     public function infos(
         Request $request,
-        EntityManagerInterface $manager
+        EntityManagerInterface $manager,
+
     ): Response {
         $form = $this->createForm(ProfileType::class, $this->getUser());
 
@@ -39,6 +40,7 @@ class ProfilController extends AbstractController
             $manager->flush();
 
             $this->addFlash('success', 'Les Informations de votre Compte ont bien été mises à jour.');
+
 
             return $this->redirectToRoute('app_profil_index');
         }

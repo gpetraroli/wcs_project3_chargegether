@@ -40,14 +40,21 @@
 						{{ form_row(form.phoneNumber) }}
 					</fieldset>
 				</div>
+
 				{{ form_row(form.plainPassword, {
             label: 'Password'
         }) }}
 				{{ form_row(form.agreeTerms) }}
 
+	<div class="d-flex justify-content-center">
+			<button type="submit" href="{{ path('app_profil_hote') }}" class="m-4 text-center col-9 d-flex align-items-center justify-content-center rounded-pill bg-primary gap-3">
+            <i class="bi bi-check-circle-fill"></i> Enregistrer
+			</button>
+		</div>
+
 				{{ form_end(form) }}
 			</div>
 		</div>
 	</section>
-    
+
 {% endblock %}

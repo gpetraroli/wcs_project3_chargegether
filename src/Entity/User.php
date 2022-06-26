@@ -81,9 +81,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private Collection $stations;
 
     #[ORM\ManyToMany(targetEntity: Vehicle::class)]
-    private $Vehicles;
-
-
+    private Collection $vehicles;
 
     public function __construct()
     {
@@ -91,7 +89,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->updatedAt = clone $this->createdAt;
         $this->stations = new ArrayCollection();
         $this->imageName = null;
-        $this->Vehicles = new ArrayCollection();
+        $this->vehicles = new ArrayCollection();
     }
 
     public function getId(): int
@@ -303,30 +301,24 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $station->setOwner(null);
             }
         }
-
         return $this;
     }
 
-    /**
-     * @return Collection<int, Vehicle>
-     */
     public function getVehicles(): Collection
     {
-        return $this->Vehicles;
+        return $this->vehicles;
     }
     public function addVehicle(Vehicle $vehicle): self
     {
-        if (!$this->Vehicles->contains($vehicle)) {
-            $this->Vehicles[] = $vehicle;
+        if (!$this->vehicles->contains($vehicle)) {
+            $this->vehicles[] = $vehicle;
         }
-
         return $this;
     }
     public function removeVehicle(Vehicle $vehicle): self
     {
-        $this->Vehicles->removeElement($vehicle);
+        $this->vehicles->removeElement($vehicle);
 
         return $this;
     }
-
 }

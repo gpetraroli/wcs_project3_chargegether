@@ -12,7 +12,7 @@ class HomeController extends AbstractController
     public function index(): Response
     {
 return $this->render('home/index.html.twig', [
-            'googleApiKey' => $this->getParameter('google_api_key'),
-        ]);
+    'googleApiKey' => $this->getParameter('google_api_key'),
+    ]);
     }
 }

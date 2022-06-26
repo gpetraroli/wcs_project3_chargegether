@@ -87,7 +87,7 @@ class Station
         return $this->owner;
     }
 
-    public function setOwner(User|UserInterface $owner): self
+    public function setOwner(null|User|UserInterface $owner): self
     {
         $this->owner = $owner;
 

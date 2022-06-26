@@ -7,8 +7,6 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 use Symfony\Component\Validator\Constraints\IsTrue;
-use Symfony\Component\Validator\Constraints\Length;
-use Symfony\Component\Validator\Constraints\NotNull;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -39,7 +37,7 @@ class RegistrationFormType extends AbstractType
                     new Assert\Email(),
                     new Assert\Length(['min' => 2, 'max' => 255])
                 ],
-                'label' => 'Email',
+                 'label' => 'Email',
             ])
             ->add('lastName', TextType::class, [
                 'constraints' => [
@@ -59,7 +57,7 @@ class RegistrationFormType extends AbstractType
                 'constraints' => [
                     new Assert\Length(['min' => 2, 'max' => 45])
                 ],
-                'label' => 'Pseudo',
+                 'label' => 'Pseudo',
             ])
             ->add('address', TextType::class, [
                 'constraints' => [

@@ -24,7 +24,7 @@ class RegistrationController extends AbstractController
         UserPasswordHasherInterface $userPasswordHasher,
         UsersRepository $usersRepository
     ): Response {
-        if($this->getUser()){
+        if ($this->getUser()) {
             return $this->redirectToRoute('app_profil_index');
         }
 

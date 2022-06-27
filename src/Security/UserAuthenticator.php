@@ -48,12 +48,12 @@ class UserAuthenticator extends AbstractLoginFormAuthenticator
         TokenInterface $token,
         string $firewallName
     ): ?Response {
-        if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
-            return new RedirectResponse($targetPath);
-        }
+        // if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
+            //    return new RedirectResponse($targetPath);
+            // }
 
         // For example:
-        return new RedirectResponse($this->urlGenerator->generate('app_home'));
+        return new RedirectResponse($this->urlGenerator->generate('app_profil_index'));
         //throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
     }
 

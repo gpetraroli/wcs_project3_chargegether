@@ -3,14 +3,25 @@
 {% block title %}Connexion{% endblock %}
 
 {% block body %}
-
+    {# Vidéo background #}
     <video id="background-video" autoplay loop muted>
         <source src="Video/acceuil.mp4" type="video/mp4">
     </video>
 
 	<section class="container my-3">
-        <div class="col-12" style="max-width: 100%;">
-            <img src="images/default_images/logo1.png" alt="">
+        {# logo en haut #}
+        <img style="width: 100%;" src="images/default_images/logo1.png" alt="">
+        {# Petit texte #}
+        <p class="mx-2 my-4 text-center text-white fs-5"> Rejoignez la communauté Chargether</p>
+        {# bouton s'inscrire #}
+        <div class="d-flex justify-content-center">
+            <a href="{{ path('app_register') }}"
+               class="col-9 m-4 d-flex align-items-center justify-content-center text-decoration-none text-center text-secondary
+               rounded-pill bg-white border-4 border-secondary">
+                <h3 class=" fs-5 text-secondary my-2 ">
+                    S'inscrire
+                </h3>
+            </a>
         </div>
 		<div class="row">
 			<div class="col">

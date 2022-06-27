@@ -59,34 +59,4 @@ class ProfilController extends AbstractController
     {
         return $this->render('profil/vehicules.html.twig');
     }
-
-    #[Route('/hote-inscription', name: 'hote_inscription')]
-    public function hoteInscription(Request $request, StationsRepository $stationsRepository): Response
-    {
-        $station = new Station();
-        $station->setOwner($this->getUser());
-
-        $form = $this->createForm(StationType::class, $station);
-
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $stationsRepository->add($station, true);
-
-            $this->addFlash('success', 'hôte correctement ajouté');
-
-            return $this->redirectToRoute('app_profil_hote');
-        }
-
-        return $this->renderForm('profil/hote_inscription.html.twig', [
-            'form' => $form,
-            'plugsType' => PlugType::cases(),
-            'stationPowers' => StationPower::cases(),
-        ]);
-    }
-
-    #[Route('/hote', name: 'hote')]
-    public function hote(): Response
-    {
-        return $this->render('profil/hote.html.twig');
-    }
 }

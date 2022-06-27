@@ -6,6 +6,7 @@ use App\Config\PlugType;
 use App\Config\StationPower;
 use App\Repository\StationsRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: StationsRepository::class)]
 class Station
@@ -18,6 +19,9 @@ class Station
     #[ORM\Column(type: 'string', length: 255)]
     private string $address;
 
+    #[ORM\Column(type: 'json')]
+    private string $coordinates;
+
     #[ORM\Column(type: 'string', length: 45, enumType: PlugType::class)]
     private PlugType $plugType;
 
@@ -29,7 +33,7 @@ class Station
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'stations')]
     #[ORM\JoinColumn(nullable: false)]
-    private User $owner;
+    private UserInterface $owner;
 
     public function getId(): int
     {
@@ -81,15 +85,25 @@ class Station
         $this->description = $description;
     }
 
-    public function getOwner(): ?User
+    public function getOwner(): ?UserInterface
     {
         return $this->owner;
     }
 
-    public function setOwner(?User $owner): self
+    public function setOwner(?UserInterface $owner): self
     {
         $this->owner = $owner;
 
         return $this;
+    }
+
+    public function getCoordinates(): string
+    {
+        return $this->coordinates;
+    }
+
+    public function setCoordinates(string $coordinates): void
+    {
+        $this->coordinates = $coordinates;
     }
 }

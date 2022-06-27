@@ -3,6 +3,32 @@
 {% block title %}Hote - Chargether{% endblock %}
 
 {% block body %}
-HOTE
+    {% if not app.user.stations|length %}
+        <div class="d-flex flex-column align-items-center">
+            <h2>No stations yet</h2>
+            <a class="m-4 text-center col-9 d-flex align-items-center justify-content-center rounded-pill bg-primary gap-3"
+               href="{{ path('app_hote_inscription') }}">
+                <i class="'bi bi-plugin fs-1 fa-2xl text-white"></i>
+                <h3 class="text-white my-2">
+                    DEVENIR HÔTE
+                </h3>
+            </a>
+
+        </div>
+    {% endif %}
+
+    {% for station in app.user.stations %}
+        <div class="card align-items-center bg-secondary text-white mt-3" style="width: 18rem; margin: 0 auto">
+            <div class="card-body d-flex flex-column gap-2">
+                <h5 class="card-title m-0">{{ station.address }}</h5>
+                <p class="card-text m-0">plug type: <strong>{{ station.plugType.name }}</strong></p>
+                <p class="card-text m-0">power: <strong>{{ station.power.value }} KW</strong></p>
+                <div class="d-flex gap-3">
+                    <a href="{{ path('app_hote_edit', {id: station.id}) }}" class="btn btn-primary">edit</a>
+                    <a href="{{ path('app_hotes_delete', {id: station.id}) }}" class="btn btn-primary card-link link-light">delete</a>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
 
 {% endblock %}

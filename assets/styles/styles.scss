@@ -1,6 +1,10 @@
 .selected {
     position: relative;
 
+    img {
+        filter: brightness(0) saturate(100%) invert(27%) sepia(94%) saturate(5966%) hue-rotate(137deg) brightness(95%) contrast(94%);
+    }
+
     i {
         font-size: 5rem;
         position: absolute;

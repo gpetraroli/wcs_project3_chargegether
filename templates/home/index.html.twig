@@ -4,5 +4,19 @@
 {% endblock %}
 
 {% block body %}
-	{% include 'components/_map.html.twig' %}
+<section class="fixed-top mt-5">
+    <div class="w-100 text-center mt-3">
+        <button type="button" class="btn bg-light border border-secondary border-3 rounded-pill">
+            <span class="fw-bolder text-secondary">
+                {% for vehicule in app.user.vehicles %}
+                    {{ vehicule.brand }} {{ vehicule.model }}
+                {% endfor %}
+
+            </span>
+        </button>
+    </div>
+</section>
+
+    {% include 'components/_map.html.twig' %}
+    {% include 'components/_navbar.html.twig' %}
 {% endblock %}

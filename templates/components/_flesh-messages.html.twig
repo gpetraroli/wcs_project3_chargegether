@@ -1,4 +1,4 @@
-<div class="position-absolute top-0 w-100 p-3">
+<div class="position-absolute top-0 w-100 p-3" style="z-index: 1000;">
     {% for category, messages in app.flashes %}
         {% for message in messages %}
             <div class="alert alert-{{ category }}">

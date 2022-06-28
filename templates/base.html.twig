@@ -23,6 +23,8 @@
 
 		{% include 'components/_flesh-messages.html.twig' %}
 
+        {% block modal %}{% endblock %}
+
 		<div class="container-fluid d-flex flex-column p-0 vh-100">
 			<div style="height: 90vh;"> {% block body %}{% endblock %}</div>
             <div style="height: 10vh">

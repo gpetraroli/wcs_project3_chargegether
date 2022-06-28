@@ -54,6 +54,12 @@ class ProfilController extends AbstractController
         return $this->render('profil/edit_password.html.twig');
     }
 
+    #[Route('/vehicules', name: 'vehicules')]
+    public function vehicules(): Response
+    {
+        return $this->render('profil/vehicules.html.twig');
+    }
+
     #[Route('/hote-inscription', name: 'hote_inscription')]
     public function hoteInscription(Request $request, StationsRepository $stationsRepository): Response
     {

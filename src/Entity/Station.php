@@ -33,7 +33,7 @@ class Station
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'stations')]
     #[ORM\JoinColumn(nullable: false)]
-    private UserInterface $owner;
+    private User|UserInterface $owner;
 
     public function getId(): int
     {
@@ -85,12 +85,12 @@ class Station
         $this->description = $description;
     }
 
-    public function getOwner(): ?UserInterface
+    public function getOwner(): null|User|UserInterface
     {
         return $this->owner;
     }
 
-    public function setOwner(?UserInterface $owner): self
+    public function setOwner(null|User|UserInterface $owner): self
     {
         $this->owner = $owner;
 

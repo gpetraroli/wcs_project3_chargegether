@@ -4,6 +4,11 @@
     Home - Chargether
 {% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('map') }}
+{% endblock %}
+
 {% block body %}
 <section class="fixed-top mt-5">
     <div class="w-100 text-center mt-3">
@@ -12,7 +17,6 @@
                 {% for vehicule in app.user.vehicles %}
                     {{ vehicule.brand }} {{ vehicule.model }}
                 {% endfor %}
-
             </span>
         </button>
     </div>

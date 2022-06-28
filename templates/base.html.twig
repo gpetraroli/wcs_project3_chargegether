@@ -10,12 +10,10 @@
 		</title>
 
 		{% block stylesheets %}
-			{% block specific_stylesheets %}{% endblock %}
 			{{ encore_entry_link_tags('app') }}
 		{% endblock %}
 
 		{% block javascripts %}
-			{% block specific_javascript %}{% endblock %}
 			{{ encore_entry_script_tags('app') }}
 		{% endblock %}
 	</head>
@@ -26,7 +24,9 @@
         {% block modal %}{% endblock %}
 
 		<div class="container-fluid d-flex flex-column p-0 vh-100">
-			<div style="height: 90vh;"> {% block body %}{% endblock %}</div>
+			<div style="height: 90vh; overflow: scroll">
+                {% block body %}{% endblock %}
+            </div>
             <div style="height: 10vh">
                 {% include('components/_navbar.html.twig') %}
             </div>

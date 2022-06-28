@@ -1,43 +1,52 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Connexion
-{% endblock %}
+{% block title %}Connexion{% endblock %}
 
 {% block body %}
 
-{# <div class="container mt-5 h-50"> #}
-<div class="row h-100">
-   <div class="col-sm-12 my-auto">
-		<form method="post">
+	{# <div class="container mt-5 h-50"> #}
+	<div class="position-absolute">
+		<div class="overlay"></div>
+		<video playsinline="playsinline" autoplay="autoplay" muted="muted" loop="loop">
+			<source src="https://storage.googleapis.com/coverr-main/mp4/Mt_Baker.mp4" type="video/mp4">
+		</video>
+	</div>
 
-			{% for message in app.flashes('success') %}
-				<div class="alert alert-success mt-4">
-					{{ message }}
+	<div class="row h-100">
+
+		<div class="col-sm-12 my-auto">
+
+			<form method="post">
+
+				{% for message in app.flashes('success') %}
+					<div class="alert alert-success mt-4">
+						{{ message }}
+					</div>
+				{% endfor %}
+
+				{% if error %}
+					<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+				{% endif %}
+
+				<div class='alert alert-success'>
+					<h1 class="h1 mb-3 font-weight-normal">Se connecter</h1>
+
+					<label for="inputEmail">Email</label>
+					<input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
+
+					<label for="inputPassword">Mot de Passe</label>
+					<input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+
+					<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+					<button class="btn btn-lg btn-success mt-3" type="submit">
+						Me Connecter
+					</button>
+					<a class="btn btn-lg btn-primary mt-3" href="{{ path('app_register') }}" role="button">M'Inscrire</a>
 				</div>
-			{% endfor %}
 
-			{% if error %}
-				<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-			{% endif %}
+			</form>
 
-			<div class='alert alert-success'>
-				<h1 class="h1 mb-3 font-weight-normal">Se connecter</h1>
-
-				<label for="inputEmail">Email</label>
-				<input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
-
-				<label for="inputPassword">Mot de Passe</label>
-				<input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
-
-				<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-				<button class="btn btn-lg btn-success mt-3" type="submit">
-					Me Connecter
-				</button>
-				<a class="btn btn-lg btn-primary mt-3" href="{{ path('app_register') }}" role="button">M'Inscrire</a>
-			</div>
-		</form>
-	{# </div> #}
-    </div>
-    </div>
-
+			{# </div> #}
+		</div>
+	</div>
 {% endblock %}

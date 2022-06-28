@@ -32,6 +32,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string', length: 500)]
     private string $password;
 
+    private ?string $plainPassword;
+
     #[ORM\Column(type: 'json')]
     private array $roles = [];
 
@@ -83,6 +85,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\ManyToMany(targetEntity: Vehicle::class)]
     private Collection $vehicles;
 
+
+
     public function __construct()
     {
         $this->createdAt = new DateTime();
@@ -110,6 +114,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->userName = $userName;
     }
 
+    public function getPlainPassword(): string
+    {
+        return $this->plainPassword;
+    }
+
+    public function setPlainPassword(string $plainPassword): self
+    {
+        $this->plainPassword = $plainPassword;
+
+        return $this;
+    }
 
     public function getPassword(): string
     {

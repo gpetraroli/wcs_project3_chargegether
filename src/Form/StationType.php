@@ -21,27 +21,23 @@ class StationType extends AbstractType
     {
         $builder
             ->add('address', TextType::class, [
-                'required' => true,
+                'constraints' => [new Assert\NotBlank()],
+            ])
+            ->add('coordinates', TextType::class, [
                 'constraints' => [new Assert\NotBlank()],
             ])
             ->add('plugType', EnumType::class, [
                 'class' => PlugType::class,
-                'required' => true,
                 'constraints' => [new Assert\NotBlank()],
             ])
             ->add('power', EnumType::class, [
                 'class' => StationPower::class,
-                'required' => true,
                 'constraints' => [new Assert\NotBlank()],
             ])
             ->add('description', TextareaType::class, [
-                'required' => true,
                 'constraints' => [new Assert\NotBlank()],
             ])
-            ->add('enregistrer', SubmitType::class, [
-                'required' => true,
-                'constraints' => [new Assert\NotBlank()],
-            ]);
+            ->add('enregistrer', SubmitType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

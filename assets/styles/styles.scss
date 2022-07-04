@@ -1,6 +1,10 @@
 .selected {
     position: relative;
 
+    img {
+        filter: brightness(0) saturate(100%) invert(27%) sepia(94%) saturate(5966%) hue-rotate(137deg) brightness(95%) contrast(94%);
+    }
+
     i {
         font-size: 5rem;
         position: absolute;
@@ -10,6 +14,20 @@
     }
 }
 
+<<<<<<< HEAD
 
 
+=======
+#background-video {
+    height: 100vh;
+    width: 100vw;
+    object-fit: cover;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: -1;
+}
+>>>>>>> 4dc3bc8362318f3fbb9d986c8cf03656899cdb38
 

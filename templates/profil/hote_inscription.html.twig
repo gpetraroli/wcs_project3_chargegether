@@ -4,6 +4,7 @@
 
 {% block specific_javascript %}
     <script defer src="{{ asset('assets/js/station.js') }}"></script>
+    <script defer src="{{ asset('assets/js/geocoding.js') }}"></script>
 {% endblock %}
 
 {% block body %}
@@ -11,37 +12,35 @@
         <h1 class="p-3 bg-primary text-white text-center fs-5">Informations de l'hôte</h1>
         <h2 class="text-center text-secondary border-3 border-secondary border-bottom m-3 pb-3">TYPE DE CONNECTEUR</h2>
         <div class="d-flex flex-wrap">
-            <div class="plug-type-item selected col-6 text-center mb-3" data-plug-type={{ plugsType[0].value }}>
+            <div class="plug-type-item col-6 text-center mb-3 {{ form.vars.value.plugType.value == 'domestic' ? 'selected' : ''}}" data-plug-type={{ plugsType[0].value }}>
                 <img src="{{ asset('images/stations/plugs/domestique.png') }}">
             </div>
-            <div class="plug-type-item col-6 text-center mb-3" data-plug-type={{ plugsType[1].value }}>
+            <div class="plug-type-item col-6 text-center mb-3 {{ form.vars.value.plugType.value == 'type1' ? 'selected' : '' }}" data-plug-type={{ plugsType[1].value }}>
                 <img src="{{ asset('images/stations/plugs/type1.png') }}">
             </div>
-            <div class="plug-type-item col-6 text-center mb-3" data-plug-type={{ plugsType[2].value }}>
+            <div class="plug-type-item col-6 text-center mb-3 {{ form.vars.value.plugType.value == 'type3c' ? 'selected' : ''}}" data-plug-type={{ plugsType[3].value }}>
                 <img src="{{ asset('images/stations/plugs/type3.png') }}">
             </div>
-            <div class="plug-type-item col-6 text-center mb-3" data-plug-type={{ plugsType[3].value }}>
+            <div class="plug-type-item col-6 text-center mb-3 {{ form.vars.value.plugType.value == 'type2' ? 'selected' : ''}}" data-plug-type={{ plugsType[2].value }}>
                 <img src="{{ asset('images/stations/plugs/type2.png') }}">
             </div>
-            <div class="plug-type-item col-6 text-center mb-3" data-plug-type={{ plugsType[4].value }}>
+            <div class="plug-type-item col-6 text-center mb-3 {{ form.vars.value.plugType.value == 'type2attached' ? 'selected' : ''}}" data-plug-type={{ plugsType[4].value }}>
                 <img src="{{ asset('images/stations/plugs/type2atache.png') }}">
-            </div>
-            <div class="plug-type-item col-6 text-center mb-3" data-plug-type={{ plugsType[5].value }}>
-                <img src="{{ asset('images/stations/plugs/combo-css.png') }}">
             </div>
         </div>
 
         <h2 class="text-center text-secondary border-3 border-secondary border-bottom m-3 pb-3">PUISSANCE DE CHARGE</h2>
         <div class="d-flex flex-wrap">
-            <div class="station-power-item col-6 text-center mb-3" data-station-power={{ stationPowers[0].value }}>
+            <div class="station-power-item col-6 text-center mb-3 {{ form.vars.value.power.value == '3' ? 'selected' : ''}}" data-station-power={{ stationPowers[0].value }}>
                 <img src="{{ asset('images/stations/power/borne3kw.png') }}">
             </div>
-            <div class="station-power-item col-6 text-center mb-3" data-station-power={{ stationPowers[1].value }}>
+            <div class="station-power-item col-6 text-center mb-3 {{ form.vars.value.power.value == '7' ? 'selected' : ''}}" data-station-power={{ stationPowers[1].value }}>
                 <img src="{{ asset('images/stations/power/borne7kw.png') }}">
             </div>
-            <div class="station-power-item col-6 text-center mb-3" data-station-power={{ stationPowers[2].value }}>
+            <div class="station-power-item col-6 text-center mb-3 {{ form.vars.value.power.value == '11' ? 'selected' : ''}}" data-station-power={{ stationPowers[2].value }}>
                 <img src="{{ asset('images/stations/power/borne18kw.png') }}">
             </div>
+<<<<<<< HEAD
             <div class="station-power-item col-6 text-center mb-3" data-station-power={{ stationPowers[3].value }}>
                 <img src="{{ asset('images/stations/power/borne43kw.png') }}">
             </div>
@@ -52,7 +51,9 @@
                 <img src="{{ asset('images/stations/power/borne350kw.png') }}">
             </div>
         </div>
-        
+
+=======
+>>>>>>> 4dc3bc8362318f3fbb9d986c8cf03656899cdb38
         <div class="px-3">
             {{ form_start(form) }}
             <div class="d-none">
@@ -61,7 +62,9 @@
             <div class="d-none">
                 {{ form_row(form.power) }}
             </div>
-
+            <div class="d-none">
+                {{ form_row(form.coordinates) }}
+            </div>
             {{ form_end(form) }}
         </div>
     </div>

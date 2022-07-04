@@ -1,5 +1,6 @@
 /*global google*/
 import {Loader} from "@googlemaps/js-api-loader"
+import {mark} from "regenerator-runtime";
 
 const googleApiKey = document.querySelector('#map').dataset.google_api_key;
 const loader = new Loader({
@@ -28,6 +29,7 @@ function renderMap()
     map.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(locationButton);
 
     setCurrentPosition();
+    renderStations();
 }// renderMap
 
 function setCurrentPosition()
@@ -49,6 +51,19 @@ function setCurrentPosition()
     } else {
         handleLocationError();
     }
+}
+
+function renderStations() {
+    fetch('/api/hotes')
+        .then(data => data.json())
+        .then(stations => {
+            stations.forEach(station => {
+                new google.maps.Marker({
+                    position: station,
+                    map: map,
+                });
+            });
+        });
 }
 
 function handleLocationError(browserHasGeolocation, infoWindow, pos)

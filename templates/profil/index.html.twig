@@ -4,7 +4,7 @@
 {% endblock %}
 
 {% block specific_javascript %}
-	<script src="https://kit.fontawesome.com/47e5d2715e.js" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/47e5d2715e.js" crossorigin="anonymous"></script>
 {% endblock %}
 
 {% block body %}
@@ -19,27 +19,42 @@
         <div class="d-flex flex-column">
 
             <img
+<<<<<<< HEAD
+                {% if user.imageName is not null %}
+                    src="/images/profile_images/{{ user.imageName }}"
+                {% else %}
+                    src="/images/default_images/default_Users_Profile.png"
+                {% endif %}
+=======
             {% if user.imageName is not null %}
                 src="/images/profile_images/{{ user.imageName }}"
             {% else %}
                 src="/images/default_images/default_Users_Profile.png"
             {% endif %}
+
                      alt="Image de profil" class="bd-placeholder-img rounded-circle border border-2 border-info" width="100" height="100" style="object-fit: cover">
 				<a href="#" class="text-decoration-none text-info">
 					<small>
 						Changer de photo</small>
 				</a>
 			</div>
+>>>>>>> dd4ea769b60d9d50e52c5b062f0468e202e8c11f
 
-			<h1 class="ms-5">
-				{{ user.firstName ~ ' ' ~ user.lastName }}
-			</h1>
-		</div>
+                alt="Image de profil de Michel" class="bd-placeholder-img rounded-circle border border-2 border-info" width="100" height="100" style="object-fit: cover">
+            <a href="#" class="text-decoration-none text-info link-secondary">
+                <small>
+                    Changer de photo</small>
+            </a>
+        </div>
 
-		<hr class="mx-3">
+        <h1 class="ms-5 text-secondary">
+            {{ user.firstName ~ ' ' ~ user.lastName }}
+        </h1>
+    </div>
 
 		<div class="d-flex flex-column gap-4">
 
+<<<<<<< HEAD
 			<div class="d-flex align-items-center">
 				<i class="fa-solid fa-user fa-2xl col-3 text-center"></i>
 				<a class="col-9 text-center text-dark text-decoration-none" href="{{ path('app_profil_infos') }}">
@@ -59,33 +74,39 @@
 				</a>
 			</div>
 		</div>
+=======
+    <div class="d-flex flex-column gap-4 text-secondary">
+>>>>>>> 4dc3bc8362318f3fbb9d986c8cf03656899cdb38
 
-		<div class="d-flex justify-content-center">
-			<a
-				class="m-4 text-center col-9 d-flex align-items-center justify-content-center rounded-pill bg-primary
-					            gap-3" href="{{ path('app_profil_hote_inscription') }}">
-				{#            <div class="m-4 text-center col-9 d-flex align-items-center justify-content-center rounded-pill bg-primary gap-3">#}
-				<i class="fa-solid fa-car-rear fa-2xl text-white"></i>
-				<h3 class="text-white my-2">
-					DEVENIR HÔTE
-				</h3>
-				{#            </div>#}
-			</a>
-		</div>
+        <div class="d-flex align-items-center">
+            <i class="fa-solid fa-user fa-2xl col-3 text-center"></i>
+            <a class="col-9 text-center text-decoration-none link-secondary" href="{{ path('app_profil_infos') }}">
+                <h4>Informations personnelles</h4>
+            </a>
+        </div>
+        <div class="d-flex align-items-center">
+            <i class="fa-solid fa-key fa-2xl  col-3 text-center"></i>
+            <a class="col-9 text-center link-secondary text-decoration-none" href="#">
+                <h4>Mot De Passe</h4>
+            </a>
+        </div>
+        <div class="d-flex align-items-center">
+            <i class="fa-solid fa-car-rear fa-2xl  col-3 text-center"></i>
+            <a class="col-9 text-center link-secondary text-decoration-none" href="{{ path('app_profil_vehicules') }}">
+                <h4>Véhicules</h4>
+            </a>
+        </div>
+    </div>
 
-		<div class="d-flex justify-content-center">
-			<a href="{{ path('app_profil_hote') }}" class="m-4 text-center col-9 d-flex align-items-center justify-content-center
-					            rounded-pill
-					            bg-primary
-					            gap-3">
-				<i class="bi bi-plugin text-white fs-1"></i>
-				<h3 class="text-white my-2 ">
-					Ma borne
-				</h3>
-			</a>
-		</div>
-
-		<hr class="mx-3">
+    <div class="d-flex justify-content-center">
+        <a class="m-4 text-center col-9 d-flex align-items-center justify-content-center rounded-pill bg-primary gap-3"
+           href="{{ app.user.stations|length ? path('app_hotes') : path('app_hote_inscription') }}">
+            <i class="{{ app.user.stations|length ? 'bi bi-plugin fs-1' : 'fa-solid fa-car-rear fa-2xl'}} fa-2xl text-white"></i>
+            <h3 class="text-white my-2">
+                {{ app.user.stations|length ? 'MA BORNE' : 'DEVENIR HÔTE' }}
+            </h3>
+        </a>
+    </div>
 
 		<div class="d-flex justify-content-center align-items-center gap-3">
 
@@ -96,12 +117,11 @@
 				</a>
 			</div>
 
-			<div class="d-flex align-items-center gap-2">
-				<i class="fa-solid fa-square-share-nodes"></i>
-				<h5 class="text-center m-0">Partagez</h5>
-			</div>
-
-		</div>
+        <div class="d-flex align-items-center gap-2 text-secondary">
+            <i class="fa-solid fa-square-share-nodes"></i>
+            <h5 class="text-center m-0 text-secondary">Partagez</h5>
+        </div>
+        </div>
 
 		<hr class="mx-3">
 
@@ -117,6 +137,25 @@
                     <i class="bi bi-twitter fs-1"></i>
                 </a>
             </div>
-        <a href="{{ path('app_logout') }}" class="text-center text-danger text-decoration-none"> se deconnecter </a>
+    <div class="d-flex justify-content-center">
+        <a href="{{ path('app_logout') }}" class="text-center text-danger text-decoration-none mb-5 pb-5"> se
+            deconnecter
+        </a>
+    </div>
 
+    <div class="mb-2 pb-2"></div>
+    <div class="mb-3 pb-3">²</div>
+
+    <p class="text-center"> Suivez Chargether sur les réseaux sociaux </p>
+    <div class="d-flex justify-content-center gap-5 mb-3">
+        <a href="#" class="text-secondary">
+            <i class="bi bi-instagram fs-1"></i>
+        </a>
+        <a href="#" class="text-secondary">
+            <i class="bi bi-facebook fs-1"></i>
+        </a>
+        <a href="#" class="text-secondary">
+            <i class="bi bi-twitter fs-1"></i>
+        </a>
+    </div>
 {% endblock %}

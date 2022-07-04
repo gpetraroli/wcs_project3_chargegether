@@ -19,6 +19,9 @@ class Station
     #[ORM\Column(type: 'string', length: 255)]
     private string $address;
 
+    #[ORM\Column(type: 'json')]
+    private string $coordinates;
+
     #[ORM\Column(type: 'string', length: 45, enumType: PlugType::class)]
     private PlugType $plugType;
 
@@ -92,5 +95,15 @@ class Station
         $this->owner = $owner;
 
         return $this;
+    }
+
+    public function getCoordinates(): string
+    {
+        return $this->coordinates;
+    }
+
+    public function setCoordinates(string $coordinates): void
+    {
+        $this->coordinates = $coordinates;
     }
 }

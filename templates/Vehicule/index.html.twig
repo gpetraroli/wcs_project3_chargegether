@@ -9,6 +9,7 @@
             Véhicule
         </h1>
     </header>
+    {% if app.user.vehicles.count < 2 %}
     <div class="d-flex justify-content-center">
         <a
             class="m-4 text-center col-6 d-flex align-items-center justify-content-center rounded-pill bg-primary
@@ -20,6 +21,7 @@
             <i class="bi bi-plugin text-white"></i>
         </a>
     </div>
+    {% endif %}
     <p class="text-center">2 maximum</p>
 
     <hr class="mx-3">

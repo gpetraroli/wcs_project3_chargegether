@@ -3,41 +3,136 @@
 {% block title %}Connexion{% endblock %}
 
 {% block body %}
+    {# Vidéo background #}
+    <video id="background-video" autoplay loop muted>
+        <source src="Video/acceuil.mp4" type="video/mp4">
+    </video>
 
-	<section class="container my-3">
+	<section class="container gap-3 d-flex flex-column justify-content-center mb-5 pb-5">
+        {# logo en haut #}
+        <img style="width: 100%;" src="images/default_images/logo1.png" alt="">
+        {# Petit texte #}
+        <p class="mx-2 text-center text-white fs-5"> Rejoignez la communauté Chargether</p>
+        {# bouton s'inscrire #}
+        <div class="d-flex justify-content-center">
+            <a href="{{ path('app_register') }}"
+               class="col-7 d-flex align-items-center justify-content-center text-decoration-none text-center
+               text-secondary
+               rounded-pill bg-white border-4 border-secondary">
+                <h3 class=" fs-5 text-secondary my-2 ">
+                    S'inscrire
+                </h3>
+            </a>
+        </div>
+        {# bouton facebook #}
+        <div class="d-flex justify-content-center">
+            <a
+                class=" col-10 text-center text-decoration-none d-flex align-items-center justify-content-center
+                bg-secondary
+                            gap-2"
+                href="#">
+                {#            <div class="m-4 text-center col-9 d-flex align-items-center justify-content-center rounded-pill bg-primary gap-3">#}
+                <i class=" col-2  bi bi-facebook text-white ms-2"></i>
+                <h3 class=" fs-6 text-white my-2 me-2 ">
+                    CONNEXION AVEC FACEBOOK
+                </h3>
+            </a>
+        </div>
+        {# bouton google #}
+        <div class="d-flex justify-content-center">
+            <a
+                class="col-10 text-center text-decoration-none d-flex align-items-center justify-content-center
+                bg-secondary
+                            gap-2"
+                href="#">
+                {#            <div class="m-4 text-center col-9 d-flex align-items-center justify-content-center rounded-pill bg-primary gap-3">#}
+                <i class=" col-2 bi bi-google text-white ms-2"></i>
+                <h3 class=" fs-6 text-white my-2 me-2 ">
+                    CONNEXION AVEC GOOGLE
+                </h3>
+            </a>
+        </div>
+        {# bouton apple #}
+        <div class="d-flex justify-content-center">
+            <a
+                class="col-10 text-center text-decoration-none d-flex align-items-center justify-content-center
+                bg-secondary gap-2"
+                href="#">
+                {#            <div class="m-4 text-center col-9 d-flex align-items-center justify-content-center rounded-pill bg-primary gap-3">#}
+                <i class="col-2 bi bi-apple text-white ms-2"></i>
+                <h3 class="fs-6 text-white my-2 me-2">
+                    CONNEXION AVEC APPLE
+                </h3>
+            </a>
+        </div>
+
+        {# formulaire inscription #}
 		<div class="row">
 			<div class="col">
-
 				<form method="post">
-
-					{% for message in app.flashes('success') %}
-						<div class="alert alert-success mt-4">
-							{{ message }}
-						</div>
-					{% endfor %}
-
 					{% if error %}
 						<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
 					{% endif %}
 
-					<div class='alert alert-success'>
-						<h1 class="h1 mb-3 font-weight-normal">Se connecter</h1>
+                    <div class="d-flex justify-content-center">
+                        <div class="col-10 text-center">
+                            <label for="inputEmail" ></label>
+                            <input type="email"
+                                   name="email" id="inputEmail"
+                                   class="form-control text-center fs-6 text-dark my-2 me-2"
+                                   autocomplete="email"
+                                   placeholder="EMAIL"
+                                   required autofocus>
+                        </div>
+                    </div>
 
-						<label for="inputEmail">Email</label>
-						<input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
+                    <div class="d-flex justify-content-center">
+                        <div class="col-10 text-center">
+                            <label for="inputPassword"></label>
+                            <input type="password"
+                                   name="password"
+                                   id="inputPassword"
+                                   class="form-control text-center fs-6 text-dark my-2 me-2"
+                                   autocomplete="current-password"
+                                   placeholder="MOT DE PASSE"
+                                   required>
 
-						<label for="inputPassword">Mot de Passe</label>
-						<input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+                        </div>
+                    </div>
 
+                    <div class="d-flex justify-content-center">
+                        <div class="col-10 text-center">
+
+                            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                            <button class=" fs-6 btn btn-lg btn-secondary col-12 mt-3" type="submit">
+                                SE CONNECTER
+                            </button>
+
+                        </div>
+                    </div>
+
+<<<<<<< HEAD
 						<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 						<button class="btn btn-lg btn-primary mt-3" type="submit">
 							Me Connecter
 						</button>
                       <a class="btn btn-lg btn-primary mt-3" href="{{ path('app_register') }}" role="button">M'Inscrire</a>
 					</div>
+=======
+>>>>>>> cdadad602d5cd38a2dd6cd604a04c08a6fadf5c6
 				</form>
+
 			</div>
 		</div>
-	</section>
+
+        {# Mot de passe oublié #}
+        <p class="mx-2 mb-0 text-center text-white fs-5"> Mot de passe oublié</p>
+        <div class="d-flex justify-content-center">
+            <img class="text-center" src="images/default_images/RGPD.png" alt="" style="width: 30px">
+        </div>
+
+        <p class="mx-2 text-center text-white">© CHARGETHER 2022 - V0.00</p>
+
+    </section>
 
 {% endblock %}

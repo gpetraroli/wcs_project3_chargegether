@@ -39,6 +39,7 @@ class RegistrationFormType extends AbstractType
                 ],
                  'label' => 'Email',
             ])
+
             ->add('lastName', TextType::class, [
                 'constraints' => [
                     new Assert\NotBlank(),
@@ -46,6 +47,7 @@ class RegistrationFormType extends AbstractType
                 ],
                 'label' => 'Nom',
             ])
+
             ->add('firstName', TextType::class, [
                 'constraints' => [
                     new Assert\NotBlank(),
@@ -53,12 +55,14 @@ class RegistrationFormType extends AbstractType
                 ],
                 'label' => 'Prénom',
             ])
+
             ->add('userName', TextType::class, [
                 'constraints' => [
                     new Assert\Length(['min' => 2, 'max' => 45])
                 ],
                  'label' => 'Pseudo',
             ])
+
             ->add('address', TextType::class, [
                 'constraints' => [
                     new Assert\NotBlank(),
@@ -66,6 +70,7 @@ class RegistrationFormType extends AbstractType
                 ],
                 'label' => 'Adresse',
             ])
+
             ->add('birthDate', DateType::class, [
                 'label' => 'Date de Naissance',
                 'widget' => 'single_text',
@@ -81,6 +86,7 @@ class RegistrationFormType extends AbstractType
                 ],
                 'label' => 'Ville',
             ])
+
             ->add('zipcode', TextType::class, [
                 'constraints' => [
                     new Assert\NotBlank(),
@@ -88,6 +94,7 @@ class RegistrationFormType extends AbstractType
                 ],
                 'label' => 'Code Postal'
             ])
+
             ->add('country', CountryType::class, [
                 'constraints' => [
                     new Assert\NotBlank(),
@@ -95,6 +102,7 @@ class RegistrationFormType extends AbstractType
                 ],
                 'label' => 'Pays',
             ])
+
             ->add('gender', ChoiceType::class, [
                 'choices'  => [
                     'Un Homme' => true,
@@ -103,6 +111,7 @@ class RegistrationFormType extends AbstractType
                 ],
                 'label' => 'Je suis...',
             ])
+
             ->add('phoneNumber', TextType::class, [
                 'constraints' => [
                     new Assert\NotBlank(),
@@ -110,12 +119,14 @@ class RegistrationFormType extends AbstractType
                 ],
                 'label' => 'Téléphone',
             ])
+
             ->add('imageFile', VichImageType::class, [
                 'label' => 'Photo de Profile',
                 'label_attr' => [
                     'class' => 'form-label my-3',
                 ]
             ])
+
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
                 'constraints' => [
@@ -125,6 +136,7 @@ class RegistrationFormType extends AbstractType
                 ],
                 'label' => 'En m\'inscrivant sur ce site j\'accepte les conditions...'
             ])
+
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'mapped' => false,
@@ -145,6 +157,7 @@ class RegistrationFormType extends AbstractType
                 ],
                 'invalid_message' => 'Les mots de passe ne correspondent pas.'
             ])
+
             ->add('submit', SubmitType::class, [
                 'attr' => [
                     'class' => 'btn btn-success btn-lg my-3'
@@ -152,6 +165,7 @@ class RegistrationFormType extends AbstractType
                 'label' => 'M\'Inscrire',
             ]);
     }
+
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

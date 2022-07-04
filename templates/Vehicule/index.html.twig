@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Véhicules - Chargether{% endblock %}
+
+{% block body %}
+
+    <header class="bg-primary d-flex justify-content-center">
+        <h1 class="text-white my-3">
+            Véhicule
+        </h1>
+    </header>
+    <div class="d-flex justify-content-center">
+        <a
+            class="m-4 text-center col-6 d-flex align-items-center justify-content-center rounded-pill bg-primary
+					            gap-3" href="{{ path('vehicle_add') }}">
+            <i class="bi bi-plus-circle text-white"></i>
+            <h3 class="text-white fs-6 my-2">
+                Ajouter
+            </h3>
+            <i class="bi bi-plugin text-white"></i>
+        </a>
+    </div>
+    <p class="text-center">2 maximum</p>
+
+    <hr class="mx-3">
+
+    <h3 class="text-secondary mx-3">Votre véhicule</h3>
+
+    <div style="background: lightblue">
+        {% for vehicle in app.user.vehicles %}
+            <div class="mx-5 d-flex flex-column ">
+                <h2 class="d-flex justify-content-center text-secondary">
+                    {{ vehicle.brand }} {{ vehicle.model }}
+                </h2>
+            </div>
+
+            <div class="mx-3 d-flex justify-content-between">
+                <h6 class="text-secondary">Marque</h6>
+                <h6 class="text-primary">{{ vehicle.brand }}</h6>
+            </div>
+
+            <div class="mx-3 d-flex justify-content-between">
+                <h6 class="text-secondary">Modèle</h6>
+                <h6 class="text-primary">{{ vehicle.model }}</h6>
+            </div>
+
+            <div class="mx-3 d-flex justify-content-between">
+                <h6 class="text-secondary">Capacité batterie </h6>
+                <h6 class="text-primary">{{ vehicle.batteryCapacity }} . kWh</h6>
+            </div>
+
+            <div class="mx-3 d-flex justify-content-between">
+                <h6 class="text-secondary">Type de prise</h6>
+                <h6 class="text-primary">{{ vehicle.plugType }}</h6>
+            </div>
+
+            <div class="mx-3 d-flex justify-content-between">
+                <h6 class="text-secondary">Puissance de batterie</h6>
+                <h6 class="text-primary">{{ vehicle.batteryPower }} . kWh</h6>
+            </div>
+
+
+
+        {% endfor %}
+
+    </div>
+
+
+
+{% endblock %}

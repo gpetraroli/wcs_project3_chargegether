@@ -110,7 +110,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->userName = $userName;
     }
 
-
     public function getPassword(): string
     {
         return $this->password;
@@ -278,7 +277,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-
 
     public function getStations(): Collection
     {

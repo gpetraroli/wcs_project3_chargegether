@@ -2,12 +2,7 @@
 
 namespace App\Controller;
 
-use App\Config\PlugType;
-use App\Config\StationPower;
-use App\Entity\Station;
 use App\Form\ProfileType;
-use App\Form\StationType;
-use App\Repository\StationsRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

@@ -14,7 +14,6 @@
     <div class="w-100 text-center mt-3">
         <button type="button" class="btn bg-light border border-secondary border-3 rounded-pill">
             <span class="fw-bolder text-secondary">
-            
                 {% for vehicule in app.user.vehicles %}
                     {{ vehicule.brand }} {{ vehicule.model }}
                 {% endfor %}
@@ -23,6 +22,7 @@
     </div>
 </section>
 
+{#    {% include 'components/_station-info.html.twig' %}#}
     {% include 'components/_map.html.twig' %}
-    {% include 'components/_navbar.html.twig' %}
+    <div id="station-info" class="d-none station-info position-absolute bottom-0 bg-white w-100 d-flex flex-column gap-4 p-3 pt-4 align-items-center"></div>
 {% endblock %}

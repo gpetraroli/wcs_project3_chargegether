@@ -1,5 +1,6 @@
 /*global google*/
-import {Loader} from "@googlemaps/js-api-loader"
+import {Loader} from "@googlemaps/js-api-loader";
+import {renderStationInfo, dismissStationInfo} from './station-info-widget';
 
 const googleApiKey = document.querySelector('#map').dataset.google_api_key;
 const loader = new Loader({
@@ -52,14 +53,19 @@ function setCurrentPosition()
     }
 }
 
-function renderStations() {
+function renderStations()
+{
     fetch('/api/hotes')
         .then(data => data.json())
         .then(stations => {
             stations.forEach(station => {
-                new google.maps.Marker({
+                let marker = new google.maps.Marker({
                     position: station,
+                    icon: "/images/pin.png",
                     map: map,
+                });
+                marker.addListener("click", () => {
+                    renderStationInfo(station);
                 });
             });
         });

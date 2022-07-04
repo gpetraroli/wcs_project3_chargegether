@@ -66,8 +66,12 @@ class StationController extends AbstractController
         foreach ($stations as $station) {
             $coords = explode(',', $station->getCoordinates());
             $stationsData[] = [
+                'id' => $station->getId(),
+                'type' => $station->getPlugType(),
+                'power' => $station->getPower(),
                 'lat' => floatval($coords[0]),
                 'lng' => floatval($coords[1]),
+                'owner' => $station->getOwner()->getUserName(),
             ];
         }
         return $this->json($stationsData);

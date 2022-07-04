@@ -2,10 +2,10 @@
 
 namespace App\Controller;
 
+use App\Form\ProfileType;
 use App\Entity\User;
 use App\Entity\Station;
 use App\Config\PlugType;
-use App\Form\ProfileType;
 use App\Form\StationType;
 use App\Config\StationPower;
 use App\Form\UserPasswordType;

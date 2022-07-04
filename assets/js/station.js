@@ -24,3 +24,20 @@ powerEls.forEach(power => {
         powerSel.value = power.dataset.stationPower;
     })
 });
+
+(function init()
+{
+    plugEls.forEach(plug => {
+        plug.classList.remove('selected');
+        if (plug.dataset.plugType === plugTypeSel.value) {
+            plug.classList.add('selected');
+        }
+    });
+
+    powerEls.forEach(power => {
+        power.classList.remove('selected');
+        if (power.dataset.stationPower === powerSel.value) {
+            power.classList.add('selected');
+        }
+    });
+})();

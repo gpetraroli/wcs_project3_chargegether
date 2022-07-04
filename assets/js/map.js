@@ -1,6 +1,5 @@
 /*global google*/
 import {Loader} from "@googlemaps/js-api-loader"
-import {mark} from "regenerator-runtime";
 
 const googleApiKey = document.querySelector('#map').dataset.google_api_key;
 const loader = new Loader({

@@ -27,6 +27,7 @@ class VehiculeController extends AbstractController
     #[Route('/add/vehicles', name: 'vehicle_add')]
     public function addVehicles(): Response
     {
+
         return $this->render('Vehicule/add.html.twig');
     }
 }

@@ -19,13 +19,6 @@
         <div class="d-flex flex-column">
 
             <img
-<<<<<<< HEAD
-                {% if user.imageName is not null %}
-                    src="/images/profile_images/{{ user.imageName }}"
-                {% else %}
-                    src="/images/default_images/default_Users_Profile.png"
-                {% endif %}
-=======
             {% if user.imageName is not null %}
                 src="/images/profile_images/{{ user.imageName }}"
             {% else %}
@@ -38,7 +31,6 @@
 						Changer de photo</small>
 				</a>
 			</div>
->>>>>>> dd4ea769b60d9d50e52c5b062f0468e202e8c11f
 
                 alt="Image de profil de Michel" class="bd-placeholder-img rounded-circle border border-2 border-info" width="100" height="100" style="object-fit: cover">
             <a href="#" class="text-decoration-none text-info link-secondary">
@@ -54,7 +46,25 @@
 
 		<div class="d-flex flex-column gap-4">
 
-    <div class="d-flex flex-column gap-4 text-secondary">
+			<div class="d-flex align-items-center">
+				<i class="fa-solid fa-user fa-2xl col-3 text-center"></i>
+				<a class="col-9 text-center text-dark text-decoration-none" href="{{ path('app_profil_infos') }}">
+					<h4>Informations personnelles</h4>
+				</a>
+			</div>
+			<div class="d-flex align-items-center">
+				<i class="fa-solid fa-key fa-2xl  col-3 text-center"></i>
+				<a class="col-9 text-center text-dark text-decoration-none" href="{{ path('app_profil_edit_password') }}">
+					<h4>Mot De Passe</h4>
+				</a>
+			</div>
+			<div class="d-flex align-items-center">
+				<i class="fa-solid fa-car-rear fa-2xl  col-3 text-center"></i>
+				<a class="col-9 text-center text-dark text-decoration-none" href="{{ path('app_profil_vehicules') }}">
+					<h4>Véhicules</h4>
+				</a>
+			</div>
+		</div>
 
         <div class="d-flex align-items-center">
             <i class="fa-solid fa-user fa-2xl col-3 text-center"></i>

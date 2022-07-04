@@ -9,6 +9,7 @@
     <div class="w-100 text-center mt-3">
         <button type="button" class="btn bg-light border border-secondary border-3 rounded-pill">
             <span class="fw-bolder text-secondary">
+            
                 {% for vehicule in app.user.vehicles %}
                     {{ vehicule.brand }} {{ vehicule.model }}
                 {% endfor %}

@@ -88,7 +88,6 @@ class StationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
             $this->addFlash('success', 'hôte correctement modifiè');
-            $this->addFlash('danger', 'hôte correctement modifiè');
             return $this->redirectToRoute('app_hotes');
         }
 

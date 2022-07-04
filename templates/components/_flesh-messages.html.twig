@@ -1,7 +1,7 @@
 <div id='flesh-messages-container' class="position-absolute top-0 w-100 p-3" style="z-index: 1000;">
     {% for category, messages in app.flashes %}
         {% for message in messages %}
-            <div class="flesh-message alert alert-{{ category }}">
+            <div class="alert alert-{{ category }}">
                 {{ message }}
             </div>
         {% endfor %}

@@ -25,3 +25,11 @@
     bottom: 0;
     z-index: -1;
 }
+
+.station-info {
+    z-index: 1000;
+    border-top-right-radius: 50px;
+    border-top-left-radius: 50px;
+    border: 2px solid $secondary;
+    border-bottom: 0;
+}

@@ -2,10 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\Vehicle;
 use App\Repository\VehiclesRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use function Symfony\Component\Translation\t;
 
 class VehiculeController extends AbstractController
 {
@@ -24,10 +27,30 @@ class VehiculeController extends AbstractController
         ]);
     }
 
-    #[Route('/add/vehicles', name: 'vehicle_add')]
-    public function addVehicles(): Response
+    #[Route('/add/vehicles/{id}', name: 'vehicle_add')]
+    public function addVehicles(Vehicle $vehicle, EntityManagerInterface $entityManager): Response
     {
+        $user = $this->getUser();
+        if ($user->getVehicles()->count() < 2){
+            $user->addVehicle($vehicle);
+            $entityManager->flush();
+        } else {
+            $this->addFlash(
+                'danger',
+                '2 véhicules maximum possibles'
+            );
+        }
 
-        return $this->render('Vehicule/add.html.twig');
+        return $this->redirectToRoute('vehicules');
+    }
+
+    #[Route('/remove/vehicles/{id}', name: 'vehicle_remove')]
+    public function remove(Vehicle $vehicle, EntityManagerInterface $entityManager): Response
+    {
+        $user = $this->getUser();
+        $user->removeVehicle($vehicle);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('vehicules');
     }
 }

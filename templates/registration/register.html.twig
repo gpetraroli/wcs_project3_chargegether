@@ -46,11 +46,13 @@
         }) }}
 				{{ form_row(form.agreeTerms) }}
 
-	<div class="d-flex justify-content-center">
-			<button type="submit" href="{{ path('app_profil_hote') }}" class="m-4 text-center col-9 d-flex align-items-center justify-content-center rounded-pill bg-primary gap-3">
-            <i class="bi bi-check-circle-fill"></i> Enregistrer
-			</button>
-		</div>
+				<div class="mb-5">
+					<div class="d-flex justify-content-center mb-5">
+						<button type="submit" href="{{ path('app_profil_hote') }}" class="btn btn-secondary m-4 text-center text-white col-9 d-flex align-items-center justify-content-center rounded-pill gap-3 p-0">
+							<h3 class="text-white my-2">Enregistrer</h3>
+						</button>
+					</div>
+				</div>
 
 				{{ form_end(form) }}
 			</div>

@@ -76,17 +76,7 @@ class ProfileType extends AbstractType
                 'label_attr' => [
                     'class' => 'form-label my-3',
                 ]
-            ])
-            ->add('submit', SubmitType::class, [
-                'attr' => [
-                    'class' => 'm-4 text-center
-                    col-9 d-flex align-items-center
-                    justify-content-center
-                     rounded-pill bg-primary gap-3
-                     text-white my-2 bi bi-check-circle-fill'
-                ],
-                'label' => 'S\' Enregistrer',
-            ]);
+                ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

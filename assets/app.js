@@ -17,3 +17,5 @@ const $ = require('jquery');
 require('bootstrap');
 
 import './js/flashMessagesHandler';
+
+import './js/notifier-widget';

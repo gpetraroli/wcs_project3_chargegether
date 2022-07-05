@@ -1,6 +1,6 @@
 /*global google*/
 import {Loader} from "@googlemaps/js-api-loader";
-import {renderStationInfo, dismissStationInfo} from './station-info-widget';
+import {renderStationInfo} from './station-info-widget';
 
 const googleApiKey = document.querySelector('#map').dataset.google_api_key;
 const loader = new Loader({

@@ -8,12 +8,19 @@ use App\Repository\NotificationsRepository;
 
 class NotificationManager
 {
-    public function sendNotificationTo(User $destination, string $body, NotificationsRepository $notifRepository): void
+    private NotificationsRepository $notifRepository;
+
+    public function __construct(NotificationsRepository $notifRepository)
+    {
+        $this->notifRepository = $notifRepository;
+    }
+
+    public function sendNotificationTo(User $destination, string $body): void
     {
         $notification = new Notification();
         $notification->setBody($body);
         $notification->setDestinationUser($destination);
 
-        $notifRepository->add($notification, true);
+        $this->notifRepository->add($notification, true);
     }
 }

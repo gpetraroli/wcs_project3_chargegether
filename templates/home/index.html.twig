@@ -4,9 +4,10 @@
     Home - Chargether
 {% endblock %}
 
-{% block stylesheets %}
+{% block javascripts %}
     {{ parent() }}
     {{ encore_entry_script_tags('map') }}
+    <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD9Ymmg4k3WlkkA4hlom351Yp1tn3nhOeY&callback=initMap"></script>
 {% endblock %}
 
 {% block body %}

@@ -1,19 +1,11 @@
 /*global google*/
-import {Loader} from "@googlemaps/js-api-loader";
 import {renderStationInfo} from './station-info-widget';
-
-const googleApiKey = document.querySelector('#map').dataset.google_api_key;
-const loader = new Loader({
-    apiKey: googleApiKey,
-    version: "weekly",
-});
+import {calcRoute, initDirectionService} from './directions';
 
 let map;
 let currentPositionMarker;
 
-loader.load().then(renderMap);
-
-function renderMap()
+function initMap()
 {
     map = new google.maps.Map(document.getElementById("map"), {
         zoom: 15,
@@ -30,7 +22,10 @@ function renderMap()
 
     setCurrentPosition();
     renderStations();
-}// renderMap
+    initDirectionService(map);
+}// initMap
+
+window.initMap = initMap;
 
 function setCurrentPosition()
 {

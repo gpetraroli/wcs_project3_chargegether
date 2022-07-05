@@ -27,7 +27,7 @@ export function renderStationInfo(station)
     stationInfoEl.querySelector('#btn-close').addEventListener('click', dismissStationInfo);
 }
 
-export function dismissStationInfo()
+function dismissStationInfo()
 {
     const stationInfoEl = document.querySelector('#station-info');
     stationInfoEl.classList.add('d-none');

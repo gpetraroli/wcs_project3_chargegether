@@ -10,17 +10,17 @@
         </h1>
     </header>
     {% if app.user.vehicles.count < 2 %}
-    <div class="d-flex justify-content-center">
-        <a
-            class="m-4 text-center col-6 d-flex align-items-center justify-content-center rounded-pill bg-primary
+        <div class="d-flex justify-content-center">
+            <a
+                class="m-4 text-center col-6 d-flex align-items-center justify-content-center rounded-pill bg-primary
 					            gap-3" href="{{ path('vehicle_add_view') }}">
-            <i class="bi bi-plus-circle text-white"></i>
-            <h3 class="text-white fs-6 my-2">
-                Ajouter
-            </h3>
-            <i class="bi bi-plugin text-white"></i>
-        </a>
-    </div>
+                <i class="bi bi-plus-circle text-white"></i>
+                <h3 class="text-white fs-6 my-2">
+                    Ajouter
+                </h3>
+                <i class="bi bi-plugin text-white"></i>
+            </a>
+        </div>
     {% endif %}
     <p class="text-center">2 maximum</p>
 
@@ -28,46 +28,44 @@
 
     <h3 class="text-secondary mx-3">Votre véhicule</h3>
 
-    <div style="background: lightblue">
+    <div class="d-flex flex-column gap-3">
         {% for vehicle in app.user.vehicles %}
-            <div class="mx-5 d-flex flex-column ">
-                <h2 class="d-flex justify-content-center text-secondary">
-                    {{ vehicle.brand }} {{ vehicle.model }}
-                </h2>
+            <div class="p-3" style="background: lightblue">
+                <div class="d-flex flex-column ">
+                    <h2 class="d-flex justify-content-center text-secondary">
+                        {{ vehicle.brand }} {{ vehicle.model }}
+                    </h2>
+                </div>
+
+                <div class="d-flex justify-content-between">
+                    <h6 class="text-secondary">Marque</h6>
+                    <h6 class="text-primary">{{ vehicle.brand }}</h6>
+                </div>
+
+                <div class="d-flex justify-content-between">
+                    <h6 class="text-secondary">Modèle</h6>
+                    <h6 class="text-primary">{{ vehicle.model }}</h6>
+                </div>
+
+                <div class="d-flex justify-content-between">
+                    <h6 class="text-secondary">Capacité batterie </h6>
+                    <h6 class="text-primary">{{ vehicle.batteryCapacity }} . kWh</h6>
+                </div>
+
+                <div class="d-flex justify-content-between">
+                    <h6 class="text-secondary">Type de prise</h6>
+                    <h6 class="text-primary">{{ vehicle.plugType }}</h6>
+                </div>
+
+                <div class="d-flex justify-content-between">
+                    <h6 class="text-secondary">Puissance de batterie</h6>
+                    <h6 class="text-primary">{{ vehicle.batteryPower }} . kWh</h6>
+                </div>
+
+                <a class="btn btn-secondary" href="{{ path('vehicle_remove', {'id': vehicle.id}) }}">supprimer</a>
             </div>
-
-            <div class="mx-3 d-flex justify-content-between">
-                <h6 class="text-secondary">Marque</h6>
-                <h6 class="text-primary">{{ vehicle.brand }}</h6>
-            </div>
-
-            <div class="mx-3 d-flex justify-content-between">
-                <h6 class="text-secondary">Modèle</h6>
-                <h6 class="text-primary">{{ vehicle.model }}</h6>
-            </div>
-
-            <div class="mx-3 d-flex justify-content-between">
-                <h6 class="text-secondary">Capacité batterie </h6>
-                <h6 class="text-primary">{{ vehicle.batteryCapacity }} . kWh</h6>
-            </div>
-
-            <div class="mx-3 d-flex justify-content-between">
-                <h6 class="text-secondary">Type de prise</h6>
-                <h6 class="text-primary">{{ vehicle.plugType }}</h6>
-            </div>
-
-            <div class="mx-3 d-flex justify-content-between">
-                <h6 class="text-secondary">Puissance de batterie</h6>
-                <h6 class="text-primary">{{ vehicle.batteryPower }} . kWh</h6>
-            </div>
-
-            <a href="{{ path('vehicle_remove', {'id': vehicle.id}) }}">supprimer le véhicule</a>
-
-
         {% endfor %}
 
     </div>
-
-
 
 {% endblock %}

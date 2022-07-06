@@ -9,8 +9,10 @@ use App\Config\PlugType;
 use App\Form\StationType;
 use App\Config\StationPower;
 use App\Form\UserPasswordType;
+use App\Repository\NotificationsRepository;
 use App\Repository\UsersRepository;
 use App\Repository\StationsRepository;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,10 +25,14 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 class ProfilController extends AbstractController
 {
     #[Route('/', name: 'index')]
-    public function index(): Response
+    public function index(NotificationsRepository $notifRepository): Response
     {
         return $this->render('profil/index.html.twig', [
-            'user' => $this->getUser()
+            'user' => $this->getUser(),
+            'notifications' => $notifRepository->findBy([
+                'destinationUser' => $this->getUser(),
+                'isRead' => false,
+            ]),
         ]);
     }
 
@@ -72,7 +78,7 @@ class ProfilController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $datas = $form->getData();
 
-            $user->setUpdatedAt(new \DateTime());
+            $user->setUpdatedAt(new DateTime());
 
             $newHashedPassword = $hasher->hashPassword($user, $datas['newPassword']);
 

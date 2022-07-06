@@ -83,6 +83,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\ManyToMany(targetEntity: Vehicle::class)]
     private Collection $vehicles;
 
+    #[ORM\OneToMany(mappedBy: 'destinationUser', targetEntity: Notification::class, orphanRemoval: true)]
+    private Collection $notifications;
+
     public function __construct()
     {
         $this->createdAt = new DateTime();
@@ -90,6 +93,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->stations = new ArrayCollection();
         $this->imageName = null;
         $this->vehicles = new ArrayCollection();
+        $this->notifications = new ArrayCollection();
     }
 
     public function getId(): int
@@ -316,6 +320,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function removeVehicle(Vehicle $vehicle): self
     {
         $this->vehicles->removeElement($vehicle);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Notification>
+     */
+    public function getNotifications(): Collection
+    {
+        return $this->notifications;
+    }
+
+    public function addNotification(Notification $notification): self
+    {
+        if (!$this->notifications->contains($notification)) {
+            $this->notifications[] = $notification;
+            $notification->setDestinationUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNotification(Notification $notification): self
+    {
+        if ($this->notifications->removeElement($notification)) {
+            // set the owning side to null (unless already changed)
+            if ($notification->getDestinationUser() === $this) {
+                $notification->setDestinationUser(null);
+            }
+        }
 
         return $this;
     }

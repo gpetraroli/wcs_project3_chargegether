@@ -23,9 +23,14 @@ class Notification
     #[ORM\Column(type: 'datetime_immutable')]
     private DateTimeImmutable $createdAt;
 
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'notifications')]
+    #[ORM\JoinColumn(nullable: false)]
+    private User $destinationUser;
+
     public function __construct()
     {
         $this->createdAt = new DateTimeImmutable();
+        $this->isRead = false;
     }
 
     public function getId(): int
@@ -66,5 +71,17 @@ class Notification
     public function setCreatedAt(\DateTimeImmutable $createdAt): void
     {
         $this->createdAt = $createdAt;
+    }
+
+    public function getDestinationUser(): ?User
+    {
+        return $this->destinationUser;
+    }
+
+    public function setDestinationUser(?User $destinationUser): self
+    {
+        $this->destinationUser = $destinationUser;
+
+        return $this;
     }
 }

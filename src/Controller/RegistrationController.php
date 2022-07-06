@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
 use App\Repository\UsersRepository;
+use App\Service\MailService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -18,6 +19,7 @@ class RegistrationController extends AbstractController
         Request $request,
         UserPasswordHasherInterface $userPasswordHasher,
         UsersRepository $usersRepository,
+        MailService $mail
     ): Response {
         if ($this->getUser()) {
             return $this->redirectToRoute('app_profil_index');
@@ -41,6 +43,14 @@ class RegistrationController extends AbstractController
                 'success',
                 'Votre compte a bien été créé.'
             );
+                //j'envoie un mail
+                $mail->send(
+                    'no-reply@chargether.com',
+                    $user->getEmail(),
+                    'Activation de votre compte sur notre site CHARGETHER',
+                    'register',
+                    ['user' => $user]
+                );
 
             return $this->redirectToRoute('app_login');
         }

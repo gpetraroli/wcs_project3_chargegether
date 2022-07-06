@@ -6,7 +6,9 @@ use App\Entity\Booking;
 use App\Entity\Station;
 use App\Form\BookingType;
 use App\Repository\BookingsRepository;
+use App\Service\BookingPriceManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -14,6 +16,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class BookingController extends AbstractController
 {
+    private BookingPriceManager $bookingPriceManager;
+
+    public function __construct(BookingPriceManager $bookingPriceManager)
+    {
+        $this->bookingPriceManager = $bookingPriceManager;
+    }
+
     //Afficher list resa
     #[Route('/reservations', name: 'booking')]
     public function showBookingsList(Request $request, EntityManagerInterface $manager): Response
@@ -21,14 +30,27 @@ class BookingController extends AbstractController
         return $this->render('booking/index.html.twig');
     }
 
+    #[Route('/api/price', name: 'api_price')]
+    public function apiPrice(\DateTimeImmutable $dateBegin,
+                             \DateTimeImmutable $dateEnd,
+                             int $vehiclePower,
+                             int $stationPower ): JsonResponse
+    {
+        $price = $this->bookingPriceManager->calculateBookingPrice(
+            $dateBegin,
+            $dateEnd,
+            $vehiclePower,
+            $stationPower
+        );
+
+        return $this->json($price);
+    }
+
     //nouvelle reservation
     #[Route('/hote/reserver/{id}', name: 'add_booking')]
-    public function addBooking(Station $station, Request $request, BookingsRepository $bookingsRepository): Response
+    public function addBooking(Station $station, Request $request, BookingsRepository $bookingsRepository,
+                               ): Response
     {
-        $fees = 1;
-        $coefficient = 2.5;
-        $electricityPrice = 0.3;
-
         $booking = New Booking();
         $booking->setStation($station);
         $booking->setUser($this->getUser());
@@ -40,14 +62,12 @@ class BookingController extends AbstractController
             $booking->setVehicle($form->get('vehicle')->getData());
             $booking->setStartRes($form->get('startRes')->getData());
             $booking->setEndRes($form->get('endRes')->getData());
-            // calcul du prix de la réservation
-            $interval = $form->get('endRes')->getData()->diff($form->get('startRes')->getData());
-            $intervarInHours = $interval->format('%h') + $interval->format('%i')/60;
-            $vehiclePower = $form->get('vehicle')->getData()->getBatteryPower();
-            $stationPower = $station->getPower()->value;
-            $power = ($vehiclePower < $stationPower) ? $vehiclePower : $stationPower;
-            $price = $electricityPrice * $coefficient * $intervarInHours * $power + $fees;
 
+            $price = $this->bookingPriceManager->calculateBookingPrice( $form->get('endRes')->getData(),
+                                                            $form->get('startRes')->getData(),
+                                                            $form->get('vehicle')->getData()->getBatteryPower(),
+                                                            $station->getPower()->value
+            );
             $booking->setBookingPrice(strval($price));
             $bookingsRepository->add($booking, true);
             $this->addFlash('success', 'nouvelle résa effectuée');

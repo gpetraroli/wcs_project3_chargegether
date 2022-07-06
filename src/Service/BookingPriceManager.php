@@ -1,0 +1,23 @@
+<?php
+
+namespace App\Service;
+
+class BookingPriceManager
+{
+
+    private int $fees = 1;
+    private float $coefficient = 2.5;
+    private float $electricityPrice = 0.3;
+
+
+    public function calculateBookingPrice(\DateTimeImmutable $dateBegin,
+                                          \DateTimeImmutable $dateEnd,
+                                          int $vehiclePower,
+                                          int $stationPower ): float
+    {
+        $interval = $dateEnd->diff($dateBegin);
+        $intervarInHours = $interval->format('%h') + $interval->format('%i')/60;
+        $power = ($vehiclePower < $stationPower) ? $vehiclePower : $stationPower;
+        return $this->electricityPrice * $this->coefficient * $intervarInHours * $power + $this->fees;
+    }
+}

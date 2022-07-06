@@ -13,29 +13,26 @@
     <div>
         {% for notification in app.user.notifications %}
             {% if not notification.isRead %}
-                <div class="card align-items-start bg-secondary text-white position-relative m-3">
+                <a href="{{ path('app_notification_show', {id: notification.id}) }}" class="card align-items-start bg-secondary text-white position-relative m-3">
                     <div class="card-body d-flex flex-column gap-2">
                         <p class="card-text m-0">{{ notification.createdAt|date('Y-m-d - H:i') }}</p>
                         <p class="card-text m-0">{{ notification.body|slice(0,45) }}</p>
                     </div>
                     <span class="bg-white p-1 px-2 rounded text-secondary position-absolute top-0 end-0 m-1 fw-bold">new</span>
-                </div>
+                </a>
             {% endif %}
         {% endfor %}
     </div>
     <div>
         {% for notification in app.user.notifications %}
             {% if notification.isRead %}
-                <div class="card align-items-start bg-transparent border border-secondary m-3">
+                <a href="{{ path('app_notification_show', {id: notification.id}) }}" class="card align-items-start bg-transparent border border-secondary m-3">
                     <div class="card-body d-flex flex-column gap-2">
                         <p class="card-text m-0">{{ notification.createdAt|date('Y-m-d - H:i') }}</p>
                         <p class="card-text m-0">{{ notification.body|slice(0,45) }}</p>
                     </div>
-                </div>
+                </a>
             {% endif %}
         {% endfor %}
     </div>
-
-
-
 {% endblock %}

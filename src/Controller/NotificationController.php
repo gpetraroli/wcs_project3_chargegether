@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Notification;
 use App\Repository\NotificationsRepository;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,8 +31,20 @@ class NotificationController extends AbstractController
     }
 
     #[Route('/notifications', name: 'app_notifications', methods: ['GET'])]
-    public function show(): Response
+    public function showAll(): Response
     {
         return $this->render('profil/notifications.html.twig');
+    }
+
+    #[Route('/notification/{id}', name: 'app_notification_show', methods: ['GET'])]
+    public function showOne(int $id, ManagerRegistry $managerRegistry): Response
+    {
+        $notification = $managerRegistry->getRepository(Notification::class)->findOneBy(['id' => $id]);
+        $notification->setIsRead(true);
+        $managerRegistry->getManager()->flush();
+
+        return $this->render('/profil/notification.html.twig', [
+            'notification' => $notification,
+        ]);
     }
 }

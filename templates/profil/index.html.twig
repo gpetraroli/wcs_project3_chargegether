@@ -51,9 +51,9 @@
             </div>
             <div class="d-flex align-items-center gap-3">
                 <i class="bi bi-bell fs-1 position-relative">
-                    <span class="notification-alert d-none position-absolute start-100 translate-middle p-2 bg-danger border border-light rounded-circle"></span>
+                    <span class="{{ notifications|length == 0 ? 'd-none' : '' }} position-absolute start-100 translate-middle p-2 bg-danger border border-light rounded-circle"></span>
                 </i>
-                <a class="text-center link-secondary text-decoration-none" href="{{ path('vehicules') }}">
+                <a class="text-center link-secondary text-decoration-none" href="{{ path('app_notifications') }}">
                     <h4 class="m-0">Notifications</h4>
                 </a>
             </div>

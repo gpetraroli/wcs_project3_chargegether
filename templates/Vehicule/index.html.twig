@@ -28,9 +28,9 @@
 
     <h3 class="text-secondary mx-3">Votre véhicule</h3>
 
-    <div class="d-flex flex-column gap-3">
+    <div class="d-flex flex-column gap-3 m-3">
         {% for vehicle in app.user.vehicles %}
-            <div class="p-3" style="background: lightblue">
+            <div class="p-3 border border-secondary" style="{{ selectedVehicleId == vehicle.id ? 'background: lightblue' : ''}};">
                 <div class="d-flex flex-column ">
                     <h2 class="d-flex justify-content-center text-secondary">
                         {{ vehicle.brand }} {{ vehicle.model }}
@@ -62,7 +62,12 @@
                     <h6 class="text-primary">{{ vehicle.batteryPower }} . kWh</h6>
                 </div>
 
-                <a class="btn btn-secondary" href="{{ path('vehicle_remove', {'id': vehicle.id}) }}">supprimer</a>
+                <div class="mt-2">
+                    {% if selectedVehicleId != vehicle.id %}
+                        <a class="btn btn-secondary" href="{{ path('app_select_vehicle', {'id': vehicle.id}) }}">select</a>
+                    {% endif %}
+                    <a class="btn btn-outline-secondary" href="{{ path('vehicle_remove', {'id': vehicle.id}) }}">supprimer</a>
+                </div>
             </div>
         {% endfor %}
 

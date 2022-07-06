@@ -4,8 +4,10 @@ namespace App\Controller;
 
 use App\Entity\Vehicle;
 use App\Repository\VehiclesRepository;
+use App\Service\VehicleManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use function Symfony\Component\Translation\t;
@@ -13,9 +15,11 @@ use function Symfony\Component\Translation\t;
 class VehiculeController extends AbstractController
 {
     #[Route('/vehicules', name: 'vehicules')]
-    public function vehicules(): Response
+    public function vehicules(VehicleManager $vehicleManager): Response
     {
-        return $this->render('Vehicule/index.html.twig');
+        return $this->render('Vehicule/index.html.twig', [
+            'selectedVehicleId' => $vehicleManager->getSelectedVehicle(),
+        ]);
     }
 
     #[Route('/vehicules/ajouter', name: 'vehicle_add_view')]
@@ -50,6 +54,14 @@ class VehiculeController extends AbstractController
         $user = $this->getUser();
         $user->removeVehicle($vehicle);
         $entityManager->flush();
+
+        return $this->redirectToRoute('vehicules');
+    }
+
+    #[Route('/vehicules/select/{id}', name: 'app_select_vehicle', methods: ['GET'])]
+    public function selectVehicle(int $id, VehicleManager $vehicleManager): Response
+    {
+        $vehicleManager->setSelectedVehicle($id);
 
         return $this->redirectToRoute('vehicules');
     }

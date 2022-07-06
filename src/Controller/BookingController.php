@@ -3,7 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Booking;
+use App\Entity\Station;
+use App\Form\BookingType;
+use App\Repository\BookingsRepository;
+use App\Service\BookingPriceManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -11,20 +16,71 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class BookingController extends AbstractController
 {
+    private BookingPriceManager $bookingPriceManager;
+
+    public function __construct(BookingPriceManager $bookingPriceManager)
+    {
+        $this->bookingPriceManager = $bookingPriceManager;
+    }
+
     //Afficher list resa
     #[Route('/reservations', name: 'booking')]
     public function showBookingsList(Request $request, EntityManagerInterface $manager): Response
     {
-        $booking = new Booking();
-
         return $this->render('booking/index.html.twig');
     }
 
-    //nouvelle reservation
-    #[Route('/reservation/new', name: 'add_booking')]
-    public function addBooking(): Response
+    #[Route('/api/price', name: 'api_price')]
+    public function apiPrice(\DateTimeImmutable $dateBegin,
+                             \DateTimeImmutable $dateEnd,
+                             int $vehiclePower,
+                             int $stationPower ): JsonResponse
     {
-        return $this->render('booking/addbooking.html.twig');
+        $price = $this->bookingPriceManager->calculateBookingPrice(
+            $dateBegin,
+            $dateEnd,
+            $vehiclePower,
+            $stationPower
+        );
+
+        return $this->json($price);
+    }
+
+    //nouvelle reservation
+    #[Route('/hote/reserver/{id}', name: 'add_booking')]
+    public function addBooking(Station $station, Request $request, BookingsRepository $bookingsRepository,
+                               ): Response
+    {
+        $booking = New Booking();
+        $booking->setStation($station);
+        $booking->setUser($this->getUser());
+
+        $form = $this->createForm(BookingType::class , $booking);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()){
+            $booking->setVehicle($form->get('vehicle')->getData());
+            $booking->setStartRes($form->get('startRes')->getData());
+            $booking->setEndRes($form->get('endRes')->getData());
+
+            $price = $this->bookingPriceManager->calculateBookingPrice( $form->get('endRes')->getData(),
+                                                            $form->get('startRes')->getData(),
+                                                            $form->get('vehicle')->getData()->getBatteryPower(),
+                                                            $station->getPower()->value
+            );
+            $booking->setBookingPrice(strval($price));
+            $bookingsRepository->add($booking, true);
+            $this->addFlash('success', 'nouvelle résa effectuée');
+
+            return $this->redirectToRoute('booking');
+
+        }
+
+
+
+        return $this->render('booking/addbooking.html.twig', [
+            'form' => $form->createView(),
+        ]);
     }
 
     //recapitulatif infos resa

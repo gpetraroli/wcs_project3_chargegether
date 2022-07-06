@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Repository\NotificationsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class NotificationController extends AbstractController
@@ -25,5 +26,11 @@ class NotificationController extends AbstractController
             ];
         }
         return $this->json($notificationsData);
+    }
+
+    #[Route('/notifications', name: 'app_notifications', methods: ['GET'])]
+    public function show(): Response
+    {
+        return $this->render('profil/notifications.html.twig');
     }
 }

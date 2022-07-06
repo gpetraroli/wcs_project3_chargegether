@@ -1,13 +1,95 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Reservations - Chargether{% endblock %}
+{% block title %}Reservations - Chargether
+{% endblock %}
 
-
+{% block specific_javascript %}
+	<script src="https://kit.fontawesome.com/47e5d2715e.js" crossorigin="anonymous"></script>
+{% endblock %}
 
 {% block body %}
 
-addBOOKING
+	<header class="bg-primary d-flex justify-content-center">
+		<h3 class="text-white my-3">
+			<a href="{{ path('app_profil_index') }}" class="btn btn-primary" role="button" data-bs-toggle="button">
+				<i class="bi bi-arrow-left-circle-fill"></i>
+			</a>
+			Réservation
+		</h3>
+	</header>
 
-{{ form(form) }}
+	<div class="plug-type-item text-center mt-3" data-plug-type=>
+		<img src="{{ asset('images/stations/plugs/type3c.png') }}">
+	</div>
+
+	<div class="h4 pb-3 mx-3 border-bottom border-secondary"></div>
+
+	<div class="mt-3 mx-5 d-flex justify-content-between">
+		<i class="bi bi-calendar3"></i>Date
+		<h6 class="text-secondary"></h6>
+		<input type="date">
+	</div>
+
+	<div class="my-2 mx-5 d-flex justify-content-between">
+		<i class="bi bi-clock"></i>
+		<p>Heure prévue</p>
+		<h6 class="text-secondary"></h6>
+		<input type="time">
+	</div>
+
+	<div class="mb-3 mx-5 d-flex justify-content-between">
+		<i class="bi bi-clock"></i>
+		<p>Heure de fin</p>
+		<h6 class="text-secondary"></h6>
+		<input type="time">
+	</div>
+
+	<div class="h4 pb-3 mx-3 border-bottom border-secondary"></div>
+
+	<div class="my-2 mx-3 d-flex justify-content-between">
+		<h6 class="text-primary">Détails de la réservation :</h6>
+	</div>
+
+	<div class="mx-3 d-flex justify-content-between">
+		<h6 class="text-secondary">Heure de début</h6>
+	</div>
+
+	<div class="mx-3 d-flex justify-content-between">
+		<h6 class="text-secondary">Heure de fin</h6>
+	</div>
+
+	<div class="mx-3 d-flex justify-content-between">
+		<h6 class="text-secondary">Coût du stationnement</h6>
+	</div>
+
+	<div class="mx-3 d-flex justify-content-between">
+		<h6 class="text-secondary">Frais de Chargether</h6>
+	</div>
+
+	<div class="mx-3 d-flex justify-content-between">
+		<h6 class="text-secondary">
+			<b>Total</b>
+		</h6>
+	</div>
+
+	<div class="mb-5">
+		<div class="d-flex justify-content-center mb-5">
+			<button type="submit" href="{{ path('app_profil_hote') }}" class="btn btn-secondary m-4 text-center text-white col-9 d-flex align-items-center justify-content-center rounded-pill gap-3 p-0">
+				<h3 class="text-white my-2">Valider</h3>
+			</button>
+		</div>
+	</div>
+
+	<div class="h4 pb-3 mx-3 border-bottom border-secondary"></div>
+
+	<div class="mx-2 d-flex flex-column">
+		<h6>
+			<b>
+				Conditions :</b>
+		</h6>
+		<p>- Le prix sera actualisé au moment de la charge</p>
+		<p>- La recharge sera calculée par au niveau de la batterie de la batterie de départ et du niveau souhaité</p>
+		<p>- Le règlement sera effectué à la fin de la recharge</p>
+	</div>
 
 {% endblock %}

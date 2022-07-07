@@ -71,11 +71,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'datetime', nullable: true)]
     private DateTime $updatedAt;
 
-    #[Vich\UploadableField(mapping: 'profile_image', fileNameProperty: 'imageName')]
+    #[Vich\UploadableField(mapping: 'profile_image', fileNameProperty: 'imageName', size: 'imageSize')]
     private ?File $imageFile = null;
 
     #[ORM\Column(type: 'string', nullable: true)]
     private ?string $imageName;
+
+    #[ORM\Column(type: 'integer')]
+    private ?int $imageSize = null;
 
     #[ORM\OneToMany(mappedBy: 'owner', targetEntity: Station::class, orphanRemoval: true)]
     private Collection $stations;
@@ -258,6 +261,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getImageName(): ?string
     {
         return $this->imageName;
+    }
+
+    public function setImageSize(?int $imageSize): void
+    {
+        $this->imageSize = $imageSize;
+    }
+    public function getImageSize(): ?int
+    {
+        return $this->imageSize;
     }
 
     public function getCreatedAt(): DateTime

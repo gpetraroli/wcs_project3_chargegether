@@ -3,10 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use Symfony\Component\Mime\Email;
 use App\Form\RegistrationFormType;
 use App\Repository\UsersRepository;
-use App\Service\MailService;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,7 +20,7 @@ class RegistrationController extends AbstractController
         Request $request,
         UserPasswordHasherInterface $userPasswordHasher,
         UsersRepository $usersRepository,
-        MailService $mail
+        MailerInterface $mailer
     ): Response {
         if ($this->getUser()) {
             return $this->redirectToRoute('app_profil_index');
@@ -43,14 +44,23 @@ class RegistrationController extends AbstractController
                 'success',
                 'Votre compte a bien été créé.'
             );
-                //j'envoie un mail
-                $mail->send(
-                    'no-reply@chargether.com',
-                    $user->getEmail(),
-                    'Activation de votre compte sur notre site CHARGETHER',
-                    'register',
-                    ['user' => $user]
-                );
+
+            $email = (new Email())
+            ->from('contact@chargether.com')
+            ->to('you@example.com')
+            ->subject('Inscription sur notre Site Chargether')
+            ->text('Sending emails is fun again!')
+            ->html('<h1>Activez votre compte</h1>
+            <p>Bonjour,</p>
+            <p>Votre Inscription sur le Site de
+                <strong>CHARGETHER</strong>
+                est à valider, en cliquant sur le lien ci-dessous :</p>
+            <p>
+                <a href="">Lien</a>
+            </p>
+            <p>Ce lien expirera dans 3 heures.</p>');
+
+        $mailer->send($email);
 
             return $this->redirectToRoute('app_login');
         }

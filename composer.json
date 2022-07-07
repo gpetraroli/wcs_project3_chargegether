@@ -45,7 +45,7 @@
         "symfony/serializer": "^6.1",
         "symfony/string": "^6.1",
         "symfony/translation": "^6.1",
-        "symfony/twig-bundle": "^6.1",
+        "symfony/twig-bundle": "6.1.*",
         "symfony/validator": "6.1.*",
         "symfony/web-link": "^6.1",
         "symfony/webapp-meta": "^1.0",

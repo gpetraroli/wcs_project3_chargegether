@@ -3,9 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\User;
-use Symfony\Component\Mime\Email;
 use App\Form\RegistrationFormType;
 use App\Repository\UsersRepository;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -45,22 +45,13 @@ class RegistrationController extends AbstractController
                 'Votre compte a bien été créé.'
             );
 
-            $email = (new Email())
-            ->from('contact@chargether.com')
-            ->to('you@example.com')
-            ->subject('Inscription sur notre Site Chargether')
-            ->text('Sending emails is fun again!')
-            ->html('<h1>Activez votre compte</h1>
-            <p>Bonjour,</p>
-            <p>Votre Inscription sur le Site de
-                <strong>CHARGETHER</strong>
-                est à valider, en cliquant sur le lien ci-dessous :</p>
-            <p>
-                <a href="">Lien</a>
-            </p>
-            <p>Ce lien expirera dans 3 heures.</p>');
+            $email = (new TemplatedEmail())
+                ->from('contact@chargether.com')
+                ->to($user->getEmail())
+                ->subject('Inscription sur notre Site Chargether')
+                ->htmlTemplate('emails/register.html.twig');
 
-        $mailer->send($email);
+            $mailer->send($email);
 
             return $this->redirectToRoute('app_login');
         }

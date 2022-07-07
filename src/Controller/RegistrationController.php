@@ -49,7 +49,10 @@ class RegistrationController extends AbstractController
                 ->from('contact@chargether.com')
                 ->to($user->getEmail())
                 ->subject('Inscription sur notre Site Chargether')
-                ->htmlTemplate('emails/register.html.twig');
+                ->htmlTemplate('emails/register.html.twig')
+                ->context([
+                    'user' => $user,
+                ]);
 
             $mailer->send($email);
 

@@ -6,9 +6,10 @@ use App\Entity\Booking;
 use App\Entity\Station;
 use App\Form\BookingType;
 use App\Service\VehicleManager;
-use App\Repository\UsersRepository;
 use App\Service\BookingPriceManager;
 use App\Repository\BookingsRepository;
+use App\Service\NotificationManager;
+use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -56,6 +57,7 @@ class BookingController extends AbstractController
         Request $request,
         BookingsRepository $bookingsRepository,
         VehicleManager $vehicleManager
+        NotificationManager $notifManager
     ): Response {
         $booking = new Booking();
         $booking->setStation($station);
@@ -79,6 +81,9 @@ class BookingController extends AbstractController
             $booking->setBookingPrice(strval($price));
             $bookingsRepository->add($booking, true);
             $this->addFlash('success', 'nouvelle résa effectuée');
+
+            $messageBody = $this->getUser()->getUserName() . ' réservé votre station en ' . $station->getAddress() . ' pour le ' . $booking->getStartRes()->format('d/m/Y') . ' à ' . $booking->getStartRes()->format('H:i');
+            $notifManager->sendNotificationTo($station->getOwner(), $messageBody);
 
             return $this->redirectToRoute('booking');
         }

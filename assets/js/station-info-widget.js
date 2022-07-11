@@ -19,7 +19,7 @@ export function renderStationInfo(station)
             </div>
             <img style="height: 70px" src="images/stations/power/borne${station.power}kw.png">
         </div>
-        <a href="#" class="btn btn-secondary fs-2 rounded-pill col-6">Réserver</a>
+        <a href="/hote/reserver/${station.id}" class="btn btn-secondary fs-2 rounded-pill col-6">Réserver</a>
     `;
 
     stationInfoEl.innerHTML = stationInfoMakup;

@@ -51,7 +51,6 @@ class BookingController extends AbstractController
     //nouvelle reservation
     #[Route('/hote/reserver/{id}', name: 'add_booking', methods: ['GET'])]
     public function addBooking(
-        int $id,
         Station $station,
         Request $request,
         BookingsRepository $bookingsRepository,
@@ -75,6 +74,7 @@ class BookingController extends AbstractController
                 $form->get('vehicle')->getData()->getBatteryPower(),
                 $station->getPower()->value
             );
+
             $booking->setBookingPrice(strval($price));
             $bookingsRepository->add($booking, true);
             $this->addFlash('success', 'nouvelle résa effectuée');
@@ -95,5 +95,4 @@ class BookingController extends AbstractController
     {
         return $this->render('booking/infosbooking.html.twig');
     }
-
 }

@@ -10,7 +10,6 @@ use App\Service\VehicleManager;
 use App\Service\BookingPriceManager;
 use App\Repository\BookingsRepository;
 use App\Service\NotificationManager;
-use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

@@ -6,6 +6,7 @@ use App\Entity\Booking;
 use App\Entity\Station;
 use App\Form\BookingType;
 use App\Service\VehicleManager;
+use App\Repository\UsersRepository;
 use App\Service\BookingPriceManager;
 use App\Repository\BookingsRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -24,9 +25,10 @@ class BookingController extends AbstractController
         $this->bookingPriceManager = $bookingPriceManager;
     }
 
-    //Afficher list resa
     #[Route('/reservations', name: 'booking')]
-    public function showBookingsList(Request $request, EntityManagerInterface $manager): Response
+    public function showBookingsList(Request $request,
+     EntityManagerInterface $manager
+     ): Response
     {
         return $this->render('booking/index.html.twig');
     }
@@ -48,7 +50,6 @@ class BookingController extends AbstractController
         return $this->json($price);
     }
 
-    //nouvelle reservation
     #[Route('/hote/reserver/{id}', name: 'add_booking', methods: ['GET'])]
     public function addBooking(
         Station $station,
@@ -89,10 +90,10 @@ class BookingController extends AbstractController
         ]);
     }
 
-    //recapitulatif infos resa
     #[Route('/reservation/{id}', name: 'infos_booking')]
     public function showBookingInfos(): Response
     {
         return $this->render('booking/infosbooking.html.twig');
     }
+
 }

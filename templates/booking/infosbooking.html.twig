@@ -1,27 +1,26 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Reservations - Chargether{% endblock %}
-
+{% block title %}Reservations - Chargether
+{% endblock %}
 
 {% block body %}
 
 	<header class="bg-primary d-flex justify-content-center">
 		<h3 class="text-white my-3">
-			<a href="{{ path('app_profil_index') }}" class="btn btn-primary" role="button" data-bs-toggle="button">
+			<a href="{{ path ('app_profil_index') }}" class="btn btn-primary" role="button" data-bs-toggle="button">
 				<i class="bi bi-arrow-left-circle-fill"></i>
 			</a>
 			Récapitulatif de la réservation
 		</h3>
 	</header>
 
-    <div class="card col col-12">
-                    <img src="/images/carconnect.png" class="card-img-top" alt="carconnect">
-
-                <div class="mx-3 d-flex justify-content-between">
-                    <img src="/images/logo_hote.png" alt="logo">
-                        <h5 class="card-title text-center text-secondary">Votre hôte a validé la réservation</h5>
-                </div>
-    </div>
+	<div class="card col-12">
+		<img src="/images/carconnect.png" class="card-img-top" alt="carconnect">
+		<div class="mx-3 d-flex justify-content-between">
+			<img src="/images/logo_hote.png" alt="logo">
+			<h5 class="card-title text-center text-secondary">Votre hôte a validé la réservation</h5>
+		</div>
+	</div>
 
 	<div class="my-5">
 		<div class="my-2 mx-3 d-flex justify-content-between">
@@ -51,34 +50,37 @@
 		</div>
 	</div>
 
-    	<div class="mb-5">
-			<div class="d-flex justify-content-center mb-5">
-				<button type="submit" href="{{ path ('app_profil_index') }}" class="btn btn-secondary m-4 text-center text-white col-9 d-flex align-items-center justify-content-center rounded-pill gap-3 p-0">
-					<h3 class="text-white my-2">Direction chez l'hôte</h3>
-				</button>
-			</div>
+	<div class="mb-5">
+		<div class="d-flex justify-content-center mb-5">
+			<button type="submit" href="{{ path ('app_profil_index') }}" class="btn btn-secondary m-4 text-center text-white col-9 d-flex align-items-center justify-content-center rounded-pill gap-3 p-0">
+				<h3 class="text-white my-2">Direction chez l'hôte</h3>
+			</button>
 		</div>
+	</div>
 
-        <div class="h4 pb-3 mx-3 border-bottom border-secondary"></div>
+	<div class="h4 pb-3 mx-3 border-bottom border-secondary"></div>
 
-        <div class="d-flex flex-column gap-4">
-            <p class="text-center m-0"> Suivez Chargether sur les réseaux sociaux </p>
-            <div class="d-flex justify-content-center gap-5">
-                <a href="#" class="text-secondary">
-                    <i class="bi bi-instagram fs-1"></i>
-                </a>
-                <a href="#" class="text-secondary">
-                    <i class="bi bi-facebook fs-1"></i>
-                </a>
-                <a href="#" class="text-secondary">
-                    <i class="bi bi-twitter fs-1"></i>
-                </a>
-            </div>
-            <div class="d-flex justify-content-center">
-                <a href="{{ path('app_logout') }}" class="text-center text-danger text-decoration-none mb-5 pb-5"> se
-                    deconnecter
-                </a>
-            </div>
-        </div>
+	<div class="d-flex flex-column gap-4">
+		<p class="text-center m-0">
+			Suivez Chargether sur les réseaux sociaux
+		</p>
+		<div class="d-flex justify-content-center gap-5">
+			<a href="#" class="text-secondary">
+				<i class="bi bi-instagram fs-1"></i>
+			</a>
+			<a href="#" class="text-secondary">
+				<i class="bi bi-facebook fs-1"></i>
+			</a>
+			<a href="#" class="text-secondary">
+				<i class="bi bi-twitter fs-1"></i>
+			</a>
+		</div>
+		<div class="d-flex justify-content-center">
+			<a href="{{ path ('app_logout') }}" class="text-center text-danger text-decoration-none mb-5 pb-5">
+				se
+				                    deconnecter
+			</a>
+		</div>
+	</div>
 
 {% endblock %}

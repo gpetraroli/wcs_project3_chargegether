@@ -3,8 +3,8 @@
 namespace App\Service;
 
 use App\Entity\Notification;
-use App\Entity\User;
 use App\Repository\NotificationsRepository;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class NotificationManager
 {
@@ -15,7 +15,7 @@ class NotificationManager
         $this->notifRepository = $notifRepository;
     }
 
-    public function sendNotificationTo(User $destination, string $body): void
+    public function sendNotificationTo(UserInterface $destination, string $body): void
     {
         $notification = new Notification();
         $notification->setBody($body);

@@ -6,9 +6,9 @@ use App\Entity\Booking;
 use App\Entity\Station;
 use App\Form\BookingType;
 use App\Service\VehicleManager;
-use App\Repository\UsersRepository;
 use App\Service\BookingPriceManager;
-use App\Repository\BookingsRepository;
+use App\Service\NotificationManager;
+use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -35,8 +35,8 @@ class BookingController extends AbstractController
 
     #[Route('/api/price', name: 'api_price')]
     public function apiPrice(
-        \DateTimeImmutable $dateBegin,
-        \DateTimeImmutable $dateEnd,
+        DateTimeImmutable $dateBegin,
+        DateTimeImmutable $dateEnd,
         int $vehiclePower,
         int $stationPower
     ): JsonResponse {
@@ -50,12 +50,14 @@ class BookingController extends AbstractController
         return $this->json($price);
     }
 
-    #[Route('/hote/reserver/{id}', name: 'add_booking', methods: ['GET'])]
+    //nouvelle reservation
+    #[Route('/hote/reserver/{id}', name: 'add_booking')]
     public function addBooking(
         Station $station,
         Request $request,
         BookingsRepository $bookingsRepository,
-        VehicleManager $vehicleManager
+        VehicleManager $vehicleManager,
+        NotificationManager $notifManager
     ): Response {
         $booking = new Booking();
         $booking->setStation($station);
@@ -79,6 +81,9 @@ class BookingController extends AbstractController
             $booking->setBookingPrice(strval($price));
             $bookingsRepository->add($booking, true);
             $this->addFlash('success', 'nouvelle résa effectuée');
+
+            $messageBody = $this->getUser()->getUserName() . ' réservé votre station en ' . $station->getAddress() . ' pour le ' . $booking->getStartRes()->format('d/m/Y') . ' à ' . $booking->getStartRes()->format('H:i');
+            $notifManager->sendNotificationTo($station->getOwner(), $messageBody);
 
             return $this->redirectToRoute('booking');
         }

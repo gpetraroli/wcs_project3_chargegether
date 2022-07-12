@@ -2,19 +2,20 @@
 
 namespace App\Controller;
 
+use DateTimeImmutable;
 use App\Entity\Booking;
 use App\Entity\Station;
 use App\Entity\User;
 use App\Form\BookingType;
-use App\Repository\BookingsRepository;
+use App\Service\VehicleManager;
 use App\Service\BookingPriceManager;
+use App\Repository\BookingsRepository;
 use App\Service\NotificationManager;
-use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
@@ -29,10 +30,11 @@ class BookingController extends AbstractController
         $this->bookingPriceManager = $bookingPriceManager;
     }
 
-    //Afficher list resa
     #[Route('/reservations', name: 'booking')]
-    public function showBookingsList(Request $request, EntityManagerInterface $manager): Response
-    {
+    public function showBookingsList(
+        Request $request,
+        EntityManagerInterface $manager
+    ): Response {
         return $this->render('booking/index.html.twig');
     }
 
@@ -59,6 +61,7 @@ class BookingController extends AbstractController
         Station $station,
         Request $request,
         BookingsRepository $bookingsRepository,
+        VehicleManager $vehicleManager,
         NotificationManager $notifManager
     ): Response {
         $booking = new Booking();
@@ -79,6 +82,7 @@ class BookingController extends AbstractController
                 $form->get('vehicle')->getData()->getBatteryPower(),
                 $station->getPower()->value
             );
+
             $booking->setBookingPrice(strval($price));
             $bookingsRepository->add($booking, true);
             $this->addFlash('success', 'nouvelle résa effectuée');
@@ -89,14 +93,13 @@ class BookingController extends AbstractController
             return $this->redirectToRoute('booking');
         }
 
-
-
         return $this->render('booking/addbooking.html.twig', [
             'form' => $form->createView(),
+            'station' => $station,
+            'selectVehicle' => $vehicleManager->getSelectedVehicle(),
         ]);
     }
 
-    //recapitulatif infos resa
     #[Route('/reservation/{id}', name: 'infos_booking')]
     public function showBookingInfos(): Response
     {

@@ -30,19 +30,20 @@ class BookingType extends AbstractType
 
         $builder
             ->add('startRes', DateTimeType::class, [
-                'input' => 'datetime_immutable'
+                'input' => 'datetime_immutable',
+                'label' => 'Début de la réservation'
             ])
             ->add('endRes', DateTimeType::class, [
-                'input' => 'datetime_immutable'
+                'input' => 'datetime_immutable',
+                'label' => 'Fin de la réservation'
             ])
             ->add('vehicle', EntityType::class, [
                 'class' => Vehicle::class,
                 'choices' => $user->getVehicles(),
                 'choice_label' => 'model',
+                'label' => 'Véhicule pris en charge',
             ])
             ->add('Reserver', SubmitType::class);
-
-        ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void

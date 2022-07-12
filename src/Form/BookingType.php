@@ -2,8 +2,8 @@
 
 namespace App\Form;
 
-
 use App\Entity\Booking;
+use App\Entity\User;
 use App\Entity\Vehicle;
 use App\Repository\VehiclesRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -25,8 +25,10 @@ class BookingType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder
+        /** @var User|null $user */
+        $user = $this->security->getUser();
 
+        $builder
             ->add('startRes', DateTimeType::class, [
                 'input' => 'datetime_immutable',
                 'label' => 'Début de la réservation'
@@ -37,7 +39,7 @@ class BookingType extends AbstractType
             ])
             ->add('vehicle', EntityType::class, [
                 'class' => Vehicle::class,
-                'choices' => $this->security->getUser()->getVehicles(),
+                'choices' => $user->getVehicles(),
                 'choice_label' => 'model',
                 'label' => 'Véhicule pris en charge',
             ])

@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Config\PlugType;
 use App\Config\StationPower;
 use App\Entity\Station;
+use App\Entity\User;
 use App\Form\StationType;
 use App\Repository\StationsRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -14,6 +15,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * @method User|null getUser()
+ */
 class StationController extends AbstractController
 {
     #[Route('/hote/inscription', name: 'app_hote_inscription')]

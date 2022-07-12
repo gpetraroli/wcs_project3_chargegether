@@ -13,7 +13,6 @@
         <exclude name="BooleanArgumentFlag" />
     </rule>
     <rule ref="rulesets/codesize.xml" >
-        <exclude name="TooManyFields" />
         <exclude name="CyclomaticComplexity" />
         <exclude name="NPathComplexity" />
         <exclude name="TooManyFields" />
@@ -21,11 +20,7 @@
         <exclude name="ExcessiveClassComplexity" />
         <exclude name="ExcessiveMethodLength" />
     </rule>
-    <rule ref="rulesets/codesize.xml/TooManyFields" >
-        <properties>
-            <property name="maxfields" value="20" />
-        </properties>
-    </rule>
+
     <rule ref="rulesets/controversial.xml" >
         <exclude name="Superglobals" />
     </rule>
@@ -45,6 +40,8 @@
     <rule ref="rulesets/unusedcode.xml" >
         <exclude name="UnusedFormalParameter" />
     </rule>
+    <exclude-pattern>src/Config/PlugType.php</exclude-pattern>
+    <exclude-pattern>src/Config/StationPower.php</exclude-pattern>
     <exclude-pattern>src/Migrations</exclude-pattern>
     <exclude-pattern>src/Kernel.php</exclude-pattern>
     <exclude-pattern>src/Security</exclude-pattern>

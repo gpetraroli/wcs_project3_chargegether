@@ -40,6 +40,7 @@
     <rule ref="rulesets/unusedcode.xml" >
         <exclude name="UnusedFormalParameter" />
     </rule>
+    <exclude-pattern>src/Config/PlugType.php</exclude-pattern>
     <exclude-pattern>src/Migrations</exclude-pattern>
     <exclude-pattern>src/Kernel.php</exclude-pattern>
     <exclude-pattern>src/Security</exclude-pattern>

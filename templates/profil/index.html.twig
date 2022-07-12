@@ -2,112 +2,112 @@
 
 {% block title %}Profil - Chargether{% endblock %}
 
-{% block specific_javascript %}
-    <script src="https://kit.fontawesome.com/47e5d2715e.js" crossorigin="anonymous"></script>
-{% endblock %}
-
 {% block body %}
-    <section class="h-100 position-relative d-flex flex-column justify-content-between">
 
-        <header class="bg-primary d-flex justify-content-center">
-            <h1 class="text-white my-3"> Profil </h1>
-        </header>
-
-
-        <div class="d-flex justify-content-start align-items-center m-3 mb-0">
+    <header class="bg-primary d-flex justify-content-center">
+        <h1 class="text-white my-3">
+            Profil
+        </h1>
+    </header>
+    <div class="d-flex flex-column mx-3 gap-4 mb-5">
+        <div class="d-flex align-items-center m-3 mb-0">
             <div class="d-flex flex-column">
-                <img src="/images/profile/{{ user.imageName }}"
-                     alt="Image de profil de Michel"
-                     class="bd-placeholder-img rounded-circle border border-2 border-info"
-                     width="100"
-                     height="100"
-                     style="object-fit: cover">
-                <a href="#" class="text-decoration-none text-info"><small> Changer de photo</small></a>
-            </div>
+                <img
+                    {% if app.user.imageName is not null %}
+                        src="/images/profile_images/{{ app.user.imageName }}"
+                    {% else %}
+                        src="/images/default_images/default_Users_Profile.png"
+                    {% endif %}
 
-            <h1 class="ms-5"> {{ user.firstName ~ ' ' ~ user.lastName }} </h1>
+                    alt="Image de profil de Michel" class="bd-placeholder-img rounded-circle border border-2 border-info" width="100" height="100" style="object-fit: cover">
+
+            </div>
+            <div>
+                <h1 class="ms-5 text-secondary">
+                    {{ app.user.firstName ~ ' ' ~ app.user.lastName }}
+                </h1>
+            </div>
         </div>
+        <div class="d-flex flex-column align-items-start gap-4 text-secondary">
 
-        <hr class="mx-3">
-
-        <div class="d-flex flex-column gap-4">
-
-            <div class="d-flex align-items-center">
-                <i class="fa-solid fa-user fa-2xl col-3 text-center"></i>
-                <a class="col-9 text-center text-dark text-decoration-none" href="{{ path('app_profil_infos') }}">
-                    <h4 >Informations personnelles</h4>
+            <div class="d-flex align-items-center gap-3">
+                <i class="bi bi-person-circle fs-1"></i>
+                <a class="text-center text-decoration-none link-secondary" href="{{ path('app_profil_infos') }}">
+                    <h4 class="m-0">Informations personnelles</h4>
                 </a>
             </div>
-            <div class="d-flex align-items-center">
-                <i class="fa-solid fa-key fa-2xl  col-3 text-center"></i>
-                <a class="col-9 text-center text-dark text-decoration-none" href="#">
-                    <h4 >Mot De Passe</h4>
+            <div class="d-flex align-items-center gap-3">
+                <i class="bi bi-key-fill fs-1"></i>
+                <a class="text-center link-secondary text-decoration-none" href="{{ path('app_profil_edit_password') }}">
+                    <h4 class="m-0">Mot De Passe</h4>
                 </a>
             </div>
-            <div class="d-flex align-items-center">
-                <i class="fa-solid fa-car-rear fa-2xl  col-3 text-center"></i>
-                <a class="col-9 text-center text-dark text-decoration-none" href="{{ path('app_profil_vehicules') }}">
-                    <h4 >Véhicules</h4>
+            <div class="d-flex align-items-center gap-3">
+                <i class="bi bi-truck fs-1"></i>
+                <a class="text-center link-secondary text-decoration-none" href="{{ path('vehicules') }}">
+                    <h4 class="m-0">Véhicules</h4>
+                </a>
+            </div>
+            <div class="d-flex align-items-center gap-3">
+                <i class="bi bi-bell fs-1 position-relative">
+                    <span class="{{ notifications|length == 0 ? 'd-none' : '' }} position-absolute start-100 translate-middle p-2 bg-danger border border-light rounded-circle"></span>
+                </i>
+                <a class="text-center link-secondary text-decoration-none" href="{{ path ('app_notifications') }}">
+                    <h4 class="m-0">Notifications</h4>
+                </a>
+            </div>
+            <div class="d-flex align-items-center gap-3">
+            <i class="bi bi-chat-text fs-1"></i>
+                <a class="text-center link-secondary text-decoration-none" href="{{ path ('app_question_user') }}">
+                    <h4 class="m-0">FaQ</h4>
                 </a>
             </div>
         </div>
 
         <div class="d-flex justify-content-center">
-            <a class="m-4 text-center col-9 d-flex align-items-center justify-content-center rounded-pill bg-primary
-            gap-3" href="{{ path('app_profil_hote_inscription') }}">
-{#            <div class="m-4 text-center col-9 d-flex align-items-center justify-content-center rounded-pill bg-primary gap-3">#}
-                <i class="fa-solid fa-car-rear fa-2xl text-white"></i>
-                <h3 class="text-white my-2"> DEVENIR HÔTE </h3>
-{#            </div>#}
+            <a class="px-5 text-center d-flex align-items-center justify-content-center rounded-pill bg-primary gap-3"
+               href="{{ app.user.stations|length ? path('app_hotes') : path('app_hote_inscription') }}">
+                <i class="{{ app.user.stations|length ? 'bi bi-plugin fs-1' : 'fa-solid fa-car-rear fa-2xl'}} fa-2xl text-white"></i>
+                <h3 class="text-white my-2">
+                    {{ app.user.stations|length ? 'MA BORNE' : 'DEVENIR HÔTE' }}
+                </h3>
             </a>
         </div>
-
-        <div class="d-flex justify-content-center">
-            <a href="{{ path('app_profil_hote') }}" class="m-4 text-center col-9 d-flex align-items-center justify-content-center
-            rounded-pill
-            bg-primary
-            gap-3">
-                <i class="bi bi-plugin text-white fs-1"></i>
-                <h3 class="text-white my-2 "> Ma borne </h3>
-            </a>
-        </div>
-
-        <hr class="mx-3">
-
-        <div class="d-flex justify-content-center align-items-center gap-3">
+        <hr class="border border-secondary">
+        <div class="d-flex justify-content-between align-items-center">
 
             <div class="d-flex align-items-center gap-2">
                 <i class="fa-regular fa-envelope"></i>
-                <a class="text-decoration-none text-dark" href="{{ path('app_contact') }}">
+                <a class="text-decoration-none text-secondary d-flex gap-2 align-items-center" href="{{ path('app_contact') }}">
+                    <i class="bi bi-envelope-fill fs-2"></i>
                     <h5 class="text-center m-0">Contactez-nous</h5>
                 </a>
             </div>
 
-            <div class="d-flex align-items-center gap-2">
-                <i class="fa-solid fa-square-share-nodes"></i>
-                <h5 class="text-center m-0">Partagez</h5>
+            <div class="d-flex align-items-center gap-2 text-secondary">
+                <i class="bi bi-share-fill fs-2"></i>
+                <h5 class="text-center m-0 text-secondary">Partagez</h5>
             </div>
-
         </div>
-
-        <hr class="mx-3">
-
-        <div class="d-flex flex-column align-items-center justify-content-center">
-
-            <p> Suivez Chargether sur les réseaux sociaux </p>
-            <div class="d-flex gap-5 mb-3">
-                <a href="#" class="text-dark">
+        <hr class="border border-secondary">
+        <div class="d-flex flex-column gap-4">
+            <p class="text-center m-0"> Suivez Chargether sur les réseaux sociaux </p>
+            <div class="d-flex justify-content-center gap-5">
+                <a href="#" class="text-secondary">
                     <i class="bi bi-instagram fs-1"></i>
                 </a>
-                <a href="#" class="text-dark">
+                <a href="#" class="text-secondary">
                     <i class="bi bi-facebook fs-1"></i>
                 </a>
-                <a href="#" class="text-dark">
+                <a href="#" class="text-secondary">
                     <i class="bi bi-twitter fs-1"></i>
                 </a>
             </div>
+            <div class="d-flex justify-content-center">
+                <a href="{{ path('app_logout') }}" class="text-center text-danger text-decoration-none mb-5 pb-5"> se
+                    deconnecter
+                </a>
+            </div>
         </div>
-    </section>
-    {% include 'components/_navbar.html.twig' %}
-
+    </div>
 {% endblock %}

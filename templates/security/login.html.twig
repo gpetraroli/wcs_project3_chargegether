@@ -1,43 +1,106 @@
-{% extends 'base.html.twig' %}
+{% extends 'base_no_menu.html.twig' %}
 
-{% block title %}Connexion
-{% endblock %}
+{% block title %}Connexion{% endblock %}
 
 {% block body %}
+    {# Vidéo background #}
+    <video id="background-video" autoplay loop muted>
+        <source src="Video/acceuil.mp4" type="video/mp4">
+    </video>
 
-	<section class="container my-3">
-		<div class="row">
-			<div class="col">
+    <section class="container gap-4 d-flex flex-column justify-content-center mb-5 pb-5 p-3">
+        {# logo en haut #}
+        <img style="width: 100%;" src="images/default_images/logo1.png" alt="">
+        {# Petit texte #}
+        <p class="mx-2 text-center text-white fs-5"> Rejoignez la communauté Chargether</p>
+        {# bouton s'inscrire #}
+        <div class="d-flex justify-content-center">
+            <a href="{{ path('app_register') }}"
+               class="col-7 d-flex align-items-center justify-content-center text-decoration-none text-center
+               text-secondary
+               rounded-pill bg-white border-4 border-secondary">
+                <h3 class="fs-5 text-secondary my-2 ">
+                    S'INSCRIRE
+                </h3>
+            </a>
+        </div>
 
-				<form method="post">
+        <div class="d-flex flex-column gap-2 align-items-center">
+            <a href="#" class="text-decoration-none d-flex align-items-center bg-secondary gap-2 px-4 w-100">
+                <i class="bi bi-facebook text-white fs-1"></i>
+                <h3 class="fs-6 text-white m-0 w-100 text-center">
+                    CONNEXION AVEC FACEBOOK
+                </h3>
+            </a>
+            <a href="#" class="col-10 text-decoration-none d-flex align-items-center bg-secondary gap-2 px-4 w-100">
+                <i class="bi bi-google text-white fs-1"></i>
+                <h3 class="fs-6 text-white m-0 w-100 text-center">
+                    CONNEXION AVEC GOOGLE
+                </h3>
+            </a>
+            <a href="#" class="col-10 text-decoration-none d-flex align-items-center bg-secondary gap-2 px-4 w-100">
+                <i class="bi bi-apple text-white fs-1"></i>
+                <h3 class="fs-6 text-white m-0 w-100 text-center">
+                    CONNEXION AVEC APPLE
+                </h3>
+            </a>
 
-					{% for message in app.flashes('success') %}
-						<div class="alert alert-success mt-4">
-							{{ message }}
-						</div>
-					{% endfor %}
+            {# formulaire inscription #}
+                    <form method="post" class="w-100 d-flex flex-column gap-2">
+                        {% if error %}
+                            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                        {% endif %}
 
-					{% if error %}
-						<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-					{% endif %}
+                        <div class="d-flex justify-content-center">
+                            <div class="text-center w-100">
+                                <input type="email"
+                                       name="email" id="inputEmail"
+                                       class="form-control text-center fs-6 text-dark"
+                                       autocomplete="email"
+                                       placeholder="EMAIL"
+                                       required autofocus>
+                            </div>
+                        </div>
 
-					<div class='alert alert-success'>
-						<h1 class="h1 mb-3 font-weight-normal">Se connecter</h1>
+                        <div class="d-flex justify-content-center">
+                            <div class="col-10 text-center w-100">
+                                <input type="password"
+                                       name="password"
+                                       id="inputPassword"
+                                       class="form-control text-center fs-6 text-dark"
+                                       autocomplete="current-password"
+                                       placeholder="MOT DE PASSE"
+                                       required>
 
-						<label for="inputEmail">Email</label>
-						<input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
+                            </div>
+                        </div>
 
-						<label for="inputPassword">Mot de Passe</label>
-						<input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+                        <div class="d-flex justify-content-center">
+                            <div class="text-center w-100">
 
-						<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-						<button class="btn btn-lg btn-success mt-3" type="submit">
-							Me Connecter
-						</button>
-					</div>
-				</form>
-			</div>
-		</div>
-	</section>
+                                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                                <button class=" fs-6 btn btn-lg btn-secondary col-12 mt-4" type="submit">
+                                    SE CONNECTER
+                                </button>
+
+                            </div>
+                        </div>
+                    </form>
+
+
+
+                </div>
+
+
+
+        {# Mot de passe oublié #}
+        <p class="mx-2 mb-0 text-center text-white fs-5"> Mot de passe oublié</p>
+        <div class="d-flex justify-content-center">
+            <img class="text-center" src="images/default_images/RGPD.png" alt="" style="width: 30px">
+        </div>
+
+        <p class="mx-2 text-center text-white">© CHARGETHER 2022 - V0.00</p>
+
+    </section>
 
 {% endblock %}

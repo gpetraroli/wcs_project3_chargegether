@@ -16,4 +16,6 @@ const $ = require('jquery');
 // the bootstrap module doesn't export/return anything
 require('bootstrap');
 
-import './js/maps';
+import './js/flashMessagesHandler';
+
+import './js/notifier-widget';

@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\NotificationsRepository;
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: NotificationsRepository::class)]
 class Notification
@@ -23,9 +24,14 @@ class Notification
     #[ORM\Column(type: 'datetime_immutable')]
     private DateTimeImmutable $createdAt;
 
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'notifications')]
+    #[ORM\JoinColumn(nullable: false)]
+    private UserInterface $destinationUser;
+
     public function __construct()
     {
         $this->createdAt = new DateTimeImmutable();
+        $this->isRead = false;
     }
 
     public function getId(): int
@@ -66,5 +72,17 @@ class Notification
     public function setCreatedAt(\DateTimeImmutable $createdAt): void
     {
         $this->createdAt = $createdAt;
+    }
+
+    public function getDestinationUser(): ?UserInterface
+    {
+        return $this->destinationUser;
+    }
+
+    public function setDestinationUser(?UserInterface $destinationUser): self
+    {
+        $this->destinationUser = $destinationUser;
+
+        return $this;
     }
 }

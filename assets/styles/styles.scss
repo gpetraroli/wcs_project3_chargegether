@@ -1,0 +1,41 @@
+.selected {
+    position: relative;
+
+    img {
+        filter: brightness(0) saturate(100%) invert(27%) sepia(94%) saturate(5966%) hue-rotate(137deg) brightness(95%) contrast(94%);
+    }
+
+    i {
+        font-size: 5rem;
+        position: absolute;
+        top: -10%;
+        right:18%;
+
+    }
+}
+
+#background-video {
+    height: 110vh;
+    width: 100vw;
+    object-fit: cover;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: -30px;
+    bottom: 0;
+    z-index: -1;
+}
+
+.station-info {
+    z-index: 1000;
+    border-top-right-radius: 50px;
+    border-top-left-radius: 50px;
+    border: 2px solid $secondary;
+    border-bottom: 0;
+}
+
+.notification-alert {
+    top: 5px;
+}
+
+

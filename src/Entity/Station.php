@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use App\Config\PlugType;
+use App\Config\StationPower;
 use App\Repository\StationsRepository;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -16,14 +18,21 @@ class Station
     #[ORM\Column(type: 'string', length: 255)]
     private string $address;
 
-    #[ORM\Column(type: 'string', length: 45)]
-    private string $plugType;
+    #[ORM\Column(type: 'json')]
+    private string $coordinates;
 
-    #[ORM\Column(type: 'smallint')]
-    private int $power;
+    #[ORM\Column(type: 'string', length: 45, enumType: PlugType::class)]
+    private PlugType $plugType;
+
+    #[ORM\Column(type: 'smallint', enumType: StationPower::class)]
+    private StationPower $power;
 
     #[ORM\Column(type: 'text', nullable: true)]
     private string $description;
+
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'stations')]
+    #[ORM\JoinColumn(nullable: false)]
+    private User $owner;
 
     public function getId(): int
     {
@@ -45,22 +54,22 @@ class Station
         $this->address = $address;
     }
 
-    public function getPlugType(): string
+    public function getPlugType(): PlugType
     {
         return $this->plugType;
     }
 
-    public function setPlugType(string $plugType): void
+    public function setPlugType(PlugType $plugType): void
     {
         $this->plugType = $plugType;
     }
 
-    public function getPower(): int
+    public function getPower(): StationPower
     {
         return $this->power;
     }
 
-    public function setPower(int $power): void
+    public function setPower(StationPower $power): void
     {
         $this->power = $power;
     }
@@ -73,5 +82,27 @@ class Station
     public function setDescription(string $description): void
     {
         $this->description = $description;
+    }
+
+    public function getOwner(): User
+    {
+        return $this->owner;
+    }
+
+    public function setOwner(User $owner): self
+    {
+        $this->owner = $owner;
+
+        return $this;
+    }
+
+    public function getCoordinates(): string
+    {
+        return $this->coordinates;
+    }
+
+    public function setCoordinates(string $coordinates): void
+    {
+        $this->coordinates = $coordinates;
     }
 }

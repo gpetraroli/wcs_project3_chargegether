@@ -1,7 +1,6 @@
-{% extends 'base.html.twig' %}
+{% extends 'base_no_menu.html.twig' %}
 
-{% block title %}Inscription
-{% endblock %}
+{% block title %}Inscription - Chargether{% endblock %}
 
 {% block body %}
 
@@ -12,7 +11,7 @@
 
 				{{ form_start(form) }}
 
-				<div class='alert alert-secondary'>
+				<div class='bg-primary alert'>
 					<fieldset class="mb-2">
 						<legend>Mon Identité</legend>
 						{{ form_row(form.email) }}
@@ -20,7 +19,6 @@
 						{{ form_row(form.lastName) }}
 						{{ form_row(form.firstName) }}
 						{{ form_row(form.gender) }}
-						{{ form_row(form.avatar) }}
 
 						<div class="mb-3">
 							{{ form_row(form.imageFile) }}
@@ -31,7 +29,7 @@
 					</fieldset>
 				</div>
 
-				<div class='alert alert-secondary'>
+				<div class='bg-primary alert'>
 					<fieldset class="mb-2">
 						<legend>Mes Coordonnées</legend>
 						{{ form_row(form.address) }}
@@ -41,13 +39,23 @@
 						{{ form_row(form.phoneNumber) }}
 					</fieldset>
 				</div>
+
 				{{ form_row(form.plainPassword, {
             label: 'Password'
         }) }}
 				{{ form_row(form.agreeTerms) }}
 
+				<div class="mb-5">
+					<div class="d-flex justify-content-center mb-5">
+						<button type="submit" href="{{ path('app_profil_hote') }}" class="btn btn-secondary m-4 text-center text-white col-9 d-flex align-items-center justify-content-center rounded-pill gap-3 p-0">
+							<h3 class="text-white my-2">Enregistrer</h3>
+						</button>
+					</div>
+				</div>
+
 				{{ form_end(form) }}
 			</div>
 		</div>
 	</section>
+
 {% endblock %}

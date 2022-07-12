@@ -7,8 +7,6 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 use Symfony\Component\Validator\Constraints\IsTrue;
-use Symfony\Component\Validator\Constraints\Length;
-use Symfony\Component\Validator\Constraints\NotNull;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -21,7 +19,6 @@ use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
-use Symfony\Component\Validator\Constraints\LessThanOrEqual;
 
 class RegistrationFormType extends AbstractType
 {
@@ -40,7 +37,7 @@ class RegistrationFormType extends AbstractType
                     new Assert\Email(),
                     new Assert\Length(['min' => 2, 'max' => 255])
                 ],
-                'label' => 'Email',
+                 'label' => 'Email',
             ])
             ->add('lastName', TextType::class, [
                 'constraints' => [
@@ -60,7 +57,7 @@ class RegistrationFormType extends AbstractType
                 'constraints' => [
                     new Assert\Length(['min' => 2, 'max' => 45])
                 ],
-                'label' => 'Pseudo',
+                 'label' => 'Pseudo',
             ])
             ->add('address', TextType::class, [
                 'constraints' => [
@@ -76,7 +73,6 @@ class RegistrationFormType extends AbstractType
                     new NotBlank(),
                 ],
             ])
-
             ->add('city', TextType::class, [
                 'constraints' => [
                     new Assert\NotBlank(),
@@ -113,13 +109,6 @@ class RegistrationFormType extends AbstractType
                 ],
                 'label' => 'Téléphone',
             ])
-            ->add('avatar', TextType::class, [
-                'constraints' => [
-                    new Assert\NotBlank(),
-                    new Assert\Length(['min' => 2, 'max' => 255])
-                ],
-                'label' => 'Avatar'
-            ])
             ->add('imageFile', VichImageType::class, [
                 'label' => 'Photo de Profile',
                 'label_attr' => [
@@ -154,14 +143,9 @@ class RegistrationFormType extends AbstractType
                     ]
                 ],
                 'invalid_message' => 'Les mots de passe ne correspondent pas.'
-            ])
-            ->add('submit', SubmitType::class, [
-                'attr' => [
-                    'class' => 'btn btn-success btn-lg my-3'
-                ],
-                'label' => 'M\'Inscrire',
             ]);
     }
+
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

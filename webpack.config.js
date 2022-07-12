@@ -32,6 +32,9 @@ Encore
      * and one CSS file (e.g. app.css) if your JavaScript imports CSS.
      */
     .addEntry('app', './assets/app.js')
+    .addEntry('map', './assets/js/map.js')
+    .addEntry('geocoding', './assets/js/geocoding.js')
+    .addEntry('station', './assets/js/station.js')
 
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
     .enableStimulusBridge('./assets/controllers.json')

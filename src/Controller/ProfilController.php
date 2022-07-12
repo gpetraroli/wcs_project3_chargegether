@@ -2,44 +2,128 @@
 
 namespace App\Controller;
 
+use App\Form\ProfileType;
+use App\Entity\User;
+use App\Entity\Station;
+use App\Config\PlugType;
+use App\Form\StationType;
+use App\Config\StationPower;
+use App\Form\UserPasswordType;
+use App\Repository\NotificationsRepository;
 use App\Repository\UsersRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Repository\StationsRepository;
+use DateTime;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
+/**
+ * @method User|null getUser()
+ */
 #[Route('/profil', name: 'app_profil_')]
 class ProfilController extends AbstractController
 {
     #[Route('/', name: 'index')]
-    public function index(): Response
+    public function index(NotificationsRepository $notifRepository): Response
     {
         return $this->render('profil/index.html.twig', [
-            'user' => $this->getUser()
+            'user' => $this->getUser(),
+            'notifications' => $notifRepository->findBy([
+                'destinationUser' => $this->getUser(),
+                'isRead' => false,
+            ]),
         ]);
     }
 
-    #[Route('/infos', name: 'infos')]
-    public function infos(): Response
-    {
-        return $this->render('profil/infos.html.twig');
+    #[Route('/infos', name: 'infos', methods: ['GET', 'POST'])]
+    #[Security("is_granted('ROLE_USER')")]
+    public function infos(
+        Request $request,
+        EntityManagerInterface $manager,
+    ): Response {
+        $form = $this->createForm(ProfileType::class, $this->getUser());
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $manager->flush();
+
+            $this->addFlash('success', 'Les Informations de votre Compte ont bien été mises à jour.');
+
+
+            return $this->redirectToRoute('app_profil_index');
+        }
+
+        return $this->render('profil/infos.html.twig', [
+            'form' => $form->createView(),
+        ]);
     }
 
-    #[Route('/modifier-mdp', name: 'edit_password')]
-    public function editPassword(): Response
-    {
-        return $this->render('profil/edit_password.html.twig');
-    }
+    #[Route('/modifier-mdp', name: 'edit_password', methods: ['GET', 'POST'])]
+    #[Security("is_granted('ROLE_USER')")]
+    public function editPassword(
+        Request $request,
+        UserPasswordHasherInterface $hasher,
+        EntityManagerInterface $manager,
+        UsersRepository $usersRepository
+    ): Response {
 
-    #[Route('/vehicules', name: 'vehicules')]
-    public function vehicules(): Response
-    {
-        return $this->render('profil/vehicules.html.twig');
+        /** @var User $user */
+        $user = $this->getUser();
+        $form = $this->createForm(UserPasswordType::class);
+
+        // je lui passe la requete
+        $form->handleRequest($request);
+        //si le formulaire a été soumis et valide
+        if ($form->isSubmitted() && $form->isValid()) {
+            $datas = $form->getData();
+
+            $user->setUpdatedAt(new DateTime());
+
+            $newHashedPassword = $hasher->hashPassword($user, $datas['newPassword']);
+
+            $user->setPassword($newHashedPassword);
+
+            $manager->flush();
+
+            $this->addFlash(
+                'success',
+                'Le Mot de Passe a été modifié .'
+            );
+
+            return $this->redirectToRoute('app_profil_index');
+        }
+
+        return $this->render('profil/edit_password.html.twig', [
+            'form' => $form->createView()
+        ]);
     }
 
     #[Route('/hote-inscription', name: 'hote_inscription')]
-    public function hoteInscription(): Response
+    public function hoteInscription(Request $request, StationsRepository $stationsRepository): Response
     {
-        return $this->render('profil/hote_inscription.html.twig');
+        $station = new Station();
+        $station->setOwner($this->getUser());
+
+        $form = $this->createForm(StationType::class, $station);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $stationsRepository->add($station, true);
+
+            $this->addFlash('success', 'hôte correctement ajouté');
+
+            return $this->redirectToRoute('app_profil_hote');
+        }
+
+        return $this->renderForm('profil/hote_inscription.html.twig', [
+            'form' => $form,
+            'plugsType' => PlugType::cases(),
+            'stationPowers' => StationPower::cases(),
+        ]);
     }
 
     #[Route('/hote', name: 'hote')]

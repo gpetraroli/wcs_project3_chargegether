@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\BookingsRepository;
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: BookingsRepository::class)]
 class Booking
@@ -20,20 +21,27 @@ class Booking
     #[ORM\Column(type: 'datetime')]
     private \DateTimeImmutable $endRes;
 
-    #[ORM\Column(type: 'datetime')]
+    #[ORM\Column(type: 'datetime', nullable: true)]
     private \DateTimeImmutable $startLoc;
 
-    #[ORM\Column(type: 'datetime')]
+    #[ORM\Column(type: 'datetime', nullable: true)]
     private \DateTimeImmutable $endLoc;
-
-    #[ORM\Column(type: 'smallint')]
-    private int $batteryLevelStart;
-
-    #[ORM\Column(type: 'smallint')]
-    private int $batteryLevelEnd;
 
     #[ORM\Column(type: 'datetime_immutable')]
     private DateTimeImmutable $createdAt;
+
+    #[ORM\Column(type: 'decimal', precision: 5, scale: 2)]
+    private string $bookingPrice;
+
+    #[ORM\ManyToOne(targetEntity: Vehicle::class)]
+    private Vehicle $vehicle;
+
+    #[ORM\ManyToOne(targetEntity: Station::class)]
+    private Station $station;
+
+    // le mec qui réserve
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    private User $user;
 
     public function __construct()
     {
@@ -90,26 +98,6 @@ class Booking
         $this->endLoc = $endLoc;
     }
 
-    public function getBatteryLevelStart(): int
-    {
-        return $this->batteryLevelStart;
-    }
-
-    public function setBatteryLevelStart(int $batteryLevelStart): void
-    {
-        $this->batteryLevelStart = $batteryLevelStart;
-    }
-
-    public function getBatteryLevelEnd(): int
-    {
-        return $this->batteryLevelEnd;
-    }
-
-    public function setBatteryLevelEnd(int $batteryLevelEnd): void
-    {
-        $this->batteryLevelEnd = $batteryLevelEnd;
-    }
-
     public function getCreatedAt(): \DateTimeImmutable
     {
         return $this->createdAt;
@@ -118,5 +106,47 @@ class Booking
     public function setCreatedAt(\DateTimeImmutable $createdAt): void
     {
         $this->createdAt = $createdAt;
+    }
+
+    public function getBookingPrice(): ?string
+    {
+        return $this->bookingPrice;
+    }
+
+    public function setBookingPrice(string $bookingPrice): self
+    {
+        $this->bookingPrice = $bookingPrice;
+
+        return $this;
+    }
+
+    public function getVehicle(): Vehicle
+    {
+        return $this->vehicle;
+    }
+
+    public function setVehicle(Vehicle $vehicle): void
+    {
+        $this->vehicle = $vehicle;
+    }
+
+    public function getStation(): Station
+    {
+        return $this->station;
+    }
+
+    public function setStation(Station $station): void
+    {
+        $this->station = $station;
+    }
+
+    public function getUser(): User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): void
+    {
+        $this->user = $user;
     }
 }

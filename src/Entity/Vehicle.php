@@ -19,20 +19,22 @@ class Vehicle
     #[ORM\Column(type: 'string', length: 80)]
     private string $model;
 
-    #[ORM\Column(type: 'smallint')]
-    private int $batteryCapacity;
+    #[ORM\Column(type: 'string')]
+    private string $batteryCapacity;
 
     #[ORM\Column(type: 'string', length: 45)]
     private string $plugType;
 
-    #[ORM\Column(type: 'smallint')]
-    private int $batteryPower;
+    #[ORM\Column(type: 'string')]
+    private string $batteryPower;
+
+    #[ORM\Column(type: 'string')]
+    private string $image;
 
     public function getId(): int
     {
         return $this->id;
     }
-
     public function setId(int $id): void
     {
         $this->id = $id;
@@ -42,7 +44,6 @@ class Vehicle
     {
         return $this->brand;
     }
-
     public function setBrand(string $brand): void
     {
         $this->brand = $brand;
@@ -52,18 +53,25 @@ class Vehicle
     {
         return $this->model;
     }
-
     public function setModel(string $model): void
     {
         $this->model = $model;
     }
 
-    public function getBatteryCapacity(): int
+    public function getImage(): string
+    {
+        return $this->image;
+    }
+    public function setImage(string $image): void
+    {
+        $this->image = $image;
+    }
+
+    public function getBatteryCapacity(): string
     {
         return $this->batteryCapacity;
     }
-
-    public function setBatteryCapacity(int $batteryCapacity): void
+    public function setBatteryCapacity(string $batteryCapacity): void
     {
         $this->batteryCapacity = $batteryCapacity;
     }
@@ -72,19 +80,17 @@ class Vehicle
     {
         return $this->plugType;
     }
-
     public function setPlugType(string $plugType): void
     {
         $this->plugType = $plugType;
     }
 
-    public function getBatteryPower(): int
-    {
-        return $this->batteryPower;
-    }
-
-    public function setBatteryPower(int $batteryPower): void
+    public function setBatteryPower(string $batteryPower): void
     {
         $this->batteryPower = $batteryPower;
+    }
+    public function getBatteryPower(): string
+    {
+        return $this->batteryPower;
     }
 }

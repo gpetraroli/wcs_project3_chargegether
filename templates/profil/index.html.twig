@@ -1,7 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Profil - Chargether
-{% endblock %}
+{% block title %}Profil - Chargether{% endblock %}
 
 {% block body %}
 
@@ -53,8 +52,14 @@
                 <i class="bi bi-bell fs-1 position-relative">
                     <span class="{{ notifications|length == 0 ? 'd-none' : '' }} position-absolute start-100 translate-middle p-2 bg-danger border border-light rounded-circle"></span>
                 </i>
-                <a class="text-center link-secondary text-decoration-none" href="{{ path('app_notifications') }}">
+                <a class="text-center link-secondary text-decoration-none" href="{{ path ('app_notifications') }}">
                     <h4 class="m-0">Notifications</h4>
+                </a>
+            </div>
+            <div class="d-flex align-items-center gap-3">
+            <i class="bi bi-chat-text fs-1"></i>
+                <a class="text-center link-secondary text-decoration-none" href="{{ path ('app_question_user') }}">
+                    <h4 class="m-0">FaQ</h4>
                 </a>
             </div>
         </div>

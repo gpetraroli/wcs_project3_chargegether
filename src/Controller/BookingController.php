@@ -31,10 +31,10 @@ class BookingController extends AbstractController
     }
 
     #[Route('/reservations', name: 'booking')]
-    public function showBookingsList(Request $request,
-     EntityManagerInterface $manager
-     ): Response
-    {
+    public function showBookingsList(
+        Request $request,
+        EntityManagerInterface $manager
+    ): Response {
         return $this->render('booking/index.html.twig');
     }
 
@@ -105,5 +105,4 @@ class BookingController extends AbstractController
     {
         return $this->render('booking/infosbooking.html.twig');
     }
-
 }

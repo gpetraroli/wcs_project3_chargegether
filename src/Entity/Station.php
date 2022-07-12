@@ -6,7 +6,6 @@ use App\Config\PlugType;
 use App\Config\StationPower;
 use App\Repository\StationsRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: StationsRepository::class)]
 class Station
@@ -33,7 +32,7 @@ class Station
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'stations')]
     #[ORM\JoinColumn(nullable: false)]
-    private User|UserInterface $owner;
+    private User $owner;
 
     public function getId(): int
     {
@@ -85,12 +84,12 @@ class Station
         $this->description = $description;
     }
 
-    public function getOwner(): null|User|UserInterface
+    public function getOwner(): User
     {
         return $this->owner;
     }
 
-    public function setOwner(null|User|UserInterface $owner): self
+    public function setOwner(User $owner): self
     {
         $this->owner = $owner;
 

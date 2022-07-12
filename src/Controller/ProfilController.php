@@ -21,6 +21,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
+/**
+ * @method User|null getUser()
+ */
 #[Route('/profil', name: 'app_profil_')]
 class ProfilController extends AbstractController
 {

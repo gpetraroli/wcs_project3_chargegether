@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Booking;
 use App\Entity\Station;
+use App\Entity\User;
 use App\Form\BookingType;
 use App\Repository\BookingsRepository;
 use App\Service\BookingPriceManager;
@@ -16,6 +17,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+/**
+ * @method User|null getUser()
+ */
 class BookingController extends AbstractController
 {
     private BookingPriceManager $bookingPriceManager;

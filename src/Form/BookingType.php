@@ -25,21 +25,21 @@ class BookingType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        /** @var User|null $user */
-        $user = $this->security->getUser();
-
         $builder
             ->add('startRes', DateTimeType::class, [
                 'input' => 'datetime_immutable',
-                'label' => 'Début de la réservation'
+                'label' => 'Début de la réservation',
+                'data' => new \DateTimeImmutable()
             ])
+
             ->add('endRes', DateTimeType::class, [
                 'input' => 'datetime_immutable',
-                'label' => 'Fin de la réservation'
+                'label' => 'Fin de la réservation',
+                'data' => new \DateTimeImmutable()
             ])
             ->add('vehicle', EntityType::class, [
                 'class' => Vehicle::class,
-                'choices' => $user->getVehicles(),
+                'choices' => $this->security->getUser()->getVehicles(),
                 'choice_label' => 'model',
                 'label' => 'Véhicule pris en charge',
             ])

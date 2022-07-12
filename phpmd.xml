@@ -13,7 +13,6 @@
         <exclude name="BooleanArgumentFlag" />
     </rule>
     <rule ref="rulesets/codesize.xml" >
-        <exclude name="TooManyFields" />
         <exclude name="CyclomaticComplexity" />
         <exclude name="NPathComplexity" />
         <exclude name="TooManyFields" />
@@ -21,11 +20,7 @@
         <exclude name="ExcessiveClassComplexity" />
         <exclude name="ExcessiveMethodLength" />
     </rule>
-    <rule ref="rulesets/codesize.xml/TooManyFields" >
-        <properties>
-            <property name="maxfields" value="20" />
-        </properties>
-    </rule>
+
     <rule ref="rulesets/controversial.xml" >
         <exclude name="Superglobals" />
     </rule>

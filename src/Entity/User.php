@@ -309,12 +309,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
     public function removeStation(Station $station): self
     {
-        if ($this->stations->removeElement($station)) {
-            // set the owning side to null (unless already changed)
-            if ($station->getOwner() === $this) {
-                $station->setOwner(null);
-            }
-        }
+        $this->stations->removeElement($station);
+
         return $this;
     }
 

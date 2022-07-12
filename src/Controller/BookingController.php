@@ -5,6 +5,7 @@ namespace App\Controller;
 use DateTimeImmutable;
 use App\Entity\Booking;
 use App\Entity\Station;
+use App\Entity\User;
 use App\Form\BookingType;
 use App\Service\VehicleManager;
 use App\Service\BookingPriceManager;
@@ -17,6 +18,9 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+/**
+ * @method User|null getUser()
+ */
 class BookingController extends AbstractController
 {
     private BookingPriceManager $bookingPriceManager;

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Entity\Vehicle;
 use App\Repository\VehiclesRepository;
 use App\Service\VehicleManager;
@@ -10,8 +11,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+
 use function Symfony\Component\Translation\t;
 
+/**
+ * @method User|null getUser()
+ */
 class VehiculeController extends AbstractController
 {
     #[Route('/vehicules', name: 'vehicules')]
@@ -35,7 +40,7 @@ class VehiculeController extends AbstractController
     public function addVehicles(Vehicle $vehicle, EntityManagerInterface $entityManager): Response
     {
         $user = $this->getUser();
-        if ($user->getVehicles()->count() < 2){
+        if ($user->getVehicles()->count() < 2) {
             $user->addVehicle($vehicle);
             $entityManager->flush();
         } else {

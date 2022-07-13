@@ -30,7 +30,7 @@ class BookingController extends AbstractController
         $this->bookingPriceManager = $bookingPriceManager;
     }
 
-    #[Route('/reservations', name: 'booking')]
+    #[Route('/reservations', name: 'booking_index')]
     public function showBookingsList(): Response {
         $bookings = $this->getUser()->getBookings();
         return $this->render('booking/index.html.twig',[
@@ -38,7 +38,7 @@ class BookingController extends AbstractController
         ]);
     }
 
-    #[Route('/api/price', name: 'api_price')]
+    #[Route('/api/price', name: 'booking_api_price')]
     public function apiPrice(
         DateTimeImmutable $dateBegin,
         DateTimeImmutable $dateEnd,
@@ -56,7 +56,7 @@ class BookingController extends AbstractController
     }
 
     //nouvelle reservation
-    #[Route('/hote/reserver/{id}', name: 'add_booking')]
+    #[Route('/hote/reserver/{id}', name: 'booking_new')]
     public function addBooking(
         Station $station,
         Request $request,
@@ -100,9 +100,30 @@ class BookingController extends AbstractController
         ]);
     }
 
-    #[Route('/reservation/{id}', name: 'infos_booking')]
+    #[Route('/reservation/{id}', name: 'booking_info')]
     public function showBookingInfos(): Response
     {
         return $this->render('booking/infosbooking.html.twig');
     }
+
+    #[Route('/reservation/{id}/start', name: 'booking_startloc')]
+    public function startLocation(Booking $booking, BookingsRepository $bookingsRepository): Response
+    {
+        $date = new DateTimeImmutable();
+        $booking->setStartLoc($date);
+        $bookingsRepository->add($booking, true);
+
+        return $this->redirectToRoute('booking_index');
+    }
+
+    #[Route('/reservation/{id}/end', name: 'booking_endloc')]
+    public function endLocation(Booking $booking, BookingsRepository $bookingsRepository): Response
+    {
+        $date = new DateTimeImmutable();
+        $booking->setEndLoc($date);
+        $bookingsRepository->add($booking, true);
+
+        return $this->redirectToRoute('booking_index');
+    }
+
 }

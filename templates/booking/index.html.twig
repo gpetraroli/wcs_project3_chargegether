@@ -27,8 +27,6 @@
 
 
 {% for booking in app.user.bookings %}
-    {{ dump(booking) }}
-
     <div class="my-5">
 		<div class="my-2 mx-3 d-flex justify-content-between">
 			<h6 class="text-primary">Détails de la réservation :</h6>
@@ -64,20 +62,38 @@
         </div>
 	</div>
 
-    <div class="h4 pb-3 mx-3 border-bottom border-secondary"></div>
 
+{#{% if date("now") > booking.startRes and date("now") < booking.endRes %}#}
+{#now est plus petit#}
+{#{% else %}#}
+{#now est plus grand#}
+{#{% endif %}#}
+
+
+    {# Code pour la gestion des départ et arret de location #}
     {% if booking.startLoc is not null %}
-
         {% if booking.endLoc is not null %}
             Location terminée
         {% else %}
-            BOUTON TERMINER
+            <div class="text-center">
+                <a href="">
+                    <button type="button" class="btn btn-primary ">Terminer la location</button>
+                </a>
+            </div>
+        {% endif %}
+    {% else %}
+        {% if date("now") > booking.startRes and date("now") < booking.endRes %}
+            <div class="text-center">
+                <a href="">
+                    <button type="button" class="btn btn-primary ">Démarrer la location</button>
+                </a>
+            </div>
+        {% else %}
+            On est pas dans le crénaux horraire
         {% endif %}
 
-    {% else %}
-        BOUTON DEMARER LA RESERVATION
     {% endif %}
-
+    <div class="h4 pb-3 mx-3 border-bottom border-secondary"></div>
 {% endfor %}
 
 

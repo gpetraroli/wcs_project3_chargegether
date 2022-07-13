@@ -43,7 +43,7 @@ class BookingType extends AbstractType
                 'choice_label' => 'model',
                 'label' => 'Véhicule pris en charge',
             ])
-            ->add('Reserver', SubmitType::class);
+            ->add('submit', SubmitType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

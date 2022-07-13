@@ -85,12 +85,14 @@ class BookingController extends AbstractController
 
             $booking->setBookingPrice(strval($price));
             $bookingsRepository->add($booking, true);
-            $this->addFlash('success', 'nouvelle résa effectuée');
+            $this->addFlash('success', 'Réservation effectuée avec succes');
 
-            $messageBody = $this->getUser()->getUserName() . ' réservé votre station en ' . $station->getAddress() . ' pour le ' . $booking->getStartRes()->format('d/m/Y') . ' à ' . $booking->getStartRes()->format('H:i');
+            $messageBody = $this->getUser()->getUserName() . 'a réservé votre station à l\'adresse ' .
+                $station->getAddress() .
+                ' pour le ' . $booking->getStartRes()->format('d/m/Y') . ' à ' . $booking->getStartRes()->format('H:i');
             $notifManager->sendNotificationTo($station->getOwner(), $messageBody);
 
-            return $this->redirectToRoute('booking');
+            return $this->redirectToRoute('booking_index');
         }
 
         return $this->render('booking/addbooking.html.twig', [
@@ -107,21 +109,40 @@ class BookingController extends AbstractController
     }
 
     #[Route('/reservation/{id}/start', name: 'booking_startloc')]
-    public function startLocation(Booking $booking, BookingsRepository $bookingsRepository): Response
+    public function startLocation(Booking $booking, BookingsRepository $bookingsRepository, NotificationManager
+    $notifManager): Response
     {
         $date = new DateTimeImmutable();
         $booking->setStartLoc($date);
         $bookingsRepository->add($booking, true);
 
+        $station = $booking->getStation();
+
+        $this->addFlash('success', 'La location a bien démarré');
+
+        $messageBody = $this->getUser()->getUserName() . ' a démarré la location à l\'adresse ' . $station->getAddress
+            () . ' le ' . $date->format('d/m/Y') . ' a ' . $date->format('H:i');
+        $notifManager->sendNotificationTo($station->getOwner(), $messageBody);
+
         return $this->redirectToRoute('booking_index');
     }
 
     #[Route('/reservation/{id}/end', name: 'booking_endloc')]
-    public function endLocation(Booking $booking, BookingsRepository $bookingsRepository): Response
+    public function endLocation(Booking $booking, BookingsRepository $bookingsRepository,  NotificationManager
+    $notifManager): Response
     {
         $date = new DateTimeImmutable();
         $booking->setEndLoc($date);
         $bookingsRepository->add($booking, true);
+
+        $station = $booking->getStation();
+
+        $this->addFlash('success', 'La location est bien terminée');
+
+        $messageBody = $this->getUser()->getUserName() . ' a terminé la location à l\'adresse ' . $station->getAddress
+            () . ' le ' . $date->format('d/m/Y') . ' a ' . $date->format('H:i');
+        $notifManager->sendNotificationTo($station->getOwner(), $messageBody);
+
 
         return $this->redirectToRoute('booking_index');
     }

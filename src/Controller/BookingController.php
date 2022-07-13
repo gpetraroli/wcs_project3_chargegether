@@ -2,6 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\StationReview;
+use App\Form\RateStationsType;
+use App\Repository\ReviewsRepository;
 use DateTimeImmutable;
 use App\Entity\Booking;
 use App\Entity\Station;
@@ -141,6 +144,32 @@ class BookingController extends AbstractController
         $notifManager->sendNotificationTo($station->getOwner(), $messageBody);
 
 
-        return $this->redirectToRoute('booking_index');
+        return $this->redirectToRoute('booking_review', ['id' => $station->getId()]);
+    }
+
+    #[Route('/reservation/{id}/review', name: 'booking_review')]
+    public function stationReview(Station $station, Request $request, ReviewsRepository $reviewsRepository): Response
+    {
+        $stationReview = new StationReview();
+        $form = $this->createForm(RateStationsType::class, $stationReview);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            $stationReview->setId($station->getId());
+            $stationReview->setRate($form->get('rate')->getData());
+            $stationReview->setBody($form->get('body')->getData());
+
+            $reviewsRepository->add($stationReview, true);
+
+            $this->addFlash('success', 'Merci pour votre avis, il a bien été pris en compte');
+            return $this->redirectToRoute('booking_index');
+        }
+
+
+        return $this->render('booking/rateStation.html.twig', [
+            'form' => $form->createView(),
+        ]);
+
     }
 }

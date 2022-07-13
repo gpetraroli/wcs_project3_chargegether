@@ -154,8 +154,7 @@ class BookingController extends AbstractController
         $form = $this->createForm(RateStationsType::class, $stationReview);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid())
-        {
+        if ($form->isSubmitted() && $form->isValid()) {
             $stationReview->setId($station->getId());
             $stationReview->setRate($form->get('rate')->getData());
             $stationReview->setBody($form->get('body')->getData());
@@ -170,6 +169,5 @@ class BookingController extends AbstractController
         return $this->render('booking/rateStation.html.twig', [
             'form' => $form->createView(),
         ]);
-
     }
 }

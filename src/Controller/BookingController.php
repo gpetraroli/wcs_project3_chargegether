@@ -31,11 +31,11 @@ class BookingController extends AbstractController
     }
 
     #[Route('/reservations', name: 'booking')]
-    public function showBookingsList(
-        Request $request,
-        EntityManagerInterface $manager
-    ): Response {
-        return $this->render('booking/index.html.twig');
+    public function showBookingsList(): Response {
+        $bookings = $this->getUser()->getBookings();
+        return $this->render('booking/index.html.twig',[
+            'bookings' => $bookings
+        ]);
     }
 
     #[Route('/api/price', name: 'api_price')]
@@ -66,7 +66,7 @@ class BookingController extends AbstractController
     ): Response {
         $booking = new Booking();
         $booking->setStation($station);
-        $booking->setUser($this->getUser());
+        $booking->setBookingUser($this->getUser());
 
         $form = $this->createForm(BookingType::class, $booking);
         $form->handleRequest($request);

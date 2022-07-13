@@ -8,6 +8,10 @@
 
 {% block body %}
 
+
+
+
+
 	<header class="bg-primary d-flex justify-content-center">
 		<h4 class="text-white my-3">
 			<a href="{{ path('app_profil_hote') }}" class="btn btn-primary" role="button" data-bs-toggle="button">
@@ -20,41 +24,62 @@
 	<h1 class="mt-5 text-secondary text-center">Historique</h1>
 
 	<div class="h4 pb-3 mx-3 border-bottom border-secondary"></div>
-	<div class="my-5">
+
+
+{% for booking in app.user.bookings %}
+    {{ dump(booking) }}
+
+    <div class="my-5">
 		<div class="my-2 mx-3 d-flex justify-content-between">
-			<h6 class="text-primary">Détails des réservations :</h6>
+			<h6 class="text-primary">Détails de la réservation :</h6>
 		</div>
 
 		<div class="mx-3 d-flex justify-content-between">
-			<h6 class="text-secondary">Heure de début</h6>
+			<h6 class="text-secondary"> Date et heure de début</h6>
+            <p> Le {{ booking.startRes|date("d/m/Y \\a h \\h m") }}</p>
+
 		</div>
 
 		<div class="mx-3 d-flex justify-content-between">
 			<h6 class="text-secondary">Heure de fin</h6>
-		</div>
+            <p> Le {{ booking.endRes|date("d/m/Y \\a h \\h m") }}</p>
+
+        </div>
 
 		<div class="mx-3 d-flex justify-content-between">
 			<h6 class="text-secondary">Coût du stationnement</h6>
+            <p>{{ (booking.bookingPrice-1)|number_format(2, ',') }} €</p>
 		</div>
 
 		<div class="mx-3 d-flex justify-content-between">
 			<h6 class="text-secondary">Frais de Chargether</h6>
+            <p>1 €</p>
 		</div>
 
 		<div class="mx-3 d-flex justify-content-between">
-			<h6 class="text-secondary">
-				<b>Total</b>
-			</h6>
-		</div>
+			<h6 class="text-secondary fw-bold">
+				Total
+            </h6>
+            <p class="fw-bold">{{ booking.bookingPrice|number_format(2, ',') }} €</p>
+        </div>
 	</div>
 
-	<div class="mb-5">
-		<div class="d-flex justify-content-center mb-5">
-			<button type="submit" href="{{ path('app_profil_hote') }}" class="btn btn-secondary m-4 text-center text-white col-9 d-flex align-items-center justify-content-center rounded-pill gap-3 p-0">
-				<h3 class="text-white my-2">Facture</h3>
-			</button>
-		</div>
-	</div>
+    <div class="h4 pb-3 mx-3 border-bottom border-secondary"></div>
+
+    {% if booking.startLoc is not null %}
+
+        {% if booking.endLoc is not null %}
+            Location terminée
+        {% else %}
+            BOUTON TERMINER
+        {% endif %}
+
+    {% else %}
+        BOUTON DEMARER LA RESERVATION
+    {% endif %}
+
+{% endfor %}
+
 
 
 {% endblock %}

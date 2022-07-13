@@ -5,7 +5,7 @@ namespace App\Form;
 use App\Entity\Booking;
 use App\Entity\User;
 use App\Entity\Vehicle;
-use App\Repository\VehiclesRepository;
+use DateTimeImmutable;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
@@ -31,11 +31,14 @@ class BookingType extends AbstractType
         $builder
             ->add('startRes', DateTimeType::class, [
                 'input' => 'datetime_immutable',
-                'label' => 'Début de la réservation'
+                'label' => 'Début de la réservation',
+                'data' => new DateTimeImmutable()
             ])
+
             ->add('endRes', DateTimeType::class, [
                 'input' => 'datetime_immutable',
-                'label' => 'Fin de la réservation'
+                'label' => 'Fin de la réservation',
+                'data' => new DateTimeImmutable()
             ])
             ->add('vehicle', EntityType::class, [
                 'class' => Vehicle::class,

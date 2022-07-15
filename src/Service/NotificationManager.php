@@ -20,7 +20,8 @@ class NotificationManager
         UserInterface $destination,
         string $body,
         bool $needConfirmation = false,
-        ?Booking $booking = null): void {
+        ?Booking $booking = null
+    ): void {
         $notification = new Notification();
         $notification->setBody($body);
         $notification->setDestinationUser($destination);

@@ -156,14 +156,13 @@ class Booking
         $this->bookingUser = $user;
     }
 
-        public function isConfirmed(): bool
+    public function isConfirmed(): bool
     {
         return $this->confirmed;
     }
+
     public function setConfirmed(bool $confirmed): void
     {
         $this->confirmed = $confirmed;
     }
-
-
 }

@@ -110,6 +110,4 @@ class Notification
     {
         $this->booking = $booking;
     }
-
-
 }

@@ -109,15 +109,11 @@ class BookingController extends AbstractController
     }
 
     #[Route('/hote/confirmer/{notification}/{booking}', name: 'booking_confirmation')]
-    public function confirmReservation(Notification $notification,
-                                       Booking $booking,
-                                       NotificationsRepository $notifRepository,
-                                       NotificationManager $notificationManager,
-                                       BookingsRepository $bookingsRepository):
-    Response
+    public function confirmReservation(Notification $notification, Booking $booking, NotificationsRepository
+    $notifRepository, NotificationManager $notificationManager, BookingsRepository $bookingsRepository): Response
     {
         // On modifie la première notification qui demandait à l'hôte de confirmer la résa
-        $body = str_replace(' merci de valider la reservation en cliquant ici' , '', $notification->getBody());
+        $body = str_replace(' merci de valider la reservation en cliquant ici', '', $notification->getBody());
         $notification->setNeedConfirmation(false);
         $notification->setBody($body);
         $notifRepository->add($notification, true);

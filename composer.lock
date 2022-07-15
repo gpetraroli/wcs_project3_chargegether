@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a08c055fc60a8964409855d98473698d",
+    "content-hash": "d8361a1c273ec6c9bf2a483b1c21a4b8",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1377,6 +1377,94 @@
             "time": "2022-05-23T21:33:49+00:00"
         },
         {
+            "name": "easycorp/easyadmin-bundle",
+            "version": "v4.3.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/EasyCorp/EasyAdminBundle.git",
+                "reference": "d68433feffe7f254aa157c67ada5e40ef33b03c0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/EasyCorp/EasyAdminBundle/zipball/d68433feffe7f254aa157c67ada5e40ef33b03c0",
+                "reference": "d68433feffe7f254aa157c67ada5e40ef33b03c0",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/doctrine-bundle": "^2.5",
+                "doctrine/orm": "^2.10",
+                "ext-json": "*",
+                "php": ">=8.0.2",
+                "symfony/asset": "^5.4|^6.0",
+                "symfony/cache": "^5.4|^6.0",
+                "symfony/config": "^5.4|^6.0",
+                "symfony/dependency-injection": "^5.4|^6.0",
+                "symfony/deprecation-contracts": "^3.0",
+                "symfony/doctrine-bridge": "^5.4|^6.0",
+                "symfony/event-dispatcher": "^5.4|^6.0",
+                "symfony/filesystem": "^5.4|^6.0",
+                "symfony/form": "^5.4|^6.0",
+                "symfony/framework-bundle": "^5.4|^6.0",
+                "symfony/http-foundation": "^5.4|^6.0",
+                "symfony/http-kernel": "^5.4|^6.0",
+                "symfony/intl": "^5.4|^6.0",
+                "symfony/property-access": "^5.4|^6.0",
+                "symfony/security-bundle": "^5.4|^6.0",
+                "symfony/string": "^5.4|^6.0",
+                "symfony/translation": "^5.4|^6.0",
+                "symfony/twig-bundle": "^5.4|^6.0",
+                "symfony/uid": "^5.4|^6.0",
+                "symfony/validator": "^5.4|^6.0"
+            },
+            "require-dev": {
+                "doctrine/doctrine-fixtures-bundle": "^3.4",
+                "psr/log": "^1.0",
+                "symfony/browser-kit": "^5.4|^6.0",
+                "symfony/css-selector": "^5.4|^6.0",
+                "symfony/dom-crawler": "^5.4|^6.0",
+                "symfony/phpunit-bridge": "^5.4|^6.0"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "EasyCorp\\Bundle\\EasyAdminBundle\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Project Contributors",
+                    "homepage": "https://github.com/EasyCorp/EasyAdminBundle/graphs/contributors"
+                }
+            ],
+            "description": "Admin generator for Symfony applications",
+            "homepage": "https://github.com/EasyCorp/EasyAdminBundle",
+            "keywords": [
+                "admin",
+                "backend",
+                "generator"
+            ],
+            "support": {
+                "issues": "https://github.com/EasyCorp/EasyAdminBundle/issues",
+                "source": "https://github.com/EasyCorp/EasyAdminBundle/tree/v4.3.3"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/javiereguiluz",
+                    "type": "github"
+                }
+            ],
+            "time": "2022-07-11T18:05:21+00:00"
+        },
+        {
             "name": "egulias/email-validator",
             "version": "3.2.1",
             "source": {
@@ -1592,6 +1680,87 @@
                 }
             ],
             "time": "2022-05-05T09:31:05+00:00"
+        },
+        {
+            "name": "friendsofsymfony/ckeditor-bundle",
+            "version": "2.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/FriendsOfSymfony/FOSCKEditorBundle.git",
+                "reference": "a4df4056b2832881e17b939e83f25406a6cc6414"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSCKEditorBundle/zipball/a4df4056b2832881e17b939e83f25406a6cc6414",
+                "reference": "a4df4056b2832881e17b939e83f25406a6cc6414",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "ext-zip": "*",
+                "php": "^7.1|^8.0",
+                "symfony/asset": "^4.4 || ^5.0 || ^6.0",
+                "symfony/config": "^4.4 || ^5.0 || ^6.0",
+                "symfony/dependency-injection": "^4.4 || ^5.0 || ^6.0",
+                "symfony/expression-language": "^4.4 || ^5.0 || ^6.0",
+                "symfony/form": "^4.4 || ^5.0 || ^6.0",
+                "symfony/framework-bundle": "^4.4 || ^5.0 || ^6.0",
+                "symfony/http-foundation": "^4.4 || ^5.0 || ^6.0",
+                "symfony/http-kernel": "^4.4 || ^5.0 || ^6.0",
+                "symfony/options-resolver": "^4.4 || ^5.0 || ^6.0",
+                "symfony/property-access": "^4.4 || ^5.0 || ^6.0",
+                "symfony/routing": "^4.4 || ^5.0 || ^6.0",
+                "symfony/twig-bundle": "^4.4 || ^5.0 || ^6.0",
+                "twig/twig": "^2.4 || ^3.0"
+            },
+            "conflict": {
+                "sebastian/environment": "<1.3.4",
+                "sebastian/exporter": "<2.0.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2.0",
+                "matthiasnoback/symfony-dependency-injection-test": "^3.0 || ^4.0",
+                "symfony/console": "^4.4 || ^5.0 || ^6.0",
+                "symfony/phpunit-bridge": "^4.4 || ^5.0 || ^6.0",
+                "symfony/yaml": "^4.4 || ^5.0 || ^6.0"
+            },
+            "suggest": {
+                "egeloen/form-extra-bundle": "Allows to load CKEditor asynchronously"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "FOS\\CKEditorBundle\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Eric GELOEN",
+                    "email": "geloen.eric@gmail.com"
+                },
+                {
+                    "name": "FriendsOfSymfony Community",
+                    "homepage": "https://github.com/FriendsOfSymfony/FOSCKEditorBundle/graphs/contributors"
+                }
+            ],
+            "description": "Provides a CKEditor integration for your Symfony project.",
+            "keywords": [
+                "CKEditor"
+            ],
+            "support": {
+                "issues": "https://github.com/FriendsOfSymfony/FOSCKEditorBundle/issues",
+                "source": "https://github.com/FriendsOfSymfony/FOSCKEditorBundle/tree/2.4.0"
+            },
+            "time": "2022-01-07T12:34:18+00:00"
         },
         {
             "name": "jms/metadata",
@@ -5474,6 +5643,88 @@
             "time": "2022-05-24T11:49:31+00:00"
         },
         {
+            "name": "symfony/polyfill-uuid",
+            "version": "v1.26.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/polyfill-uuid.git",
+                "reference": "a41886c1c81dc075a09c71fe6db5b9d68c79de23"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/polyfill-uuid/zipball/a41886c1c81dc075a09c71fe6db5b9d68c79de23",
+                "reference": "a41886c1c81dc075a09c71fe6db5b9d68c79de23",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1"
+            },
+            "provide": {
+                "ext-uuid": "*"
+            },
+            "suggest": {
+                "ext-uuid": "For best performance"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "1.26-dev"
+                },
+                "thanks": {
+                    "name": "symfony/polyfill",
+                    "url": "https://github.com/symfony/polyfill"
+                }
+            },
+            "autoload": {
+                "files": [
+                    "bootstrap.php"
+                ],
+                "psr-4": {
+                    "Symfony\\Polyfill\\Uuid\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Grégoire Pineau",
+                    "email": "lyrixx@lyrixx.info"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony polyfill for uuid functions",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "compatibility",
+                "polyfill",
+                "portable",
+                "uuid"
+            ],
+            "support": {
+                "source": "https://github.com/symfony/polyfill-uuid/tree/v1.26.0"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2022-05-24T11:49:31+00:00"
+        },
+        {
             "name": "symfony/process",
             "version": "v6.1.0",
             "source": {
@@ -7061,6 +7312,80 @@
             "time": "2022-05-27T16:55:36+00:00"
         },
         {
+            "name": "symfony/uid",
+            "version": "v6.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/uid.git",
+                "reference": "5d1bba611fcd5d7ccc6435fd4ea8580f9ed75406"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/uid/zipball/5d1bba611fcd5d7ccc6435fd4ea8580f9ed75406",
+                "reference": "5d1bba611fcd5d7ccc6435fd4ea8580f9ed75406",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.1",
+                "symfony/polyfill-uuid": "^1.15"
+            },
+            "require-dev": {
+                "symfony/console": "^5.4|^6.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Uid\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Grégoire Pineau",
+                    "email": "lyrixx@lyrixx.info"
+                },
+                {
+                    "name": "Nicolas Grekas",
+                    "email": "p@tchwork.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Provides an object-oriented API to generate and represent UIDs",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "UID",
+                "ulid",
+                "uuid"
+            ],
+            "support": {
+                "source": "https://github.com/symfony/uid/tree/v6.1.0"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2022-04-15T14:25:02+00:00"
+        },
+        {
             "name": "symfony/validator",
             "version": "v6.1.1",
             "source": {
@@ -7603,16 +7928,16 @@
         },
         {
             "name": "symfonycasts/reset-password-bundle",
-            "version": "v1.13.0",
+            "version": "v1.14.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/SymfonyCasts/reset-password-bundle.git",
-                "reference": "6e926da7fb2031ef38a385a994ea3a52b436dc8c"
+                "reference": "b8f59b335deb102ed50bbe49a208ed211e80c0f7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SymfonyCasts/reset-password-bundle/zipball/6e926da7fb2031ef38a385a994ea3a52b436dc8c",
-                "reference": "6e926da7fb2031ef38a385a994ea3a52b436dc8c",
+                "url": "https://api.github.com/repos/SymfonyCasts/reset-password-bundle/zipball/b8f59b335deb102ed50bbe49a208ed211e80c0f7",
+                "reference": "b8f59b335deb102ed50bbe49a208ed211e80c0f7",
                 "shasum": ""
             },
             "require": {
@@ -7647,22 +7972,22 @@
             "description": "Symfony bundle that adds password reset functionality.",
             "support": {
                 "issues": "https://github.com/SymfonyCasts/reset-password-bundle/issues",
-                "source": "https://github.com/SymfonyCasts/reset-password-bundle/tree/v1.13.0"
+                "source": "https://github.com/SymfonyCasts/reset-password-bundle/tree/v1.14.0"
             },
-            "time": "2022-02-23T14:48:27+00:00"
+            "time": "2022-07-12T16:54:15+00:00"
         },
         {
             "name": "symfonycasts/verify-email-bundle",
-            "version": "v1.10.0",
+            "version": "v1.11.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/SymfonyCasts/verify-email-bundle.git",
-                "reference": "7b9b1f59093dd260afa91eb6b3a220906a0fe0e2"
+                "reference": "725b33d1cdeda35055d3dee61f0c84c76f6da9ae"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SymfonyCasts/verify-email-bundle/zipball/7b9b1f59093dd260afa91eb6b3a220906a0fe0e2",
-                "reference": "7b9b1f59093dd260afa91eb6b3a220906a0fe0e2",
+                "url": "https://api.github.com/repos/SymfonyCasts/verify-email-bundle/zipball/725b33d1cdeda35055d3dee61f0c84c76f6da9ae",
+                "reference": "725b33d1cdeda35055d3dee61f0c84c76f6da9ae",
                 "shasum": ""
             },
             "require": {
@@ -7696,9 +8021,9 @@
             "description": "Simple, stylish Email Verification for Symfony",
             "support": {
                 "issues": "https://github.com/SymfonyCasts/verify-email-bundle/issues",
-                "source": "https://github.com/SymfonyCasts/verify-email-bundle/tree/v1.10.0"
+                "source": "https://github.com/SymfonyCasts/verify-email-bundle/tree/v1.11.0"
             },
-            "time": "2022-03-08T22:08:27+00:00"
+            "time": "2022-07-12T16:51:29+00:00"
         },
         {
             "name": "twig/extra-bundle",
@@ -9699,16 +10024,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "1.8.0",
+            "version": "1.8.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "b7648d4ee9321665acaf112e49da9fd93df8fbd5"
+                "reference": "8dbba631fa32f4b289404469c2afd6122fd61d67"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/b7648d4ee9321665acaf112e49da9fd93df8fbd5",
-                "reference": "b7648d4ee9321665acaf112e49da9fd93df8fbd5",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/8dbba631fa32f4b289404469c2afd6122fd61d67",
+                "reference": "8dbba631fa32f4b289404469c2afd6122fd61d67",
                 "shasum": ""
             },
             "require": {
@@ -9734,7 +10059,7 @@
             "description": "PHPStan - PHP Static Analysis Tool",
             "support": {
                 "issues": "https://github.com/phpstan/phpstan/issues",
-                "source": "https://github.com/phpstan/phpstan/tree/1.8.0"
+                "source": "https://github.com/phpstan/phpstan/tree/1.8.1"
             },
             "funding": [
                 {
@@ -9754,25 +10079,25 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-06-29T08:53:31+00:00"
+            "time": "2022-07-12T16:08:06+00:00"
         },
         {
             "name": "phpstan/phpstan-doctrine",
-            "version": "1.3.9",
+            "version": "1.3.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan-doctrine.git",
-                "reference": "e0281f8acec4ca743403b959885315508c9b3351"
+                "reference": "e6a149b380a4a00aea27a176a09691a8cb5f0cc7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan-doctrine/zipball/e0281f8acec4ca743403b959885315508c9b3351",
-                "reference": "e0281f8acec4ca743403b959885315508c9b3351",
+                "url": "https://api.github.com/repos/phpstan/phpstan-doctrine/zipball/e6a149b380a4a00aea27a176a09691a8cb5f0cc7",
+                "reference": "e6a149b380a4a00aea27a176a09691a8cb5f0cc7",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.2 || ^8.0",
-                "phpstan/phpstan": "^1.7.3"
+                "phpstan/phpstan": "^1.8.0"
             },
             "conflict": {
                 "doctrine/collections": "<1.0",
@@ -9820,9 +10145,9 @@
             "description": "Doctrine extensions for PHPStan",
             "support": {
                 "issues": "https://github.com/phpstan/phpstan-doctrine/issues",
-                "source": "https://github.com/phpstan/phpstan-doctrine/tree/1.3.9"
+                "source": "https://github.com/phpstan/phpstan-doctrine/tree/1.3.10"
             },
-            "time": "2022-06-06T09:18:01+00:00"
+            "time": "2022-07-13T10:42:52+00:00"
         },
         {
             "name": "phpstan/phpstan-symfony",

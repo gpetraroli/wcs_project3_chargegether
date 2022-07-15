@@ -56,35 +56,41 @@
 	</div>
 
     {# Code pour la gestion des départ et arret de location #}
-    {# Si la location a démaré #}
-    {% if booking.startLoc is not null %}
-        {# si la location est terminée#}
-        {% if booking.endLoc is not null %}
-            Location terminée
-        {# si la location n'est pas terminée #}
-        {% else %}
-            <div class="text-center">
-                <a href="{{ path('booking_endloc', {'id': booking.id}) }}">
-                    <button type="button" class="btn btn-primary ">Terminer la location</button>
-                </a>
-            </div>
-        {% endif %}
-    {# si la location n'a pas démarrée #}
-    {% else %}
-        {# on vérifie qu'on est bien dans le crénaux horraire #}
-        {% if date("now") > booking.startRes and date("now") < booking.endRes %}
-            <div class="text-center">
-                <a href="{{ path('booking_startloc', {'id': booking.id}) }}">
-                    <button type="button" class="btn btn-primary ">Démarrer la location</button>
-                </a>
-            </div>
-        {% elseif date("now") < booking.startRes %}
-            Il est trop tôt pour commencer la réservation
-        {% elseif date("now") > booking.endRes %}
-            Le créneau a été dépassé
-        {% endif %}
 
+    {# On vérifie que la réservation est confirmée#}
+    {% if booking.confirmed %}
+        {# Si la location a démaré #}
+        {% if booking.startLoc is not null %}
+            {# si la location est terminée#}
+            {% if booking.endLoc is not null %}
+                Location terminée
+            {# si la location n'est pas terminée #}
+            {% else %}
+                <div class="text-center">
+                    <a href="{{ path('booking_endloc', {'id': booking.id}) }}">
+                        <button type="button" class="btn btn-primary ">Terminer la location</button>
+                    </a>
+                </div>
+            {% endif %}
+        {# si la location n'a pas démarrée #}
+        {% else %}
+            {# on vérifie qu'on est bien dans le crénaux horraire #}
+            {% if date("now") > booking.startRes and date("now") < booking.endRes %}
+                <div class="text-center">
+                    <a href="{{ path('booking_startloc', {'id': booking.id}) }}">
+                        <button type="button" class="btn btn-primary ">Démarrer la location</button>
+                    </a>
+                </div>
+            {% elseif date("now") < booking.startRes %}
+                Il est trop tôt pour commencer la réservation
+            {% elseif date("now") > booking.endRes %}
+                Le créneau a été dépassé
+            {% endif %}
+        {% endif %}
+    {% else %}
+        La réservation n'a pas encore été confirmée par l'hôte
     {% endif %}
+
     <div class="h4 pb-3 mx-3 border-bottom border-secondary"></div>
 {% endfor %}
 

@@ -16,9 +16,8 @@ class NotificationManager
         $this->notifRepository = $notifRepository;
     }
 
-    public function sendNotificationTo(UserInterface $destination, string $body, bool $needConfirmation = false,
-                                       ?Booking $booking = null): void
-    {
+    public function sendNotificationTo(
+        UserInterface $destination, string $body, bool $needConfirmation = false, ?Booking $booking = null): void {
         $notification = new Notification();
         $notification->setBody($body);
         $notification->setDestinationUser($destination);

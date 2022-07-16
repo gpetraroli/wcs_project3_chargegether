@@ -16,18 +16,21 @@ use App\Service\VehicleManager;
 use App\Service\BookingPriceManager;
 use App\Repository\BookingsRepository;
 use App\Service\NotificationManager;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
 
 /**
  * @method User|null getUser()
  */
 class BookingController extends AbstractController
 {
+
     private BookingPriceManager $bookingPriceManager;
 
     public function __construct(BookingPriceManager $bookingPriceManager)
@@ -156,7 +159,8 @@ class BookingController extends AbstractController
     }
 
     #[Route('/reservation/{id}/end', name: 'booking_endloc')]
-    public function endLocation(Booking $booking, BookingsRepository $bookingsRepository, NotificationManager $notifManager): Response
+    public function endLocation(Booking $booking, BookingsRepository $bookingsRepository, NotificationManager
+    $notifManager, MailerInterface $mailer): Response
     {
         $date = new DateTimeImmutable();
         $booking->setEndLoc($date);
@@ -168,6 +172,14 @@ class BookingController extends AbstractController
 
         $messageBody = $this->getUser()->getUserName() . ' a terminé la location à l\'adresse ' . $station->getAddress() . ' le ' . $date->format('d/m/Y') . ' a ' . $date->format('H:i');
         $notifManager->sendNotificationTo($station->getOwner(), $messageBody);
+
+        $email = (new Email())
+            ->from($this->getUser()->getEmail())
+            ->to($station->getOwner()->getEmail())
+            ->subject('Récap de la location de votre borne ! ')
+            ->html('<p>Voici le récapitulatif de vottre location : </p>' . $messageBody);
+
+        $mailer->send($email);
 
 
         return $this->redirectToRoute('booking_review', ['id' => $station->getId()]);

@@ -24,13 +24,11 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-
 /**
  * @method User|null getUser()
  */
 class BookingController extends AbstractController
 {
-
     private BookingPriceManager $bookingPriceManager;
 
     public function __construct(BookingPriceManager $bookingPriceManager)

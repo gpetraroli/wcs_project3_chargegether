@@ -157,8 +157,7 @@ class BookingController extends AbstractController
     }
 
     #[Route('/reservation/{id}/end', name: 'booking_endloc')]
-    public function endLocation(Booking $booking, BookingsRepository $bookingsRepository, NotificationManager
-    $notifManager, MailerInterface $mailer): Response
+    public function endLocation(Booking $booking, BookingsRepository $bookingsRepository, NotificationManager $notifManager, MailerInterface $mailer): Response
     {
         $date = new DateTimeImmutable();
         $booking->setEndLoc($date);

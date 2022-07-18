@@ -171,7 +171,7 @@ class BookingController extends AbstractController
         $notifManager->sendNotificationTo($station->getOwner(), $messageBody);
 
         $email = (new Email())
-            ->from($this->getUser()->getEmail())
+            ->from('contact@chargether.com')
             ->to($station->getOwner()->getEmail())
             ->subject('Récap de la location de votre borne ! ')
             ->html('<p>Voici le récapitulatif de vottre location : </p>' . $messageBody);

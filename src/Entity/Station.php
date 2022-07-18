@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Config\PlugType;
 use App\Config\StationPower;
 use App\Repository\StationsRepository;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: StationsRepository::class)]
@@ -34,6 +35,10 @@ class Station
     #[ORM\JoinColumn(nullable: false)]
     private User $owner;
 
+    #[ORM\OneToMany(mappedBy: 'station', targetEntity: Booking::class, orphanRemoval: true)]
+    private Collection $bookings;
+
+
     public function getId(): int
     {
         return $this->id;
@@ -42,6 +47,16 @@ class Station
     public function setId(int $id): void
     {
         $this->id = $id;
+    }
+
+
+    public function getBookings(): Collection
+    {
+        return $this->bookings;
+    }
+    public function setBookings(Collection $bookings): void
+    {
+        $this->bookings = $bookings;
     }
 
     public function getAddress(): string

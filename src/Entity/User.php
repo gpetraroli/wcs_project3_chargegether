@@ -92,6 +92,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'bookingUser', targetEntity: Booking::class, orphanRemoval: true)]
     private Collection $bookings;
 
+    #[ORM\OneToMany(mappedBy: 'owner', targetEntity: StationReview::class, orphanRemoval: true)]
+    private Collection $reviews;
+
     public function __construct()
     {
         $this->createdAt = new DateTime();
@@ -118,6 +121,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setUserName(string $userName): void
     {
         $this->userName = $userName;
+    }
+
+    public function getReviews(): Collection
+    {
+        return $this->reviews;
+    }
+    public function setReviews(Collection $reviews): void
+    {
+        $this->reviews = $reviews;
     }
 
     public function getPassword(): string

@@ -193,6 +193,8 @@ class BookingController extends AbstractController
             $stationReview->setId($station->getId());
             $stationReview->setRate($form->get('rate')->getData());
             $stationReview->setBody($form->get('body')->getData());
+            $stationReview->setStation($station);
+            $stationReview->setOwner($this->getUser());
 
             $reviewsRepository->add($stationReview, true);
 

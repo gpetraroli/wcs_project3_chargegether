@@ -38,6 +38,10 @@ class Station
     #[ORM\OneToMany(mappedBy: 'station', targetEntity: Booking::class, orphanRemoval: true)]
     private Collection $bookings;
 
+    #[ORM\OneToMany(mappedBy: 'station', targetEntity: StationReview::class, orphanRemoval: true)]
+    private Collection $reviews;
+
+
 
     public function getId(): int
     {
@@ -47,6 +51,16 @@ class Station
     public function setId(int $id): void
     {
         $this->id = $id;
+    }
+
+
+    public function getReviews(): Collection
+    {
+        return $this->reviews;
+    }
+    public function setReviews(Collection $reviews): void
+    {
+        $this->reviews = $reviews;
     }
 
 

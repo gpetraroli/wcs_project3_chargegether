@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use Doctrine\Common\Collections\Collection;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 class VehicleManager
@@ -25,5 +26,20 @@ class VehicleManager
         $session = $this->requestStack->getSession();
 
         return $session->get('selectedVehicle');
+    }
+
+    public function removeSelectedVehicle(int $id): void
+    {
+        if ($this->getSelectedVehicle() === $id) {
+            $session = $this->requestStack->getSession();
+            $session->remove('selectedVehicle');
+        }
+    }
+
+    public function selectDefaultVehicle(Collection $vehicles): void
+    {
+        if (!$vehicles->isEmpty() && !$this->getSelectedVehicle()) {
+            $this->setSelectedVehicle($vehicles->first()->getId());
+        }
     }
 }

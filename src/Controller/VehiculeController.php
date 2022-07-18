@@ -37,10 +37,13 @@ class VehiculeController extends AbstractController
     public function addVehicles(
         Vehicle $vehicle,
         EntityManagerInterface $entityManager,
+        VehicleManager $vehicleManager
     ): Response {
         $user = $this->getUser();
         $user->addVehicle($vehicle);
         $entityManager->flush();
+
+        $vehicleManager->selectDefaultVehicle($user->getVehicles());
 
         return $this->redirectToRoute('vehicules');
     }
@@ -49,10 +52,14 @@ class VehiculeController extends AbstractController
     public function remove(
         Vehicle $vehicle,
         EntityManagerInterface $entityManager,
+        VehicleManager $vehicleManager
     ): Response {
         $user = $this->getUser();
         $user->removeVehicle($vehicle);
         $entityManager->flush();
+
+        $vehicleManager->removeSelectedVehicle($vehicle->getId());
+        $vehicleManager->selectDefaultVehicle($user->getVehicles());
 
         return $this->redirectToRoute('vehicules');
     }

@@ -3,7 +3,6 @@
 namespace App\Service;
 
 use Doctrine\Common\Collections\Collection;
-use phpDocumentor\Reflection\Types\Void_;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 class VehicleManager

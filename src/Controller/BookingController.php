@@ -2,6 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Notification;
+use App\Entity\StationReview;
+use App\Form\RateStationsType;
+use App\Repository\NotificationsRepository;
+use App\Repository\ReviewsRepository;
 use DateTimeImmutable;
 use App\Entity\Booking;
 use App\Entity\Station;
@@ -11,9 +16,10 @@ use App\Service\VehicleManager;
 use App\Service\BookingPriceManager;
 use App\Repository\BookingsRepository;
 use App\Service\NotificationManager;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -30,15 +36,13 @@ class BookingController extends AbstractController
         $this->bookingPriceManager = $bookingPriceManager;
     }
 
-    #[Route('/reservations', name: 'booking')]
-    public function showBookingsList(
-        Request $request,
-        EntityManagerInterface $manager
-    ): Response {
+    #[Route('/reservations', name: 'booking_index')]
+    public function showBookingsList(): Response
+    {
         return $this->render('booking/index.html.twig');
     }
 
-    #[Route('/api/price', name: 'api_price')]
+    #[Route('/api/price', name: 'booking_api_price')]
     public function apiPrice(
         DateTimeImmutable $dateBegin,
         DateTimeImmutable $dateEnd,
@@ -56,7 +60,7 @@ class BookingController extends AbstractController
     }
 
     //nouvelle reservation
-    #[Route('/hote/reserver/{id}', name: 'add_booking')]
+    #[Route('/hote/reserver/{id}', name: 'booking_new')]
     public function addBooking(
         Station $station,
         Request $request,
@@ -66,7 +70,7 @@ class BookingController extends AbstractController
     ): Response {
         $booking = new Booking();
         $booking->setStation($station);
-        $booking->setUser($this->getUser());
+        $booking->setBookingUser($this->getUser());
 
         $form = $this->createForm(BookingType::class, $booking);
         $form->handleRequest($request);
@@ -85,12 +89,14 @@ class BookingController extends AbstractController
 
             $booking->setBookingPrice(strval($price));
             $bookingsRepository->add($booking, true);
-            $this->addFlash('success', 'nouvelle résa effectuée');
+            $this->addFlash('success', 'Réservation effectuée avec succes');
 
-            $messageBody = $this->getUser()->getUserName() . ' réservé votre station en ' . $station->getAddress() . ' pour le ' . $booking->getStartRes()->format('d/m/Y') . ' à ' . $booking->getStartRes()->format('H:i');
-            $notifManager->sendNotificationTo($station->getOwner(), $messageBody);
+            $messageBody = $this->getUser()->getUserName() . 'a réservé votre station à l\'adresse ' .
+                $station->getAddress() .
+                ' pour le ' . $booking->getStartRes()->format('d/m/Y') . ' à ' . $booking->getStartRes()->format('H:i') . ' merci de valider la reservation en cliquant ici';
+            $notifManager->sendNotificationTo($station->getOwner(), $messageBody, true, $booking);
 
-            return $this->redirectToRoute('booking');
+            return $this->redirectToRoute('booking_index');
         }
 
         return $this->render('booking/addbooking.html.twig', [
@@ -100,9 +106,103 @@ class BookingController extends AbstractController
         ]);
     }
 
-    #[Route('/reservation/{id}', name: 'infos_booking')]
+    #[Route('/hote/confirmer/{notification}/{booking}', name: 'booking_confirmation')]
+    public function confirmReservation(Notification $notification, Booking $booking, NotificationsRepository $notifRepository, NotificationManager $notificationManager, BookingsRepository $bookingsRepository): Response
+    {
+        // On modifie la première notification qui demandait à l'hôte de confirmer la résa
+        $body = str_replace(' merci de valider la reservation en cliquant ici', '', $notification->getBody());
+        $notification->setNeedConfirmation(false);
+        $notification->setBody($body);
+        $notifRepository->add($notification, true);
+
+        // On rajouter une nouvelle notif à l'hôte pour lui confirmer sa confirmation
+        $messageBodyHote =  'Vous venez de confirmer la réservation suivante : ' . $body;
+        $notificationManager->sendNotificationTo($this->getUser(), $messageBodyHote);
+
+        // On prévient le client que sa résa est confirmée
+        $messageBodyClient =  'Votre réservation à bien été confirmée, retrouvez-là dans l\'onglet Réservations';
+        $notificationManager->sendNotificationTo($booking->getBookingUser(), $messageBodyClient);
+
+        // On passe le confirmed de booking à true
+        $booking->setConfirmed(true);
+        $bookingsRepository->add($booking, true);
+
+
+        return $this->redirectToRoute('app_notifications');
+    }
+
+
+
+    #[Route('/reservation/{id}', name: 'booking_info')]
     public function showBookingInfos(): Response
     {
         return $this->render('booking/infosbooking.html.twig');
+    }
+
+    #[Route('/reservation/{id}/start', name: 'booking_startloc')]
+    public function startLocation(Booking $booking, BookingsRepository $bookingsRepository, NotificationManager $notifManager): Response
+    {
+        $date = new DateTimeImmutable();
+        $booking->setStartLoc($date);
+        $bookingsRepository->add($booking, true);
+
+        $station = $booking->getStation();
+
+        $this->addFlash('success', 'La location a bien démarré');
+
+        $messageBody = $this->getUser()->getUserName() . ' a démarré la location à l\'adresse ' . $station->getAddress() . ' le ' . $date->format('d/m/Y') . ' a ' . $date->format('H:i');
+        $notifManager->sendNotificationTo($station->getOwner(), $messageBody);
+
+        return $this->redirectToRoute('booking_index');
+    }
+
+    #[Route('/reservation/{id}/end', name: 'booking_endloc')]
+    public function endLocation(Booking $booking, BookingsRepository $bookingsRepository, NotificationManager $notifManager, MailerInterface $mailer): Response
+    {
+        $date = new DateTimeImmutable();
+        $booking->setEndLoc($date);
+        $bookingsRepository->add($booking, true);
+
+        $station = $booking->getStation();
+
+        $this->addFlash('success', 'La location est bien terminée');
+
+        $messageBody = $this->getUser()->getUserName() . ' a terminé la location à l\'adresse ' . $station->getAddress() . ' le ' . $date->format('d/m/Y') . ' a ' . $date->format('H:i');
+        $notifManager->sendNotificationTo($station->getOwner(), $messageBody);
+
+        $email = (new Email())
+            ->from('contact@chargether.com')
+            ->to($station->getOwner()->getEmail())
+            ->subject('Récap de la location de votre borne ! ')
+            ->html('<p>Voici le récapitulatif de vottre location : </p>' . $messageBody);
+
+        $mailer->send($email);
+
+
+        return $this->redirectToRoute('booking_review', ['id' => $station->getId()]);
+    }
+
+    #[Route('/reservation/{id}/review', name: 'booking_review')]
+    public function stationReview(Station $station, Request $request, ReviewsRepository $reviewsRepository): Response
+    {
+        $stationReview = new StationReview();
+        $form = $this->createForm(RateStationsType::class, $stationReview);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $stationReview->setId($station->getId());
+            $stationReview->setRate($form->get('rate')->getData());
+            $stationReview->setBody($form->get('body')->getData());
+
+            $reviewsRepository->add($stationReview, true);
+
+            $this->addFlash('success', 'Merci pour votre avis, il a bien été pris en compte');
+            return $this->redirectToRoute('booking_index');
+        }
+
+
+        return $this->render('booking/rateStation.html.twig', [
+            'form' => $form->createView(),
+        ]);
     }
 }

@@ -18,6 +18,9 @@
 		<img src="{{asset('images/stations/plugs/' ~ station.plugType.name ~ '.png')}}" "alt=plug">
 	</div>
 
+
+
+{{ form_start(form) }}
 	<div class="h4 pb-3 mx-3 border-bottom border-secondary"></div>
 
 	<div class="mx-3">
@@ -61,13 +64,17 @@
 
 		<div class="mb-5">
 			<div class="d-flex justify-content-center mb-5">
-				<button type="submit" href="{{ path ('booking') }}" class="btn btn-secondary m-4 text-center text-white col-9 d-flex align-items-center justify-content-center rounded-pill gap-3 p-0">
-					<h3 class="text-white my-2">Valider</h3>
-				</button>
-			</div>
+                {{ form_row(form.submit) }}
+
+            </div>
+
 		</div>
 
-		<div class="h4 pb-3 mx-3 border-bottom border-secondary"></div>
+
+    {{ form_end(form) }}
+
+
+    <div class="h4 pb-3 mx-3 border-bottom border-secondary"></div>
 
 		<div class="mx-2 d-flex flex-column text-primary">
 			<h6 class="text-secondary">

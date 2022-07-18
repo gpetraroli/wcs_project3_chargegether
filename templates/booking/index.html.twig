@@ -8,53 +8,130 @@
 
 {% block body %}
 
-	<header class="bg-primary d-flex justify-content-center">
+    <header class="bg-primary d-flex justify-content-center">
 		<h4 class="text-white my-3">
-			<a href="{{ path('app_profil_hote') }}" class="btn btn-primary" role="button" data-bs-toggle="button">
-				<i class="bi bi-arrow-left-circle-fill"></i>
-			</a>
-			Réservation
+			Réservations
 		</h4>
 	</header>
 
-	<h1 class="mt-5 text-secondary text-center">Historique</h1>
+	<h1 class="mt-5 text-secondary text-center">Historique des réservations </h1>
 
 	<div class="h4 pb-3 mx-3 border-bottom border-secondary"></div>
-	<div class="my-5">
+
+    {% for station in app.user.stations %}
+        {% for booking in station.bookings %}
+            <div class="my-5">
+                <div class="my-2 mx-3 d-flex justify-content-between">
+                    <h6 class="text-primary">Détails de la réservation de votre borne:</h6>
+                </div>
+
+                <div class="mx-3 d-flex justify-content-between">
+                    <h6 class="text-secondary"> Date et heure de début</h6>
+                    <p> Le {{ booking.startRes|date("d/m/Y \\a G \\h i") }}</p>
+
+                </div>
+
+                <div class="mx-3 d-flex justify-content-between">
+                    <h6 class="text-secondary">Heure de fin</h6>
+                    <p> Le {{ booking.endRes|date("d/m/Y \\a G \\h i") }}</p>
+
+                </div>
+
+                <div class="mx-3 d-flex justify-content-between">
+                    <h6 class="text-secondary">Coût du stationnement</h6>
+                    <p>{{ (booking.bookingPrice-1)|number_format(2, ',') }} €</p>
+                </div>
+
+                <div class="mx-3 d-flex justify-content-between">
+                    <h6 class="text-secondary">Frais de Chargether</h6>
+                    <p>1 €</p>
+                </div>
+
+                <div class="mx-3 d-flex justify-content-between">
+                    <h6 class="text-secondary fw-bold">
+                        Total
+                    </h6>
+                    <p class="fw-bold">{{ booking.bookingPrice|number_format(2, ',') }} €</p>
+                </div>
+            </div>        {% endfor %}
+    {% endfor %}
+
+
+{% for booking in app.user.bookings %}
+    <div class="my-5">
 		<div class="my-2 mx-3 d-flex justify-content-between">
-			<h6 class="text-primary">Détails des réservations :</h6>
+			<h6 class="text-primary">Détails de la réservation passée chez un hôte :</h6>
 		</div>
 
 		<div class="mx-3 d-flex justify-content-between">
-			<h6 class="text-secondary">Heure de début</h6>
+			<h6 class="text-secondary"> Date et heure de début</h6>
+            <p> Le {{ booking.startRes|date("d/m/Y \\a G \\h i") }}</p>
+
 		</div>
 
 		<div class="mx-3 d-flex justify-content-between">
 			<h6 class="text-secondary">Heure de fin</h6>
-		</div>
+            <p> Le {{ booking.endRes|date("d/m/Y \\a G \\h i") }}</p>
+
+        </div>
 
 		<div class="mx-3 d-flex justify-content-between">
 			<h6 class="text-secondary">Coût du stationnement</h6>
+            <p>{{ (booking.bookingPrice-1)|number_format(2, ',') }} €</p>
 		</div>
 
 		<div class="mx-3 d-flex justify-content-between">
 			<h6 class="text-secondary">Frais de Chargether</h6>
+            <p>1 €</p>
 		</div>
 
 		<div class="mx-3 d-flex justify-content-between">
-			<h6 class="text-secondary">
-				<b>Total</b>
-			</h6>
-		</div>
+			<h6 class="text-secondary fw-bold">
+				Total
+            </h6>
+            <p class="fw-bold">{{ booking.bookingPrice|number_format(2, ',') }} €</p>
+        </div>
 	</div>
 
-	<div class="mb-5">
-		<div class="d-flex justify-content-center mb-5">
-			<button type="submit" href="{{ path('app_profil_hote') }}" class="btn btn-secondary m-4 text-center text-white col-9 d-flex align-items-center justify-content-center rounded-pill gap-3 p-0">
-				<h3 class="text-white my-2">Facture</h3>
-			</button>
-		</div>
-	</div>
+    {# Code pour la gestion des départ et arret de location #}
+
+    {# On vérifie que la réservation est confirmée#}
+    {% if booking.confirmed %}
+        {# Si la location a démaré #}
+        {% if booking.startLoc is not null %}
+            {# si la location est terminée#}
+            {% if booking.endLoc is not null %}
+                Location terminée
+            {# si la location n'est pas terminée #}
+            {% else %}
+                <div class="text-center">
+                    <a href="{{ path('booking_endloc', {'id': booking.id}) }}">
+                        <button type="button" class="btn btn-primary ">Terminer la location</button>
+                    </a>
+                </div>
+            {% endif %}
+        {# si la location n'a pas démarrée #}
+        {% else %}
+            {# on vérifie qu'on est bien dans le crénaux horraire #}
+            {% if date("now") > booking.startRes and date("now") < booking.endRes %}
+                <div class="text-center">
+                    <a href="{{ path('booking_startloc', {'id': booking.id}) }}">
+                        <button type="button" class="btn btn-primary ">Démarrer la location</button>
+                    </a>
+                </div>
+            {% elseif date("now") < booking.startRes %}
+                Il est trop tôt pour commencer la réservation
+            {% elseif date("now") > booking.endRes %}
+                Le créneau a été dépassé
+            {% endif %}
+        {% endif %}
+    {% else %}
+        La réservation n'a pas encore été confirmée par l'hôte
+    {% endif %}
+
+    <div class="h4 pb-3 mx-3 border-bottom border-secondary"></div>
+{% endfor %}
+
 
 
 {% endblock %}

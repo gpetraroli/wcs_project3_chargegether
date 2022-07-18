@@ -1,5 +1,10 @@
 {% extends 'base.html.twig' %}
 
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('booking') }}
+{% endblock %}
+
 {% block title %}Reservations - Chargether{% endblock %}
 
 {% block body %}

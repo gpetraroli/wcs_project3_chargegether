@@ -35,6 +35,7 @@ Encore
     .addEntry('map', './assets/js/map.js')
     .addEntry('geocoding', './assets/js/geocoding.js')
     .addEntry('station', './assets/js/station.js')
+    .addEntry('booking', './assets/js/booking-widget.js')
 
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
     .enableStimulusBridge('./assets/controllers.json')

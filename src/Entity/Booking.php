@@ -36,7 +36,7 @@ class Booking
     #[ORM\ManyToOne(targetEntity: Vehicle::class)]
     private Vehicle $vehicle;
 
-    #[ORM\ManyToOne(targetEntity: Station::class)]
+    #[ORM\ManyToOne(targetEntity: Station::class, inversedBy: 'bookings')]
     private Station $station;
 
     #[ORM\Column(type: 'boolean')]

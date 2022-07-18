@@ -38,10 +38,7 @@ class BookingController extends AbstractController
     #[Route('/reservations', name: 'booking_index')]
     public function showBookingsList(): Response
     {
-        $bookings = $this->getUser()->getBookings();
-        return $this->render('booking/index.html.twig', [
-            'bookings' => $bookings
-        ]);
+        return $this->render('booking/index.html.twig');
     }
 
     #[Route('/api/price', name: 'booking_api_price')]

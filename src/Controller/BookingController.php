@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Notification;
 use App\Entity\StationReview;
 use App\Form\RateStationsType;
+use App\Repository\NotificationsRepository;
 use App\Repository\ReviewsRepository;
 use DateTimeImmutable;
 use App\Entity\Booking;
@@ -14,9 +16,10 @@ use App\Service\VehicleManager;
 use App\Service\BookingPriceManager;
 use App\Repository\BookingsRepository;
 use App\Service\NotificationManager;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -36,10 +39,7 @@ class BookingController extends AbstractController
     #[Route('/reservations', name: 'booking_index')]
     public function showBookingsList(): Response
     {
-        $bookings = $this->getUser()->getBookings();
-        return $this->render('booking/index.html.twig', [
-            'bookings' => $bookings
-        ]);
+        return $this->render('booking/index.html.twig');
     }
 
     #[Route('/api/price', name: 'booking_api_price')]
@@ -93,8 +93,8 @@ class BookingController extends AbstractController
 
             $messageBody = $this->getUser()->getUserName() . 'a réservé votre station à l\'adresse ' .
                 $station->getAddress() .
-                ' pour le ' . $booking->getStartRes()->format('d/m/Y') . ' à ' . $booking->getStartRes()->format('H:i');
-            $notifManager->sendNotificationTo($station->getOwner(), $messageBody);
+                ' pour le ' . $booking->getStartRes()->format('d/m/Y') . ' à ' . $booking->getStartRes()->format('H:i') . ' merci de valider la reservation en cliquant ici';
+            $notifManager->sendNotificationTo($station->getOwner(), $messageBody, true, $booking);
 
             return $this->redirectToRoute('booking_index');
         }
@@ -105,6 +105,33 @@ class BookingController extends AbstractController
             'selectVehicle' => $vehicleManager->getSelectedVehicle(),
         ]);
     }
+
+    #[Route('/hote/confirmer/{notification}/{booking}', name: 'booking_confirmation')]
+    public function confirmReservation(Notification $notification, Booking $booking, NotificationsRepository $notifRepository, NotificationManager $notificationManager, BookingsRepository $bookingsRepository): Response
+    {
+        // On modifie la première notification qui demandait à l'hôte de confirmer la résa
+        $body = str_replace(' merci de valider la reservation en cliquant ici', '', $notification->getBody());
+        $notification->setNeedConfirmation(false);
+        $notification->setBody($body);
+        $notifRepository->add($notification, true);
+
+        // On rajouter une nouvelle notif à l'hôte pour lui confirmer sa confirmation
+        $messageBodyHote =  'Vous venez de confirmer la réservation suivante : ' . $body;
+        $notificationManager->sendNotificationTo($this->getUser(), $messageBodyHote);
+
+        // On prévient le client que sa résa est confirmée
+        $messageBodyClient =  'Votre réservation à bien été confirmée, retrouvez-là dans l\'onglet Réservations';
+        $notificationManager->sendNotificationTo($booking->getBookingUser(), $messageBodyClient);
+
+        // On passe le confirmed de booking à true
+        $booking->setConfirmed(true);
+        $bookingsRepository->add($booking, true);
+
+
+        return $this->redirectToRoute('app_notifications');
+    }
+
+
 
     #[Route('/reservation/{id}', name: 'booking_info')]
     public function showBookingInfos(): Response
@@ -130,7 +157,7 @@ class BookingController extends AbstractController
     }
 
     #[Route('/reservation/{id}/end', name: 'booking_endloc')]
-    public function endLocation(Booking $booking, BookingsRepository $bookingsRepository, NotificationManager $notifManager): Response
+    public function endLocation(Booking $booking, BookingsRepository $bookingsRepository, NotificationManager $notifManager, MailerInterface $mailer): Response
     {
         $date = new DateTimeImmutable();
         $booking->setEndLoc($date);
@@ -142,6 +169,14 @@ class BookingController extends AbstractController
 
         $messageBody = $this->getUser()->getUserName() . ' a terminé la location à l\'adresse ' . $station->getAddress() . ' le ' . $date->format('d/m/Y') . ' a ' . $date->format('H:i');
         $notifManager->sendNotificationTo($station->getOwner(), $messageBody);
+
+        $email = (new Email())
+            ->from('contact@chargether.com')
+            ->to($station->getOwner()->getEmail())
+            ->subject('Récap de la location de votre borne ! ')
+            ->html('<p>Voici le récapitulatif de vottre location : </p>' . $messageBody);
+
+        $mailer->send($email);
 
 
         return $this->redirectToRoute('booking_review', ['id' => $station->getId()]);

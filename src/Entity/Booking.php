@@ -36,8 +36,11 @@ class Booking
     #[ORM\ManyToOne(targetEntity: Vehicle::class)]
     private Vehicle $vehicle;
 
-    #[ORM\ManyToOne(targetEntity: Station::class)]
+    #[ORM\ManyToOne(targetEntity: Station::class, inversedBy: 'bookings')]
     private Station $station;
+
+    #[ORM\Column(type: 'boolean')]
+    private bool $confirmed;
 
     // le mec qui réserve
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'bookings')]
@@ -48,6 +51,7 @@ class Booking
         $this->createdAt = new DateTimeImmutable();
         $this->startLoc = null;
         $this->endLoc = null;
+        $this->confirmed = false;
     }
 
     public function getId(): int
@@ -150,5 +154,15 @@ class Booking
     public function setBookingUser(?User $user): void
     {
         $this->bookingUser = $user;
+    }
+
+    public function isConfirmed(): bool
+    {
+        return $this->confirmed;
+    }
+
+    public function setConfirmed(bool $confirmed): void
+    {
+        $this->confirmed = $confirmed;
     }
 }

@@ -11,13 +11,19 @@
 {% block body %}
     <section class="fixed-top mt-5">
         <div class="w-100 text-center mt-3">
-            {% for vehicle in app.user.vehicles %}
-                {% if vehicle.id == selectedVehicleId %}
-                    <a href="{{ path('vehicules') }}" class="btn bg-light border border-secondary border-3 rounded-pill fw-bolder text-secondary text-decoration-none">
-                        {{ vehicle.brand ~ ' ' ~ vehicle.model }}
-                    </a>
-                {% endif %}
-            {% endfor %}
+            {% if app.user.vehicles|length == 0 %}
+                <a href="{{ path('vehicules') }}" class="btn bg-light border border-secondary border-3 rounded-pill fw-bolder text-secondary text-decoration-none">
+                    ajouter un véhicule
+                </a>
+            {% else %}
+                {% for vehicle in app.user.vehicles %}
+                    {% if vehicle.id == selectedVehicleId %}
+                        <a href="{{ path('vehicules') }}" class="btn bg-light border border-secondary border-3 rounded-pill fw-bolder text-secondary text-decoration-none">
+                            {{ vehicle.brand ~ ' ' ~ vehicle.model }}
+                        </a>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
         </div>
     </section>
 

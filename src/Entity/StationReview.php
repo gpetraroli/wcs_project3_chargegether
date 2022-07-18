@@ -71,6 +71,4 @@ class StationReview
     {
         $this->owner = $owner;
     }
-
-
 }

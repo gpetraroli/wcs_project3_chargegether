@@ -75,9 +75,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?File $imageFile = null;
 
     #[ORM\Column(type: 'string', nullable: true)]
-    private ?string $imageName;
+    private ?string $imageName = null;
 
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column(type: 'integer', nullable: true)]
     private ?int $imageSize = null;
 
     #[ORM\OneToMany(mappedBy: 'owner', targetEntity: Station::class, orphanRemoval: true)]
@@ -283,6 +283,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->imageSize;
     }
+
 
     public function getCreatedAt(): DateTime
     {

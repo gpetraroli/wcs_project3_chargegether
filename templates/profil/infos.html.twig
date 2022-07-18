@@ -11,14 +11,13 @@
 	{{ form_start(form)}}
 	<section class="h-100 position-relative d-flex flex-column justify-content-between">
 
-			<header class="bg-primary d-flex justify-content-center">
-		<h3 class="text-white my-3">
-			<a href="{{ path('app_profil_index') }}" class="btn btn-primary" role="button" data-bs-toggle="button">
-				<i class="bi bi-arrow-left-circle-fill"></i>
-			</a>
-			Informations Personnelles
-		</h3>
-	</header>
+  <header class="bg-primary d-flex justify-content-center">
+		<h4 class="text-white my-3">
+        <a href="{{ path('app_profil_index') }}" class="text-white fs-1 col-1 ps-3"><i class="bi bi-arrow-left-circle-fill"></i></a>
+        <h2 class="text-white my-3">
+            Informations Personnelles
+        </h2>
+    </header>
 
 		<div class="d-flex justify-content-start align-items-center m-3 mb-0">
 			<div class="d-flex flex-column"></div>
@@ -59,7 +58,7 @@
 						</button>
 					</div>
 				</div>
-                
+
 	</section>
 
 	{{ form_end(form) }}

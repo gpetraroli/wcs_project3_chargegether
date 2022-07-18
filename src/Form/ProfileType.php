@@ -75,7 +75,8 @@ class ProfileType extends AbstractType
                 'label' => 'Photo de Profile',
                 'label_attr' => [
                     'class' => 'form-label my-3',
-                ]
+                ],
+                'required' => false
                 ]);
     }
 

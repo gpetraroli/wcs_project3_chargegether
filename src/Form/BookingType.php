@@ -2,10 +2,10 @@
 
 namespace App\Form;
 
-
 use App\Entity\Booking;
+use App\Entity\User;
 use App\Entity\Vehicle;
-use App\Repository\VehiclesRepository;
+use DateTimeImmutable;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
@@ -25,22 +25,28 @@ class BookingType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder
+        /** @var User|null $user */
+        $user = $this->security->getUser();
 
+        $builder
             ->add('startRes', DateTimeType::class, [
-                'input' => 'datetime_immutable'
+                'input' => 'datetime_immutable',
+                'label' => 'Début de la réservation',
+                'data' => new DateTimeImmutable()
             ])
+
             ->add('endRes', DateTimeType::class, [
-                'input' => 'datetime_immutable'
+                'input' => 'datetime_immutable',
+                'label' => 'Fin de la réservation',
+                'data' => new DateTimeImmutable()
             ])
             ->add('vehicle', EntityType::class, [
                 'class' => Vehicle::class,
-                'choices' => $this->security->getUser()->getVehicles(),
+                'choices' => $user->getVehicles(),
                 'choice_label' => 'model',
+                'label' => 'Véhicule pris en charge',
             ])
-            ->add('Reserver', SubmitType::class);
-
-        ;
+            ->add('submit', SubmitType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

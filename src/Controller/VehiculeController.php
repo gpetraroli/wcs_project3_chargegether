@@ -39,8 +39,8 @@ class VehiculeController extends AbstractController
         EntityManagerInterface $entityManager,
     ): Response {
         $user = $this->getUser();
-            $user->addVehicle($vehicle);
-            $entityManager->flush();
+        $user->addVehicle($vehicle);
+        $entityManager->flush();
 
         return $this->redirectToRoute('vehicules');
     }

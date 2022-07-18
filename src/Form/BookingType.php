@@ -3,12 +3,14 @@
 namespace App\Form;
 
 use App\Entity\Booking;
+use App\Entity\Station;
 use App\Entity\User;
 use App\Entity\Vehicle;
 use DateTimeImmutable;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -45,6 +47,11 @@ class BookingType extends AbstractType
                 'choices' => $user->getVehicles(),
                 'choice_label' => 'model',
                 'label' => 'Véhicule pris en charge',
+            ])
+            ->add('station', EntityType::class, [
+                'class' => Station::class,
+                'choice_label' => 'id',
+                'attr' => ['class' => 'd-none'],
             ])
             ->add('submit', SubmitType::class);
     }

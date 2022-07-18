@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Notification;
 use App\Entity\StationReview;
+use App\Entity\Vehicle;
 use App\Form\RateStationsType;
 use App\Repository\NotificationsRepository;
 use App\Repository\ReviewsRepository;
@@ -16,6 +17,7 @@ use App\Service\VehicleManager;
 use App\Service\BookingPriceManager;
 use App\Repository\BookingsRepository;
 use App\Service\NotificationManager;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
@@ -42,18 +44,21 @@ class BookingController extends AbstractController
         return $this->render('booking/index.html.twig');
     }
 
-    #[Route('/api/price', name: 'booking_api_price')]
+    #[Route('/api/price/{dateBegin}/{dateEnd}/{vehicle}/{station}', name: 'booking_api_price')]
+    #[ParamConverter('dateBegin', options: ['format' => 'd-m-Y H:i'])]
+    #[ParamConverter('dateEnd', options: ['format' => 'd-m-Y H:i'])]
     public function apiPrice(
         DateTimeImmutable $dateBegin,
         DateTimeImmutable $dateEnd,
-        int $vehiclePower,
-        int $stationPower
+        Vehicle $vehicle,
+        Station $station,
     ): JsonResponse {
+
         $price = $this->bookingPriceManager->calculateBookingPrice(
             $dateBegin,
             $dateEnd,
-            $vehiclePower,
-            $stationPower
+            intval($vehicle->getBatteryPower()),
+            $station->getPower()->value,
         );
 
         return $this->json($price);
@@ -87,7 +92,7 @@ class BookingController extends AbstractController
                 $station->getPower()->value
             );
 
-            $booking->setBookingPrice(strval($price));
+            $booking->setBookingPrice(strval($price['price'] + $price['fees']));
             $bookingsRepository->add($booking, true);
             $this->addFlash('success', 'Réservation effectuée avec succes');
 

@@ -21,6 +21,14 @@ class Notification
     #[ORM\Column(type: 'boolean')]
     private bool $isRead;
 
+    #[ORM\Column(type: 'boolean')]
+    private bool $needConfirmation;
+
+    #[ORM\OneToOne(targetEntity: Booking::class)]
+    #[ORM\JoinColumn(nullable: true)]
+    private ?Booking $booking;
+
+
     #[ORM\Column(type: 'datetime_immutable')]
     private DateTimeImmutable $createdAt;
 
@@ -32,6 +40,7 @@ class Notification
     {
         $this->createdAt = new DateTimeImmutable();
         $this->isRead = false;
+        $this->needConfirmation = false;
     }
 
     public function getId(): int
@@ -68,7 +77,6 @@ class Notification
     {
         return $this->createdAt;
     }
-
     public function setCreatedAt(\DateTimeImmutable $createdAt): void
     {
         $this->createdAt = $createdAt;
@@ -78,11 +86,28 @@ class Notification
     {
         return $this->destinationUser;
     }
-
     public function setDestinationUser(?UserInterface $destinationUser): self
     {
         $this->destinationUser = $destinationUser;
 
         return $this;
+    }
+
+    public function isNeedConfirmation(): bool
+    {
+        return $this->needConfirmation;
+    }
+    public function setNeedConfirmation(bool $needConfirmation): void
+    {
+        $this->needConfirmation = $needConfirmation;
+    }
+
+    public function getBooking(): ?Booking
+    {
+        return $this->booking;
+    }
+    public function setBooking(?Booking $booking): void
+    {
+        $this->booking = $booking;
     }
 }

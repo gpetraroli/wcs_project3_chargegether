@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Notification;
 use App\Entity\StationReview;
 use App\Form\RateStationsType;
+use App\Repository\NotificationsRepository;
 use App\Repository\ReviewsRepository;
 use DateTimeImmutable;
 use App\Entity\Booking;
@@ -93,8 +95,8 @@ class BookingController extends AbstractController
 
             $messageBody = $this->getUser()->getUserName() . 'a réservé votre station à l\'adresse ' .
                 $station->getAddress() .
-                ' pour le ' . $booking->getStartRes()->format('d/m/Y') . ' à ' . $booking->getStartRes()->format('H:i');
-            $notifManager->sendNotificationTo($station->getOwner(), $messageBody);
+                ' pour le ' . $booking->getStartRes()->format('d/m/Y') . ' à ' . $booking->getStartRes()->format('H:i') . ' merci de valider la reservation en cliquant ici';
+            $notifManager->sendNotificationTo($station->getOwner(), $messageBody, true, $booking);
 
             return $this->redirectToRoute('booking_index');
         }
@@ -105,6 +107,33 @@ class BookingController extends AbstractController
             'selectVehicle' => $vehicleManager->getSelectedVehicle(),
         ]);
     }
+
+    #[Route('/hote/confirmer/{notification}/{booking}', name: 'booking_confirmation')]
+    public function confirmReservation(Notification $notification, Booking $booking, NotificationsRepository $notifRepository, NotificationManager $notificationManager, BookingsRepository $bookingsRepository): Response
+    {
+        // On modifie la première notification qui demandait à l'hôte de confirmer la résa
+        $body = str_replace(' merci de valider la reservation en cliquant ici', '', $notification->getBody());
+        $notification->setNeedConfirmation(false);
+        $notification->setBody($body);
+        $notifRepository->add($notification, true);
+
+        // On rajouter une nouvelle notif à l'hôte pour lui confirmer sa confirmation
+        $messageBodyHote =  'Vous venez de confirmer la réservation suivante : ' . $body;
+        $notificationManager->sendNotificationTo($this->getUser(), $messageBodyHote);
+
+        // On prévient le client que sa résa est confirmée
+        $messageBodyClient =  'Votre réservation à bien été confirmée, retrouvez-là dans l\'onglet Réservations';
+        $notificationManager->sendNotificationTo($booking->getBookingUser(), $messageBodyClient);
+
+        // On passe le confirmed de booking à true
+        $booking->setConfirmed(true);
+        $bookingsRepository->add($booking, true);
+
+
+        return $this->redirectToRoute('app_notifications');
+    }
+
+
 
     #[Route('/reservation/{id}', name: 'booking_info')]
     public function showBookingInfos(): Response

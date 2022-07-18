@@ -15,17 +15,17 @@ class Booking
     #[ORM\Column(type: 'integer')]
     private int $id;
 
-    #[ORM\Column(type: 'datetime')]
+    #[ORM\Column(type: 'datetime_immutable')]
     private \DateTimeImmutable $startRes;
 
-    #[ORM\Column(type: 'datetime')]
+    #[ORM\Column(type: 'datetime_immutable')]
     private \DateTimeImmutable $endRes;
 
-    #[ORM\Column(type: 'datetime', nullable: true)]
-    private \DateTimeImmutable $startLoc;
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+    private ?DateTimeImmutable $startLoc;
 
-    #[ORM\Column(type: 'datetime', nullable: true)]
-    private \DateTimeImmutable $endLoc;
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+    private ?DateTimeImmutable $endLoc;
 
     #[ORM\Column(type: 'datetime_immutable')]
     private DateTimeImmutable $createdAt;
@@ -36,16 +36,22 @@ class Booking
     #[ORM\ManyToOne(targetEntity: Vehicle::class)]
     private Vehicle $vehicle;
 
-    #[ORM\ManyToOne(targetEntity: Station::class)]
+    #[ORM\ManyToOne(targetEntity: Station::class, inversedBy: 'bookings')]
     private Station $station;
 
+    #[ORM\Column(type: 'boolean')]
+    private bool $confirmed;
+
     // le mec qui réserve
-    #[ORM\ManyToOne(targetEntity: User::class)]
-    private User $user;
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'bookings')]
+    private User $bookingUser;
 
     public function __construct()
     {
         $this->createdAt = new DateTimeImmutable();
+        $this->startLoc = null;
+        $this->endLoc = null;
+        $this->confirmed = false;
     }
 
     public function getId(): int
@@ -78,7 +84,7 @@ class Booking
         $this->endRes = $endRes;
     }
 
-    public function getStartLoc(): \DateTimeImmutable
+    public function getStartLoc(): ?DateTimeImmutable
     {
         return $this->startLoc;
     }
@@ -88,7 +94,7 @@ class Booking
         $this->startLoc = $startLoc;
     }
 
-    public function getEndLoc(): \DateTimeImmutable
+    public function getEndLoc(): ?\DateTimeImmutable
     {
         return $this->endLoc;
     }
@@ -140,13 +146,23 @@ class Booking
         $this->station = $station;
     }
 
-    public function getUser(): User
+    public function getBookingUser(): User
     {
-        return $this->user;
+        return $this->bookingUser;
     }
 
-    public function setUser(User|UserInterface|null $user): void
+    public function setBookingUser(?User $user): void
     {
-        $this->user = $user;
+        $this->bookingUser = $user;
+    }
+
+    public function isConfirmed(): bool
+    {
+        return $this->confirmed;
+    }
+
+    public function setConfirmed(bool $confirmed): void
+    {
+        $this->confirmed = $confirmed;
     }
 }

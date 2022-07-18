@@ -11,13 +11,17 @@
         </h1>
         <span class="col-1"></span>
     </header>
-
         <div class="card align-items-start text-secondary m-3">
             <div class="card-header bg-secondary w-100">
                 <p class="card-text m-0 text-white">{{ notification.createdAt|date('Y-m-d - H:i') }}</p>
             </div>
             <div class="card-body d-flex flex-column gap-2">
                 <p class="card-text m-0">{{ notification.body }}</p>
+                {% if notification.needConfirmation %}
+                    <a href="{{ path('booking_confirmation', {'notification': notification.id, 'booking': notification.booking.id}) }}">
+                        Confirmer la réservation
+                    </a>
+                {% endif %}
             </div>
         </div>
 {% endblock %}

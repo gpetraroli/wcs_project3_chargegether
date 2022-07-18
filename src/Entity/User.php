@@ -89,6 +89,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'destinationUser', targetEntity: Notification::class, orphanRemoval: true)]
     private Collection $notifications;
 
+    #[ORM\OneToMany(mappedBy: 'bookingUser', targetEntity: Booking::class, orphanRemoval: true)]
+    private Collection $bookings;
+
     public function __construct()
     {
         $this->createdAt = new DateTime();
@@ -151,6 +154,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setBirthDate(DateTime $birthDate): void
     {
         $this->birthDate = $birthDate;
+    }
+
+    public function getBookings(): Collection
+    {
+        return $this->bookings;
+    }
+    public function setBookings(Collection $bookings): void
+    {
+        $this->bookings = $bookings;
     }
 
     public function getAddress(): string
@@ -309,12 +321,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
     public function removeStation(Station $station): self
     {
-        if ($this->stations->removeElement($station)) {
-            // set the owning side to null (unless already changed)
-            if ($station->getOwner() === $this) {
-                $station->setOwner(null);
-            }
-        }
+        $this->stations->removeElement($station);
+
         return $this;
     }
 

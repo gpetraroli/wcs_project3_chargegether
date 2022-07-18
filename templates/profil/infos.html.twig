@@ -8,17 +8,17 @@
 {% endblock %}
 
 {% block body %}
-{{ form_start(form)}}
+	{{ form_start(form)}}
 	<section class="h-100 position-relative d-flex flex-column justify-content-between">
 
-		<header class="bg-primary d-flex justify-content-center">
-			<h3 class="text-white my-3">
-				<a href="{{ path('app_hotes') }}" class="btn btn-primary" role="button" data-bs-toggle="button">
-					<i class="bi bi-arrow-left-circle-fill"></i>
-				</a>
-				Informations personnelles
-			</h3>
-		</header>
+			<header class="bg-primary d-flex justify-content-center">
+		<h3 class="text-white my-3">
+			<a href="{{ path('app_profil_index') }}" class="btn btn-primary" role="button" data-bs-toggle="button">
+				<i class="bi bi-arrow-left-circle-fill"></i>
+			</a>
+			Informations Personnelles
+		</h3>
+	</header>
 
 		<div class="d-flex justify-content-start align-items-center m-3 mb-0">
 			<div class="d-flex flex-column"></div>
@@ -30,11 +30,9 @@
 
 		<div class="h4 pb-3 mx-3 border-bottom border-secondary"></div>
 
-		<div class='bg-info alert'>
-			<div class="form-group">
-				<li class="list-group-item ff">{{ form_row(form.email) }}</li>
-				<li class="list-group-item">{{ form_row(form.userName) }}</li>
-			</div>
+		<div class="form-group">
+			<li class="list-group-item ff">{{ form_row(form.email) }}</li>
+			<li class="list-group-item">{{ form_row(form.userName) }}</li>
 		</div>
 
 		<div class="d-flex justify-content-start align-items-center m-3 mb-0">
@@ -42,29 +40,27 @@
 				INFORMATIONS PERSONNELLES
 			</h5>
 		</div>
+
 		<div class="h4 pb-3 mx-3 border-bottom border-secondary"></div>
 
-		<div class='bg-info alert'>
-			<div
-				class="form-group">
-				<li class="list-group-item">{{ form_row(form.address) }}</li>
-				<li class="list-group-item">{{ form_row(form.city) }}</li>
-				<li class="list-group-item">{{ form_row(form.zipcode) }}</li>
-				<li class="list-group-item">{{ form_row(form.country) }}</li>
-				<li class="list-group-item">{{ form_row(form.phoneNumber) }}</li>
-				<li class="list-group-item">{{ form_row(form.imageFile) }}</li>
-			</div>
+		<div class="form-group">
+			<li class="list-group-item">{{ form_row(form.address) }}</li>
+			<li class="list-group-item">{{ form_row(form.city) }}</li>
+			<li class="list-group-item">{{ form_row(form.zipcode) }}</li>
+			<li class="list-group-item">{{ form_row(form.country) }}</li>
+			<li class="list-group-item">{{ form_row(form.phoneNumber) }}</li>
+			<li class="list-group-item">{{ form_row(form.imageFile) }}</li>
 		</div>
 
-				<div class="mb-5">
+		<div class="mb-5">
 					<div class="d-flex justify-content-center mb-5">
 						<button type="submit" href="{{ path('app_profil_hote') }}" class="btn btn-secondary m-4 text-center text-white col-9 d-flex align-items-center justify-content-center rounded-pill gap-3 p-0">
 							<h3 class="text-white my-2">Enregistrer</h3>
 						</button>
 					</div>
 				</div>
+                
+	</section>
 
-    </section>
-
-{{ form_end(form) }}
+	{{ form_end(form) }}
 {% endblock %}

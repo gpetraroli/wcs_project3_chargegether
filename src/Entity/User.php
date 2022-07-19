@@ -41,8 +41,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string', length: 80)]
     private string $lastName;
 
-    #[ORM\Column(type: 'date')]
-    private DateTime $birthDate;
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    private ?DateTime $birthDate = null;
 
     #[ORM\Column(type: 'string', length: 255)]
     private string $address;
@@ -151,7 +151,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->birthDate;
     }
-    public function setBirthDate(DateTime $birthDate): void
+    public function setBirthDate(DateTime $birthDate = null): void
     {
         $this->birthDate = $birthDate;
     }
@@ -283,7 +283,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->imageSize;
     }
-
 
     public function getCreatedAt(): DateTime
     {

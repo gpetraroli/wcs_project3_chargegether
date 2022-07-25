@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hote - Chargether{% endblock %}
+
+{% block body %}
+    <header class="bg-primary d-flex justify-content-center">
+        <h1 class="text-white my-3">
+            Avis de votre borne
+        </h1>
+    </header>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    <div class="list-group w-auto">
+    {% for review in stationReviews %}
+            <div class="list-group-item list-group-item-action d-flex gap-3 py-3 align-items-center"
+                 aria-current="true">
+                <i class="bi bi-{{ review.rate }}-circle fs-1"></i>
+                <div class="d-flex gap-2 w-100 ">
+                    <div>
+                        <h6 class="mb-0">Avis de {{ review.owner.username }}</h6>
+                        <p class="mb-0 opacity-75">{{ review.body }}</p>
+                    </div>
+                </div>
+            </div>
+    {% endfor %}
+    </div>
+
+
+{% endblock %}

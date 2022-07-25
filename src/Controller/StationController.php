@@ -106,4 +106,14 @@ class StationController extends AbstractController
             'googleApiKey' => $this->getParameter('google_api_key'),
         ]);
     }
+
+    #[Route('/hote/avis/{id}', name: 'app_hotes_reviews')]
+    public function showReviews(Station $station): Response
+    {
+        $stationReviews = $station->getReviews();
+
+        return $this->render('/profil/stationReviews.html.twig', [
+            'stationReviews' => $stationReviews
+        ]);
+    }
 }

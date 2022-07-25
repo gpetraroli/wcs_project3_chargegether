@@ -45,3 +45,8 @@
     left: 50%;
     transform: translateX(-50%);
 }
+
+#nav-1-tab.active, #nav-2-tab.active {
+    background-color: $secondary !important;
+    color: $white;
+}

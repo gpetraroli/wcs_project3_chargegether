@@ -75,13 +75,20 @@
             <strong id="total"></strong>
     </div>
 
-    <div class="mb-5">
-        <div class="d-flex justify-content-center mb-5">
-            {{ form_row(form.submit) }}
 
+    {% if app.user.vehicles.toArray is not empty %}
+        <div class="mb-5">
+            <div class="d-flex justify-content-center mb-5">
+                <button type="submit" class="btn btn-primary"> Réserver </button>
+            </div>
         </div>
-
-    </div>
+    {% else %}
+        <p class="text-danger text-center"> Vous devez ajouter un véhicule pour réserver, si vous n'en avez pas ajouté sur
+            l'application
+            vous
+            pouvez le
+            faire depuis votre profil.</p>
+    {% endif %}
 
 
     {{ form_end(form) }}

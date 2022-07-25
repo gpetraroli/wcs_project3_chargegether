@@ -52,8 +52,7 @@ class BookingType extends AbstractType
                 'class' => Station::class,
                 'choice_label' => 'id',
                 'attr' => ['class' => 'd-none'],
-            ])
-            ->add('submit', SubmitType::class);
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

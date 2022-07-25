@@ -36,6 +36,7 @@ function setCurrentPosition()
             map.setCenter(pos);
             currentPositionMarker = new google.maps.Marker({
                 position: pos,
+                icon: "/images/cible.png",
                 map: map,
             });
         },() => {

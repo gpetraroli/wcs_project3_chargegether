@@ -8,13 +8,14 @@ use App\Entity\Vehicle;
 use App\Form\RateStationsType;
 use App\Repository\NotificationsRepository;
 use App\Repository\ReviewsRepository;
+use App\Service\BookingPriceManager;
 use DateTimeImmutable;
 use App\Entity\Booking;
 use App\Entity\Station;
 use App\Entity\User;
 use App\Form\BookingType;
 use App\Service\VehicleManager;
-use App\Service\BookingPriceManager;
+use App\Service\StationManager;
 use App\Repository\BookingsRepository;
 use App\Service\NotificationManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -71,7 +72,7 @@ class BookingController extends AbstractController
         Request $request,
         BookingsRepository $bookingsRepository,
         VehicleManager $vehicleManager,
-        NotificationManager $notifManager
+        NotificationManager $notifManager,
     ): Response {
         $booking = new Booking();
         $booking->setStation($station);

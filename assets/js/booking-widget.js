@@ -26,8 +26,8 @@ function updateView() {
         .then(data => {
             document.querySelector('#start-date-time').innerHTML = startDateTime;
             document.querySelector('#end-date-time').innerHTML = endDateTime;
-            document.querySelector('#fees').innerHTML = data['fees']+' €';
-            document.querySelector('#price').innerHTML = data['price']+' €';
-            document.querySelector('#total').innerHTML = `${data['price'] + data['fees']} €`;
+            document.querySelector('#fees').innerHTML = data['fees'].toFixed(2) +' €';
+            document.querySelector('#price').innerHTML = data['price'].toFixed(2) +' €';
+            document.querySelector('#total').innerHTML = `${(data['price'] + data['fees']).toFixed(2)} €`;
         });
 }

@@ -16,8 +16,6 @@ function updateView() {
         form.querySelector('#booking_endRes_date_year').value + ' ' +
         form.querySelector('#booking_endRes_time_hour').value + ':' +
         form.querySelector('#booking_endRes_time_minute').value;
-    console.log(startDateTime);
-    console.log(endDateTime);
 
     const vehicleId = form.querySelector('#booking_vehicle').value;
 

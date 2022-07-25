@@ -131,6 +131,3 @@ SOFTWARE.
 Pour modifier les templates des emails, il faut aller dans le dossier "templates/emails".
 Dedans la liste des différents emails envoyés par le site, pour les modifier : ouvrir le fichier et modifier le
 contenu ou supprimer le contenu et le remplacer par un template réalisé sur internet au format html (copier/coller).
-
-Le template utilisé à été réalisé sur https://pro.beefree.io pour exemple.
-

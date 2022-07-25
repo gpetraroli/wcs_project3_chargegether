@@ -51,11 +51,11 @@ class NotificationController extends AbstractController
     #[Route('/notification/{id}/delete', name: 'app_notifications_delete')]
     public function delete(Notification $notification, NotificationsRepository $notifRepository): Response
     {
-        if($this->getUser() === $notification->getDestinationUser()){
+        if ($this->getUser() === $notification->getDestinationUser())
+        {
             $notifRepository->remove($notification, true);
             $this->addFlash('success', 'La notification a bien été supprimée !');
             return $this->redirectToRoute('app_notifications');
-
         }
         return $this->redirectToRoute('app_notifications');
     }

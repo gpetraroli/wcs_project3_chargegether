@@ -38,8 +38,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string', length: 80)]
     private string $lastName;
 
-    #[ORM\Column(type: 'date')]
-    private DateTime $birthDate;
+    #[ORM\Column(type: 'date', nullable: true)]
+    private ?DateTime $birthDate = null;
 
     #[ORM\Column(type: 'string', length: 255)]
     private string $address;
@@ -72,9 +72,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?File $imageFile = null;
 
     #[ORM\Column(type: 'string', nullable: true)]
-    private ?string $imageName;
+    private ?string $imageName = null;
 
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column(type: 'integer', nullable: true)]
     private ?int $imageSize = null;
 
     #[ORM\OneToMany(mappedBy: 'owner', targetEntity: Station::class, orphanRemoval: true)]
@@ -160,7 +160,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->birthDate;
     }
-    public function setBirthDate(DateTime $birthDate): void
+    public function setBirthDate(DateTime $birthDate = null): void
     {
         $this->birthDate = $birthDate;
     }

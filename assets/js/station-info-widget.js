@@ -7,7 +7,12 @@ export function renderStationInfo(station)
         <div class="d-flex justify-content-between w-100 flex-wrap">
             <div class="d-flex flex-column gap-1">
                 <h2 id='js-name' class="text-secondary d-flex gap-2 m-0"><img src="/images/logo_hote.png">${station.owner}</h2>
-                <p class="m-0">reviews</p>
+                <p class="m-0">
+                    <a href="/hote/avis/${station.id}" class="text-decoration-none">
+                        ${String('<i class="bi bi-star-fill text-warning"></i>').repeat(station.avg)}${String('<i class="bi bi-star-half text-warning"></i>').repeat(Math.round(station.avg%1))}
+                    </a>
+                    (${station.reviewCount} avis)
+                </p>
             </div>
             <i id='btn-close' class="bi bi-x-circle fs-2"></i>
         </div>

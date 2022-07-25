@@ -137,14 +137,6 @@ class BookingController extends AbstractController
         return $this->redirectToRoute('app_notifications');
     }
 
-
-
-    #[Route('/reservation/{id}', name: 'booking_info')]
-    public function showBookingInfos(): Response
-    {
-        return $this->render('booking/infosbooking.html.twig');
-    }
-
     #[Route('/reservation/{id}/start', name: 'booking_startloc')]
     public function startLocation(Booking $booking, BookingsRepository $bookingsRepository, NotificationManager $notifManager): Response
     {

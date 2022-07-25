@@ -11,7 +11,7 @@
     </header>
 
     <div>
-        {% for notification in app.user.notifications %}
+        {% for notification in app.user.notifications|reverse %}
             {% if not notification.isRead %}
                 <a href="{{ path('app_notification_show', {id: notification.id}) }}" class="card align-items-start bg-secondary text-white position-relative m-3 text-decoration-none">
                     <div class="card-body d-flex flex-column gap-2">
@@ -24,7 +24,7 @@
         {% endfor %}
     </div>
     <div>
-        {% for notification in app.user.notifications %}
+        {% for notification in app.user.notifications|reverse %}
             {% if notification.isRead %}
                 <a href="{{ path('app_notification_show', {id: notification.id}) }}" class="card align-items-start bg-transparent border border-secondary m-3 text-decoration-none">
                     <div class="card-body d-flex flex-column gap-2">

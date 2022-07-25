@@ -18,10 +18,10 @@ security:
             lazy: true
             provider: app_user_provider
             custom_authenticator: App\Security\UserAuthenticator
-            #form_login:
-                #login_path: security.login
-                #check_path: security.login
-                #default_target_path: app_profil_index
+#            form_login:
+#                login_path: security.login
+#                check_path: security.login
+#                default_target_path: app_profil_index
 
             logout:
                 path: app_logout

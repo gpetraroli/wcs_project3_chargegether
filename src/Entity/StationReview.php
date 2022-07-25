@@ -26,7 +26,6 @@ class StationReview
     private User $owner;
 
 
-
     public function getId(): int
     {
         return $this->id;

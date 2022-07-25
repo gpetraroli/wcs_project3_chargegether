@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Config\PlugType;
 use App\Config\StationPower;
 use App\Repository\StationsRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -42,6 +43,10 @@ class Station
     private Collection $reviews;
 
 
+    public function __construct()
+    {
+        $this->reviews = new ArrayCollection();
+    }
 
     public function getId(): int
     {

@@ -1,74 +1,87 @@
 {% extends 'base.html.twig' %}
 
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('booking') }}
+{% endblock %}
+
 {% block title %}Reservations - Chargether{% endblock %}
 
 {% block body %}
 
-	<header class="bg-primary d-flex justify-content-center">
-		<h3 class="text-white my-3">
-			<a href="{{ path('app_profil_index') }}" class="btn btn-primary" role="button" data-bs-toggle="button">
-				<i class="bi bi-arrow-left-circle-fill"></i>
-			</a>
-			Réservation
-		</h3>
-	</header>
+    <header class="bg-primary d-flex justify-content-center">
+        <h3 class="text-white my-3">
+            <a href="{{ path('app_profil_index') }}" class="btn btn-primary" role="button" data-bs-toggle="button">
+                <i class="bi bi-arrow-left-circle-fill"></i>
+            </a>
+            Réservation
+        </h3>
+    </header>
 
-	<div class="plug-type-item text-center mt-3">
+    <div class="plug-type-item text-center mt-3">
 
-		<img src="{{asset('images/stations/plugs/' ~ station.plugType.name ~ '.png')}}" "alt=plug">
-	</div>
+        <img src="{{asset('images/stations/plugs/' ~ station.plugType.name ~ '.png')}}" "alt=plug">
+    </div>
 
 
 
-{{ form_start(form) }}
-	<div class="h4 pb-3 mx-3 border-bottom border-secondary"></div>
+    {{ form_start(form) }}
+    <div class="h4 pb-3 mx-3 border-bottom border-secondary"></div>
 
-	<div class="mx-3">
-		<h6 class="text-secondary">{{ form_row(form.startRes) }}</h6>
-	</div>
+    <div class="mx-3">
+        <h6 class="text-secondary">{{ form_row(form.startRes) }}</h6>
+    </div>
 
-	<div class="mx-3">
-		<h6 class="text-secondary">{{ form_row(form.endRes) }}</h6</div>
+    <div class="mx-3">
+        <h6 class="text-secondary">{{ form_row(form.endRes) }}</h6</div>
 
-		<div class="mx-auto">
-			<h6 class="text-secondary">{{ form_row(form.vehicle) }}</h6>
-		</div>
+    <div class="mx-auto">
+        <h6 class="text-secondary">{{ form_row(form.vehicle) }}</h6>
+    </div>
+    <div class="mx-auto">
+        <h6 class="text-secondary">{{ form_row(form.station) }}</h6>
+    </div>
 
-		<div class="h4 pb-3 mx-3 border-bottom border-secondary"></div>
+    <div class="h4 pb-3 mx-3 border-bottom border-secondary"></div>
 
-		<div class="my-2 mx-3 d-flex justify-content-between">
-			<h6 class="text-primary">Détails de la réservation :</h6>
-		</div>
+    <div class="my-2 mx-3 d-flex justify-content-between">
+        <h6 class="text-primary">Détails de la réservation :</h6>
+    </div>
 
-		<div class="mx-3 d-flex justify-content-between">
-			<h6 class="text-secondary">Heure de début</h6>
-		</div>
+    <div class="mx-3 d-flex justify-content-between">
+        <h6 class="text-secondary">Heure de début</h6>
+        <strong id="start-date-time"></strong>
+    </div>
 
-		<div class="mx-3 d-flex justify-content-between">
-			<h6 class="text-secondary">Heure de fin</h6>
-		</div>
+    <div class="mx-3 d-flex justify-content-between">
+        <h6 class="text-secondary">Heure de fin</h6>
+        <strong id="end-date-time"></strong>
+    </div>
 
-		<div class="mx-3 d-flex justify-content-between">
-			<h6 class="text-secondary">Coût du stationnement</h6>
-		</div>
+    <div class="mx-3 d-flex justify-content-between">
+        <h6 class="text-secondary">Coût du stationnement</h6>
+        <strong id="price"></strong>
+    </div>
 
-		<div class="mx-3 d-flex justify-content-between">
-			<h6 class="text-secondary">Frais de Chargether</h6>
-		</div>
+    <div class="mx-3 d-flex justify-content-between">
+        <h6 class="text-secondary">Frais de Chargether</h6>
+        <strong id="fees"></strong>
+    </div>
 
-		<div class="mx-3 d-flex justify-content-between">
-			<h6 class="text-secondary">
-				<b>Total</b>
-			</h6>
-		</div>
+    <div class="mx-3 d-flex justify-content-between">
+        <h6 class="text-secondary">
+            <b>Total</b>
+        </h6>
+            <strong id="total"></strong>
+    </div>
 
-		<div class="mb-5">
-			<div class="d-flex justify-content-center mb-5">
-                {{ form_row(form.submit) }}
+    <div class="mb-5">
+        <div class="d-flex justify-content-center mb-5">
+            {{ form_row(form.submit) }}
 
-            </div>
+        </div>
 
-		</div>
+    </div>
 
 
     {{ form_end(form) }}
@@ -76,13 +89,13 @@
 
     <div class="h4 pb-3 mx-3 border-bottom border-secondary"></div>
 
-		<div class="mx-2 d-flex flex-column text-primary">
-			<h6 class="text-secondary">
-				<b>
-					Conditions :</b>
-			</h6>
-			<p>- Le prix sera actualisé au moment de la charge</p>
-			<p>- La recharge sera calculée par au niveau de la batterie de la batterie de départ et du niveau souhaité</p>
-			<p>- Le règlement sera effectué à la fin de la recharge</p>
-		</div>
-	{% endblock %}
+    <div class="mx-2 d-flex flex-column text-primary">
+        <h6 class="text-secondary">
+            <b>
+                Conditions :</b>
+        </h6>
+        <p>- Le prix sera actualisé au moment de la charge</p>
+        <p>- La recharge sera calculée par au niveau de la batterie de la batterie de départ et du niveau souhaité</p>
+        <p>- Le règlement sera effectué à la fin de la recharge</p>
+    </div>
+{% endblock %}

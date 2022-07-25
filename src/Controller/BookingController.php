@@ -179,7 +179,7 @@ class BookingController extends AbstractController
             ->from('contact@chargether.com')
             ->to($station->getOwner()->getEmail())
             ->subject('Récap de la location de votre borne ! ')
-            ->html('<p>Voici le récapitulatif de vottre location : </p>' . $messageBody);
+            ->html($this->renderView('/emails/end_location.html.twig'));
 
         $mailer->send($email);
 

@@ -33,6 +33,7 @@ Encore
      */
     .addEntry('app', './assets/app.js')
     .addEntry('map', './assets/js/map.js')
+    .addEntry('navigation', './assets/js/navigation.js')
     .addEntry('geocoding', './assets/js/geocoding.js')
     .addEntry('station', './assets/js/station.js')
     .addEntry('booking', './assets/js/booking-widget.js')

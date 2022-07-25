@@ -137,14 +137,6 @@ class BookingController extends AbstractController
         return $this->redirectToRoute('app_notifications');
     }
 
-
-
-    #[Route('/reservation/{id}', name: 'booking_info')]
-    public function showBookingInfos(): Response
-    {
-        return $this->render('booking/infosbooking.html.twig');
-    }
-
     #[Route('/reservation/{id}/start', name: 'booking_startloc')]
     public function startLocation(Booking $booking, BookingsRepository $bookingsRepository, NotificationManager $notifManager): Response
     {
@@ -180,7 +172,7 @@ class BookingController extends AbstractController
             ->from('contact@chargether.com')
             ->to($station->getOwner()->getEmail())
             ->subject('Récap de la location de votre borne ! ')
-            ->html('<p>Voici le récapitulatif de vottre location : </p>' . $messageBody);
+            ->html($this->renderView('/emails/end_location.html.twig'));
 
         $mailer->send($email);
 

@@ -38,4 +38,10 @@
     top: 5px;
 }
 
-
+#start-navigation {
+    z-index: 1000;
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+}

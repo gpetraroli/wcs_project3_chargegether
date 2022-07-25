@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Home - Chargether{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('navigation') }}
+    <script defer src="https://maps.googleapis.com/maps/api/js?key={{ googleApiKey }}&callback=initMap"></script>
+{% endblock %}
+
+{% block body %}
+    <div class="position-relative h-100">
+        <a id='start-navigation' class="btn btn-secondary shadow p-3" href="https://www.google.com/maps/dir/?api=1&destination={{ destination }}" data-destination="{{ destination }}">start navigation</a>
+        {% include 'components/_map.html.twig' %}
+    </div>
+{% endblock %}

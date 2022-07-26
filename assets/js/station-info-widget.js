@@ -2,7 +2,6 @@ export function renderStationInfo(station)
 {
     const stationInfoEl = document.querySelector('#station-info');
     stationInfoEl.classList.remove('d-none');
-
     const stationInfoMakup = `
         <div class="d-flex justify-content-between w-100 flex-wrap">
             <div class="d-flex flex-column gap-1">

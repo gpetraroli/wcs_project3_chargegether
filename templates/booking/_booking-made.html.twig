@@ -41,11 +41,12 @@
         </a>
         {# On vérifie que la réservation est confirmée#}
         {% if booking.confirmed %}
+
             {# Si la location a démaré #}
             {% if booking.startLoc is not null %}
                 {# si la location est terminée#}
                 {% if booking.endLoc is not null %}
-                    <span class="text-danger">Location terminée</span>
+                    <span class="text-danger fw-bold">Location terminée</span>
                     {# si la location n'est pas terminée #}
                 {% else %}
                     <div class="text-center">
@@ -64,13 +65,15 @@
                         </a>
                     </div>
                 {% elseif date("now") < booking.startRes %}
-                    <span class="text-warning">Il est trop tôt pour commencer la réservation</span>
+                    <span class="text-secondary fw-bold">Il est trop tôt pour commencer la réservation</span>
                 {% elseif date("now") > booking.endRes %}
                     <span class="text-info">Le créneau a été dépassé</span>
                 {% endif %}
             {% endif %}
+
         {% else %}
-            <span class="text-warning">La réservation n'a pas encore été confirmée par l'hôte</span>
+
+            <span class="text-secondary fw-bold">La réservation n'a pas encore été confirmée par l'hôte</span>
         {% endif %}
     </div>
 

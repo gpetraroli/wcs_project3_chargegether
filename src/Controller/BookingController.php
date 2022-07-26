@@ -4,18 +4,21 @@ namespace App\Controller;
 
 use App\Entity\Notification;
 use App\Entity\StationReview;
+use App\Entity\Vehicle;
 use App\Form\RateStationsType;
 use App\Repository\NotificationsRepository;
 use App\Repository\ReviewsRepository;
+use App\Service\BookingPriceManager;
 use DateTimeImmutable;
 use App\Entity\Booking;
 use App\Entity\Station;
 use App\Entity\User;
 use App\Form\BookingType;
 use App\Service\VehicleManager;
-use App\Service\BookingPriceManager;
+use App\Service\StationManager;
 use App\Repository\BookingsRepository;
 use App\Service\NotificationManager;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
@@ -42,18 +45,21 @@ class BookingController extends AbstractController
         return $this->render('booking/index.html.twig');
     }
 
-    #[Route('/api/price', name: 'booking_api_price')]
+    #[Route('/api/price/{dateBegin}/{dateEnd}/{vehicle}/{station}', name: 'booking_api_price')]
+    #[ParamConverter('dateBegin', options: ['format' => 'd-m-Y H:i'])]
+    #[ParamConverter('dateEnd', options: ['format' => 'd-m-Y H:i'])]
     public function apiPrice(
         DateTimeImmutable $dateBegin,
         DateTimeImmutable $dateEnd,
-        int $vehiclePower,
-        int $stationPower
+        Vehicle $vehicle,
+        Station $station,
     ): JsonResponse {
+
         $price = $this->bookingPriceManager->calculateBookingPrice(
             $dateBegin,
             $dateEnd,
-            $vehiclePower,
-            $stationPower
+            intval($vehicle->getBatteryPower()),
+            $station->getPower()->value,
         );
 
         return $this->json($price);
@@ -66,7 +72,7 @@ class BookingController extends AbstractController
         Request $request,
         BookingsRepository $bookingsRepository,
         VehicleManager $vehicleManager,
-        NotificationManager $notifManager
+        NotificationManager $notifManager,
     ): Response {
         $booking = new Booking();
         $booking->setStation($station);
@@ -87,11 +93,11 @@ class BookingController extends AbstractController
                 $station->getPower()->value
             );
 
-            $booking->setBookingPrice(strval($price));
+            $booking->setBookingPrice(strval($price['price'] + $price['fees']));
             $bookingsRepository->add($booking, true);
             $this->addFlash('success', 'Réservation effectuée avec succes');
 
-            $messageBody = $this->getUser()->getUserName() . 'a réservé votre station à l\'adresse ' .
+            $messageBody = $this->getUser()->getUserName() . ' a réservé votre borne à l\'adresse ' .
                 $station->getAddress() .
                 ' pour le ' . $booking->getStartRes()->format('d/m/Y') . ' à ' . $booking->getStartRes()->format('H:i') . ' merci de valider la reservation en cliquant ici';
             $notifManager->sendNotificationTo($station->getOwner(), $messageBody, true, $booking);
@@ -115,9 +121,7 @@ class BookingController extends AbstractController
         $notification->setBody($body);
         $notifRepository->add($notification, true);
 
-        // On rajouter une nouvelle notif à l'hôte pour lui confirmer sa confirmation
-        $messageBodyHote =  'Vous venez de confirmer la réservation suivante : ' . $body;
-        $notificationManager->sendNotificationTo($this->getUser(), $messageBodyHote);
+        $this->addFlash('success', 'Vous venez de confirmer la réservation.');
 
         // On prévient le client que sa résa est confirmée
         $messageBodyClient =  'Votre réservation à bien été confirmée, retrouvez-là dans l\'onglet Réservations';
@@ -129,14 +133,6 @@ class BookingController extends AbstractController
 
 
         return $this->redirectToRoute('app_notifications');
-    }
-
-
-
-    #[Route('/reservation/{id}', name: 'booking_info')]
-    public function showBookingInfos(): Response
-    {
-        return $this->render('booking/infosbooking.html.twig');
     }
 
     #[Route('/reservation/{id}/start', name: 'booking_startloc')]
@@ -174,7 +170,7 @@ class BookingController extends AbstractController
             ->from('contact@chargether.com')
             ->to($station->getOwner()->getEmail())
             ->subject('Récap de la location de votre borne ! ')
-            ->html('<p>Voici le récapitulatif de vottre location : </p>' . $messageBody);
+            ->html($this->renderView('/emails/end_location.html.twig'));
 
         $mailer->send($email);
 
@@ -193,6 +189,8 @@ class BookingController extends AbstractController
             $stationReview->setId($station->getId());
             $stationReview->setRate($form->get('rate')->getData());
             $stationReview->setBody($form->get('body')->getData());
+            $stationReview->setStation($station);
+            $stationReview->setOwner($this->getUser());
 
             $reviewsRepository->add($stationReview, true);
 

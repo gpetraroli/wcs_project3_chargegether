@@ -4,11 +4,8 @@
 
 {% block body %}
 
-    <header class="bg-primary d-flex justify-content-center">
-        <h1 class="text-white my-3">
-            Véhicule
-        </h1>
-    </header>
+    {% include 'components/_header.html.twig' with { 'title': 'Véhicule', 'route': 'app_profil_index' } %}
+
     {% if app.user.vehicles.count < 2 %}
         <div class="d-flex justify-content-center">
             <a

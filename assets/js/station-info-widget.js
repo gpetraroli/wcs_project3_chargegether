@@ -2,12 +2,16 @@ export function renderStationInfo(station)
 {
     const stationInfoEl = document.querySelector('#station-info');
     stationInfoEl.classList.remove('d-none');
-
     const stationInfoMakup = `
         <div class="d-flex justify-content-between w-100 flex-wrap">
             <div class="d-flex flex-column gap-1">
                 <h2 id='js-name' class="text-secondary d-flex gap-2 m-0"><img src="/images/logo_hote.png">${station.owner}</h2>
-                <p class="m-0">reviews</p>
+                <p class="m-0">
+                    <a href="/hote/avis/${station.id}" class="text-decoration-none">
+                        ${String('<i class="bi bi-star-fill text-warning"></i>').repeat(station.avg)}${String('<i class="bi bi-star-half text-warning"></i>').repeat(Math.round(station.avg%1))}
+                    </a>
+                    (${station.reviewCount} avis)
+                </p>
             </div>
             <i id='btn-close' class="bi bi-x-circle fs-2"></i>
         </div>
@@ -15,7 +19,7 @@ export function renderStationInfo(station)
             <img style="height: 70px" src="/images/stations/plugs/${station.type}.png">
             <div>
             <img style="height: 60px" src="/images/parking.png">
-                <p class="text-center text-secondary fw-bold">privè</p>
+                <p class="text-center text-secondary fw-bold">privé</p>
             </div>
             <img style="height: 70px" src="images/stations/power/borne${station.power}kw.png">
         </div>

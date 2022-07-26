@@ -1,0 +1,81 @@
+{% for booking in app.user.bookings |reverse %}
+    <div class="my-5">
+        <div class="my-2 mx-3 d-flex justify-content-between">
+            <h6 class="text-primary">Détails de la réservation passée chez un hôte :</h6>
+        </div>
+
+        <div class="mx-3 d-flex justify-content-between">
+            <h6 class="text-secondary"> Date et heure de début</h6>
+            <p> Le {{ booking.startRes|date("d/m/Y \\a G \\h i") }}</p>
+
+        </div>
+
+        <div class="mx-3 d-flex justify-content-between">
+            <h6 class="text-secondary">Heure de fin</h6>
+            <p> Le {{ booking.endRes|date("d/m/Y \\a G \\h i") }}</p>
+
+        </div>
+
+        <div class="mx-3 d-flex justify-content-between">
+            <h6 class="text-secondary">Coût du stationnement</h6>
+            <p>{{ (booking.bookingPrice-1)|number_format(2, ',') }} €</p>
+        </div>
+
+        <div class="mx-3 d-flex justify-content-between">
+            <h6 class="text-secondary">Frais de Chargether</h6>
+            <p>1 €</p>
+        </div>
+
+        <div class="mx-3 d-flex justify-content-between">
+            <h6 class="text-secondary fw-bold">
+                Total
+            </h6>
+            <p class="fw-bold">{{ booking.bookingPrice|number_format(2, ',') }} €</p>
+        </div>
+    </div>
+
+    {# Code pour la gestion des départ et arret de location #}
+    <div class="d-flex align-items-center gap-2 mx-3">
+        <a class="btn btn-primary" href="{{ path('app_navigate_to', {'destination': booking.station.coordinates }) }}">
+            Direction
+        </a>
+        {# On vérifie que la réservation est confirmée#}
+        {% if booking.confirmed %}
+
+            {# Si la location a démaré #}
+            {% if booking.startLoc is not null %}
+                {# si la location est terminée#}
+                {% if booking.endLoc is not null %}
+                    <span class="text-danger fw-bold">Location terminée</span>
+                    {# si la location n'est pas terminée #}
+                {% else %}
+                    <div class="text-center">
+                        <a href="{{ path('booking_endloc', {'id': booking.id}) }}">
+                            <button type="button" class="btn btn-primary ">Terminer la location</button>
+                        </a>
+                    </div>
+                {% endif %}
+                {# si la location n'a pas démarrée #}
+            {% else %}
+                {# on vérifie qu'on est bien dans le crénaux horraire #}
+                {% if date("now") > booking.startRes and date("now") < booking.endRes %}
+                    <div class="text-center">
+                        <a href="{{ path('booking_startloc', {'id': booking.id}) }}">
+                            <button type="button" class="btn btn-primary ">Démarrer la location</button>
+                        </a>
+                    </div>
+                {% elseif date("now") < booking.startRes %}
+                    <span class="text-secondary fw-bold">Il est trop tôt pour commencer la réservation</span>
+                {% elseif date("now") > booking.endRes %}
+                    <span class="text-info">Le créneau a été dépassé</span>
+                {% endif %}
+            {% endif %}
+
+        {% else %}
+
+            <span class="text-secondary fw-bold">La réservation n'a pas encore été confirmée par l'hôte</span>
+        {% endif %}
+    </div>
+
+    <div class="h4 pb-3 mx-3 border-bottom border-secondary"></div>
+{% endfor %}

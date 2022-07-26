@@ -1,6 +1,5 @@
 /*global google*/
 import {renderStationInfo} from './station-info-widget';
-import {calcRoute, initDirectionService} from './directions';
 
 let map;
 let currentPositionMarker;
@@ -22,7 +21,6 @@ function initMap()
 
     setCurrentPosition();
     renderStations();
-    initDirectionService(map);
 }// initMap
 
 window.initMap = initMap;
@@ -38,6 +36,7 @@ function setCurrentPosition()
             map.setCenter(pos);
             currentPositionMarker = new google.maps.Marker({
                 position: pos,
+                icon: "/images/cible.png",
                 map: map,
             });
         },() => {

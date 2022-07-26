@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Config\PlugType;
 use App\Config\StationPower;
 use App\Repository\StationsRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -35,9 +36,17 @@ class Station
     #[ORM\JoinColumn(nullable: false)]
     private User $owner;
 
-    #[ORM\OneToMany(mappedBy: 'station', targetEntity: Booking::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'station', targetEntity: Booking::class, orphanRemoval: true, cascade: ['all'])]
     private Collection $bookings;
 
+    #[ORM\OneToMany(mappedBy: 'station', targetEntity: StationReview::class, orphanRemoval: true, cascade: ['all'])]
+    private Collection $reviews;
+
+    public function __construct()
+    {
+        $this->reviews = new ArrayCollection();
+        $this->bookings = new ArrayCollection();
+    }
 
     public function getId(): int
     {
@@ -47,6 +56,16 @@ class Station
     public function setId(int $id): void
     {
         $this->id = $id;
+    }
+
+
+    public function getReviews(): Collection
+    {
+        return $this->reviews;
+    }
+    public function setReviews(Collection $reviews): void
+    {
+        $this->reviews = $reviews;
     }
 
 
@@ -119,5 +138,49 @@ class Station
     public function setCoordinates(string $coordinates): void
     {
         $this->coordinates = $coordinates;
+    }
+
+    public function addBooking(Booking $booking): self
+    {
+        if (!$this->bookings->contains($booking)) {
+            $this->bookings[] = $booking;
+            $booking->setStation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBooking(Booking $booking): self
+    {
+        if ($this->bookings->removeElement($booking)) {
+            // set the owning side to null (unless already changed)
+            if ($booking->getStation() === $this) {
+                $booking->setStation(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function addReview(StationReview $review): self
+    {
+        if (!$this->reviews->contains($review)) {
+            $this->reviews[] = $review;
+            $review->setStation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReview(StationReview $review): self
+    {
+        if ($this->reviews->removeElement($review)) {
+            // set the owning side to null (unless already changed)
+            if ($review->getStation() === $this) {
+                $review->setStation(null);
+            }
+        }
+
+        return $this;
     }
 }

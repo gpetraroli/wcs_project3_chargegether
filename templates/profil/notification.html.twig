@@ -23,5 +23,9 @@
                     </a>
                 {% endif %}
             </div>
+            <a href="{{ path('app_notifications_delete', {id: notification.id}) }}">
+                    <span class="bg-white p-1 px-2 rounded text-secondary position-absolute top-0 end-0 m-1
+                    fw-bold">supprimer</span>
+            </a>
         </div>
 {% endblock %}

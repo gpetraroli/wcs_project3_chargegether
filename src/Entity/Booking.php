@@ -5,7 +5,7 @@ namespace App\Entity;
 use App\Repository\BookingsRepository;
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\UserInterface;
+use Doctrine\Common\Collections\Collection;
 
 #[ORM\Entity(repositoryClass: BookingsRepository::class)]
 class Booking
@@ -38,6 +38,9 @@ class Booking
 
     #[ORM\ManyToOne(targetEntity: Station::class, inversedBy: 'bookings')]
     private Station $station;
+
+    #[ORM\OneToMany(mappedBy: 'booking', targetEntity: Notification::class, cascade: ['all'], orphanRemoval: true)]
+    private Collection $notifications;
 
     #[ORM\Column(type: 'boolean')]
     private bool $confirmed;
@@ -141,7 +144,7 @@ class Booking
         return $this->station;
     }
 
-    public function setStation(Station $station): void
+    public function setStation(?Station $station): void
     {
         $this->station = $station;
     }
@@ -164,5 +167,15 @@ class Booking
     public function setConfirmed(bool $confirmed): void
     {
         $this->confirmed = $confirmed;
+    }
+
+    public function getNotifications(): Collection
+    {
+        return $this->notifications;
+    }
+
+    public function setNotifications(Collection $notifications): void
+    {
+        $this->notifications = $notifications;
     }
 }

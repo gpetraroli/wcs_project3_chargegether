@@ -14,10 +14,13 @@ class BookingPriceManager
         \DateTimeImmutable $dateEnd,
         int $vehiclePower,
         int $stationPower
-    ): float {
+    ): ?array {
         $interval = $dateEnd->diff($dateBegin);
         $intervarInHours = (int) $interval->format('%h') + (int) $interval->format('%i') / 60;
         $power = ($vehiclePower < $stationPower) ? $vehiclePower : $stationPower;
-        return $this->electricityPrice * $this->coefficient * $intervarInHours * $power + $this->fees;
+        return [
+            'price' => $this->electricityPrice * $this->coefficient * $intervarInHours * $power,
+            'fees' => $this->fees
+        ];
     }
 }

@@ -4,63 +4,55 @@
 {% endblock %}
 
 {% block specific_javascript %}
-	<script src="https://kit.fontawesome.com/47e5d2715e.js" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/47e5d2715e.js" crossorigin="anonymous"></script>
 {% endblock %}
 
 {% block body %}
-	{{ form_start(form)}}
-	<section class="h-100 position-relative d-flex flex-column justify-content-between">
+    {{ form_start(form)}}
+    <section class="h-100 position-relative d-flex flex-column justify-content-between">
 
-			<header class="bg-primary d-flex justify-content-center">
-		<h3 class="text-white my-3">
-			<a href="{{ path('app_profil_index') }}" class="btn btn-primary" role="button" data-bs-toggle="button">
-				<i class="bi bi-arrow-left-circle-fill"></i>
-			</a>
-			Informations Personnelles
-		</h3>
-	</header>
+        {% include 'components/_header.html.twig' with { 'title': 'Informations Personnelles', 'route': 'app_profil_index' } %}
 
-		<div class="d-flex justify-content-start align-items-center m-3 mb-0">
-			<div class="d-flex flex-column"></div>
+        <div class="d-flex justify-content-start align-items-center m-3 mb-0">
+            <div class="d-flex flex-column"></div>
 
-			<h5 class="text-secondary ms-5">
-				INFORMATIONS DU COMPTE
-			</h5>
-		</div>
+            <h5 class="text-secondary ms-5">
+                INFORMATIONS DU COMPTE
+            </h5>
+        </div>
 
-		<div class="h4 pb-3 mx-3 border-bottom border-secondary"></div>
+        <div class="h4 pb-3 mx-3 border-bottom border-secondary"></div>
 
-		<div class="form-group">
-			<li class="list-group-item ff">{{ form_row(form.email) }}</li>
-			<li class="list-group-item">{{ form_row(form.userName) }}</li>
-		</div>
+        <div class="form-group">
+            <li class="list-group-item ff">{{ form_row(form.email) }}</li>
+            <li class="list-group-item">{{ form_row(form.userName) }}</li>
+        </div>
 
-		<div class="d-flex justify-content-start align-items-center m-3 mb-0">
-			<h5 class="text-secondary ms-5">
-				INFORMATIONS PERSONNELLES
-			</h5>
-		</div>
+        <div class="d-flex justify-content-start align-items-center m-3 mb-0">
+            <h5 class="text-secondary ms-5">
+                INFORMATIONS PERSONNELLES
+            </h5>
+        </div>
 
-		<div class="h4 pb-3 mx-3 border-bottom border-secondary"></div>
+        <div class="h4 pb-3 mx-3 border-bottom border-secondary"></div>
 
-		<div class="form-group">
-			<li class="list-group-item">{{ form_row(form.address) }}</li>
-			<li class="list-group-item">{{ form_row(form.city) }}</li>
-			<li class="list-group-item">{{ form_row(form.zipcode) }}</li>
-			<li class="list-group-item">{{ form_row(form.country) }}</li>
-			<li class="list-group-item">{{ form_row(form.phoneNumber) }}</li>
-			<li class="list-group-item">{{ form_row(form.imageFile) }}</li>
-		</div>
+        <div class="form-group">
+            <div class="list-group-item">{{ form_row(form.address) }}</div>
+            <div class="list-group-item">{{ form_row(form.city) }}</div>
+            <div class="list-group-item">{{ form_row(form.zipcode) }}</div>
+            <div class="list-group-item">{{ form_row(form.country) }}</div>
+            <div class="list-group-item">{{ form_row(form.phoneNumber) }}</div>
+        </div>
 
-		<div class="mb-5">
-					<div class="d-flex justify-content-center mb-5">
-						<button type="submit" href="{{ path('app_profil_hote') }}" class="btn btn-secondary m-4 text-center text-white col-9 d-flex align-items-center justify-content-center rounded-pill gap-3 p-0">
-							<h3 class="text-white my-2">Enregistrer</h3>
-						</button>
-					</div>
-				</div>
-                
-	</section>
+        <div class="mb-5">
+            <div class="d-flex justify-content-center mb-5">
+                <button type="submit" href="{{ path('app_profil_hote') }}" class="btn btn-secondary m-4 text-center text-white col-9 d-flex align-items-center justify-content-center rounded-pill gap-3 p-0">
+                    <h3 class="text-white my-2">Enregistrer</h3>
+                </button>
+            </div>
+        </div>
 
-	{{ form_end(form) }}
+    </section>
+
+    {{ form_end(form) }}
 {% endblock %}

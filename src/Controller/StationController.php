@@ -8,6 +8,7 @@ use App\Entity\Station;
 use App\Entity\User;
 use App\Form\StationType;
 use App\Repository\StationsRepository;
+use App\Service\StationManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -61,22 +62,25 @@ class StationController extends AbstractController
     }
 
     #[Route('/api/hotes', name: 'api_hotes')]
-    public function stationsApi(StationsRepository $stationsRepository): JsonResponse
+    public function stationsApi(StationsRepository $stationsRepository, StationManager $stationManager): JsonResponse
     {
         $stations = $stationsRepository->findAll();
-
         $stationsData = [];
 
         foreach ($stations as $station) {
-            $coords = explode(',', $station->getCoordinates());
-            $stationsData[] = [
-                'id' => $station->getId(),
-                'type' => $station->getPlugType(),
-                'power' => $station->getPower(),
-                'lat' => floatval($coords[0]),
-                'lng' => floatval($coords[1]),
-                'owner' => $station->getOwner()->getUserName(),
-            ];
+            if ($station->getOwner() !== $this->getUser() ) {
+                $coords = explode(',', $station->getCoordinates());
+                $stationsData[] = [
+                    'id' => $station->getId(),
+                    'type' => $station->getPlugType(),
+                    'power' => $station->getPower(),
+                    'lat' => floatval($coords[0]),
+                    'lng' => floatval($coords[1]),
+                    'owner' => $station->getOwner()->getUserName(),
+                    'avg' => $stationManager->getReviewAvg($station->getReviews()),
+                    'reviewCount' => $station->getReviews()->count(),
+                ];
+            }
         }
         return $this->json($stationsData);
     }
@@ -104,6 +108,16 @@ class StationController extends AbstractController
             'plugsType' => PlugType::cases(),
             'stationPowers' => StationPower::cases(),
             'googleApiKey' => $this->getParameter('google_api_key'),
+        ]);
+    }
+
+    #[Route('/hote/avis/{id}', name: 'app_hotes_reviews')]
+    public function showReviews(Station $station): Response
+    {
+        $stationReviews = $station->getReviews();
+
+        return $this->render('/profil/stationReviews.html.twig', [
+            'stationReviews' => $stationReviews
         ]);
     }
 }

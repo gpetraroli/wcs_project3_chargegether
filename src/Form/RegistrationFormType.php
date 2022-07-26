@@ -69,9 +69,7 @@ class RegistrationFormType extends AbstractType
             ->add('birthDate', DateType::class, [
                 'label' => 'Date de Naissance',
                 'widget' => 'single_text',
-                'constraints' => [
-                    new NotBlank(),
-                ],
+                'required' => false
             ])
             ->add('city', TextType::class, [
                 'constraints' => [
@@ -108,12 +106,6 @@ class RegistrationFormType extends AbstractType
                     new Assert\Length(['min' => 2, 'max' => 20])
                 ],
                 'label' => 'Téléphone',
-            ])
-            ->add('imageFile', VichImageType::class, [
-                'label' => 'Photo de Profile',
-                'label_attr' => [
-                    'class' => 'form-label my-3',
-                ]
             ])
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,

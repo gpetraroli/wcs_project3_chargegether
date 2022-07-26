@@ -58,7 +58,7 @@ class StationReview
     {
         return $this->station;
     }
-    public function setStation(Station $station): void
+    public function setStation(?Station $station): void
     {
         $this->station = $station;
     }

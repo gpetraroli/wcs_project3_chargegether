@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\User;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Vich\UploaderBundle\Form\Type\VichImageType;
@@ -71,13 +72,7 @@ class ProfileType extends AbstractType
                 ],
                 'label' => 'Téléphone',
             ])
-            ->add('imageFile', VichImageType::class, [
-                'label' => 'Photo de Profile',
-                'label_attr' => [
-                    'class' => 'form-label my-3',
-                ],
-                'required' => false
-                ]);
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void

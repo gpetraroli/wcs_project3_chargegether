@@ -4,28 +4,15 @@
 
 {% block body %}
 
-	<header class="bg-primary d-flex justify-content-center">
-		<h4 class="text-white my-3">
-			<a href="{{ path('app_profil_index') }}" class="text-white fs-1 col-1 ps-3">
-				<i class="bi bi-arrow-left-circle-fill"></i>
-			</a>
-			<h2 class="text-white my-3">
-				Contact
-			</h2>
-		</header>
+    {% include 'components/_header.html.twig' with { 'title': 'Contact', 'route': 'app_profil_index' } %}
 
-		<main
-			class="container-fluid">
-			<img src="/images/logo.png" class="card-img-top" " alt="...">
-								<section class="row">
-				<div class="d-flex flex-column align-items-center ">
-					<h1>Pour nous contacter</h1>
-					<h1>contact@chargether.com</h1>
-				</div>
-			</div>
-		</section>
-	</main>
+    <main class="h-100">
+        <div id='main-contact' class="container-fluid h-100 d-flex flex-column justify-content-center align-items-center">
+            <h4>Pour nous contacter</h4>
+            <h1>contact@chargether.com</h1>
+        </div>
+    </main>
 
-	{% include 'components/_navbar.html.twig' %}
+    {% include 'components/_navbar.html.twig' %}
 
 {% endblock %}

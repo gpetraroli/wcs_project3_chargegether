@@ -3,6 +3,8 @@
 {% block title %}Hote - Chargether{% endblock %}
 
 {% block body %}
+    {% include 'components/_header.html.twig' with { 'title': 'Ma borne', 'route': 'app_profil_index' } %}
+
     {% if not app.user.stations|length %}
         <div class="d-flex flex-column align-items-center">
             <h2>No stations yet</h2>

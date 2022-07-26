@@ -97,7 +97,7 @@ class BookingController extends AbstractController
             $bookingsRepository->add($booking, true);
             $this->addFlash('success', 'Réservation effectuée avec succes');
 
-            $messageBody = $this->getUser()->getUserName() . 'a réservé votre station à l\'adresse ' .
+            $messageBody = $this->getUser()->getUserName() . ' a réservé votre borne à l\'adresse ' .
                 $station->getAddress() .
                 ' pour le ' . $booking->getStartRes()->format('d/m/Y') . ' à ' . $booking->getStartRes()->format('H:i') . ' merci de valider la reservation en cliquant ici';
             $notifManager->sendNotificationTo($station->getOwner(), $messageBody, true, $booking);
@@ -121,9 +121,7 @@ class BookingController extends AbstractController
         $notification->setBody($body);
         $notifRepository->add($notification, true);
 
-        // On rajouter une nouvelle notif à l'hôte pour lui confirmer sa confirmation
-        $messageBodyHote =  'Vous venez de confirmer la réservation suivante : ' . $body;
-        $notificationManager->sendNotificationTo($this->getUser(), $messageBodyHote);
+        $this->addFlash('success', 'Vous venez de confirmer la réservation.');
 
         // On prévient le client que sa résa est confirmée
         $messageBodyClient =  'Votre réservation à bien été confirmée, retrouvez-là dans l\'onglet Réservations';

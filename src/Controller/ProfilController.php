@@ -2,14 +2,17 @@
 
 namespace App\Controller;
 
+use App\Entity\UserImage;
 use App\Form\ProfileType;
 use App\Entity\User;
 use App\Entity\Station;
 use App\Config\PlugType;
 use App\Form\StationType;
 use App\Config\StationPower;
+use App\Form\UserImageType;
 use App\Form\UserPasswordType;
 use App\Repository\NotificationsRepository;
+use App\Repository\UserImageRepository;
 use App\Repository\UsersRepository;
 use App\Repository\StationsRepository;
 use DateTime;
@@ -130,5 +133,29 @@ class ProfilController extends AbstractController
     public function hote(): Response
     {
         return $this->render('profil/hote.html.twig');
+    }
+
+    #[Route('/image', name: 'image', methods: ['GET', 'POST'])]
+    public function changeProfileImage(Request $request, EntityManagerInterface $manager, UserImageRepository $userImageRepository): Response
+    {
+        $userImage = new UserImage();
+        $form = $this->createForm(UserImageType::class, $userImage);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            if ($this->getUser()->getImage()) {
+                $userImageRepository->remove($this->getUser()->getImage());
+            }
+            $this->getUser()->setImage($userImage);
+
+            $this->addFlash('success', 'L\'image a bien été modifiée');
+
+            return $this->redirectToRoute('app_profil_index');
+        }
+
+        return $this->renderForm('profil/change-user-image.html.twig', [
+            'form' => $form,
+        ]);
     }
 }

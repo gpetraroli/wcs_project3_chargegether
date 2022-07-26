@@ -4,13 +4,7 @@
 
 {% block body %}
 
-  <header class="bg-primary d-flex justify-content-center">
-		<h4 class="text-white my-3">
-        <a href="{{ path('app_profil_index') }}" class="text-white fs-1 col-1 ps-3"><i class="bi bi-arrow-left-circle-fill"></i></a>
-        <h2 class="text-white my-3">
-            Questions Fréquentes
-        </h2>
-    </header>
+    {% include 'components/_header.html.twig' with { 'title': 'FAQ', 'route': 'app_profil_index' } %}
 
 	<div class="d-flex flex-column"></div>
 	<h5 class="text-secondary ms-5 my-3">

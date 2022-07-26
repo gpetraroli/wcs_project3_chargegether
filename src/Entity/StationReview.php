@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\ReviewsRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ReviewsRepository::class)]
@@ -57,7 +58,7 @@ class StationReview
     {
         return $this->station;
     }
-    public function setStation(Station $station): void
+    public function setStation(?Station $station): void
     {
         $this->station = $station;
     }
@@ -66,7 +67,7 @@ class StationReview
     {
         return $this->owner;
     }
-    public function setOwner(User $owner): void
+    public function setOwner(?User $owner): void
     {
         $this->owner = $owner;
     }

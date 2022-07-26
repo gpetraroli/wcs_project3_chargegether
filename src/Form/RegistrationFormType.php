@@ -107,13 +107,6 @@ class RegistrationFormType extends AbstractType
                 ],
                 'label' => 'Téléphone',
             ])
-            ->add('imageFile', VichImageType::class, [
-                'label' => 'Photo de Profile',
-                'label_attr' => [
-                    'class' => 'form-label my-3',
-                ],
-                'required' => false
-            ])
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
                 'constraints' => [

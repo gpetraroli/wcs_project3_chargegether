@@ -68,17 +68,19 @@ class StationController extends AbstractController
         $stationsData = [];
 
         foreach ($stations as $station) {
-            $coords = explode(',', $station->getCoordinates());
-            $stationsData[] = [
-                'id' => $station->getId(),
-                'type' => $station->getPlugType(),
-                'power' => $station->getPower(),
-                'lat' => floatval($coords[0]),
-                'lng' => floatval($coords[1]),
-                'owner' => $station->getOwner()->getUserName(),
-                'avg' => $stationManager->getReviewAvg($station->getReviews()),
-                'reviewCount' => $station->getReviews()->count(),
-            ];
+            if ($station->getOwner() !== $this->getUser() ) {
+                $coords = explode(',', $station->getCoordinates());
+                $stationsData[] = [
+                    'id' => $station->getId(),
+                    'type' => $station->getPlugType(),
+                    'power' => $station->getPower(),
+                    'lat' => floatval($coords[0]),
+                    'lng' => floatval($coords[1]),
+                    'owner' => $station->getOwner()->getUserName(),
+                    'avg' => $stationManager->getReviewAvg($station->getReviews()),
+                    'reviewCount' => $station->getReviews()->count(),
+                ];
+            }
         }
         return $this->json($stationsData);
     }

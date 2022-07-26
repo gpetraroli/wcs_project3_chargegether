@@ -5,6 +5,7 @@ namespace App\Entity;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UsersRepository;
 use Symfony\Component\HttpFoundation\File\File;
@@ -15,7 +16,6 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 #[ORM\Entity(repositoryClass: UsersRepository::class)]
 #[UniqueEntity(fields: ['email'], message: 'Il existe déjà un compte avec cet email')]
-#[Vich\Uploadable]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -68,15 +68,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'datetime', nullable: true)]
     private DateTime $updatedAt;
 
-    #[Vich\UploadableField(mapping: 'profile_image', fileNameProperty: 'imageName', size: 'imageSize')]
-    private ?File $imageFile = null;
-
-    #[ORM\Column(type: 'string', nullable: true)]
-    private ?string $imageName = null;
-
-    #[ORM\Column(type: 'integer', nullable: true)]
-    private ?int $imageSize = null;
-
     #[ORM\OneToMany(mappedBy: 'owner', targetEntity: Station::class, orphanRemoval: true)]
     private Collection $stations;
 
@@ -92,14 +83,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'owner', targetEntity: StationReview::class, orphanRemoval: true)]
     private Collection $reviews;
 
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    private ?UserImage $image = null;
+
     public function __construct()
     {
         $this->createdAt = new DateTime();
         $this->updatedAt = clone $this->createdAt;
         $this->stations = new ArrayCollection();
-        $this->imageName = null;
         $this->vehicles = new ArrayCollection();
         $this->notifications = new ArrayCollection();
+        $this->bookings = new ArrayCollection();
+        $this->reviews = new ArrayCollection();
     }
 
     public function getId(): int
@@ -256,43 +251,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function eraseCredentials(): void
-    {
-    }
-
-    public function setImageFile(?File $imageFile = null): void
-    {
-        $this->imageFile = $imageFile;
-
-        if (null !== $imageFile) {
-            // It is required that at least one field changes if you are using doctrine
-            // otherwise the event listeners won't be called and the file is lost
-            $this->updatedAt = new DateTime();
-        }
-    }
-    public function getImageFile(): ?File
-    {
-        return $this->imageFile;
-    }
-
-    public function setImageName(?string $imageName): void
-    {
-        $this->imageName = $imageName;
-    }
-    public function getImageName(): ?string
-    {
-        return $this->imageName;
-    }
-
-    public function setImageSize(?int $imageSize): void
-    {
-        $this->imageSize = $imageSize;
-    }
-    public function getImageSize(): ?int
-    {
-        return $this->imageSize;
-    }
-
     public function getCreatedAt(): DateTime
     {
         return $this->createdAt;
@@ -381,5 +339,65 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         }
 
         return $this;
+    }
+
+    public function addBooking(Booking $booking): self
+    {
+        if (!$this->bookings->contains($booking)) {
+            $this->bookings[] = $booking;
+            $booking->setBookingUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBooking(Booking $booking): self
+    {
+        if ($this->bookings->removeElement($booking)) {
+            // set the owning side to null (unless already changed)
+            if ($booking->getBookingUser() === $this) {
+                $booking->setBookingUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function addReview(StationReview $review): self
+    {
+        if (!$this->reviews->contains($review)) {
+            $this->reviews[] = $review;
+            $review->setOwner($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReview(StationReview $review): self
+    {
+        if ($this->reviews->removeElement($review)) {
+            // set the owning side to null (unless already changed)
+            if ($review->getOwner() === $this) {
+                $review->setOwner(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getImage(): ?UserImage
+    {
+        return $this->image;
+    }
+
+    public function setImage(?UserImage $image): self
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    public function eraseCredentials(): void
+    {
     }
 }

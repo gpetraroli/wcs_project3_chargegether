@@ -50,3 +50,16 @@
     background-color: $secondary !important;
     color: $white;
 }
+
+.vich-image img {
+    height: 10rem;
+    width: 10rem;
+    object-fit: cover;
+    border-radius: 100%;
+}
+
+#main-contact {
+    background: url("/public/images/logo_opacity.png");
+    background-repeat: no-repeat;
+    background-position: center;
+}

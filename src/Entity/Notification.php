@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\NotificationsRepository;
 use DateTimeImmutable;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -24,10 +25,9 @@ class Notification
     #[ORM\Column(type: 'boolean')]
     private bool $needConfirmation;
 
-    #[ORM\OneToOne(targetEntity: Booking::class)]
+    #[ORM\ManyToOne(targetEntity: Booking::class, inversedBy: 'notifications')]
     #[ORM\JoinColumn(nullable: true)]
     private ?Booking $booking;
-
 
     #[ORM\Column(type: 'datetime_immutable')]
     private DateTimeImmutable $createdAt;
@@ -109,5 +109,10 @@ class Notification
     public function setBooking(?Booking $booking): void
     {
         $this->booking = $booking;
+    }
+
+    public function isIsRead(): ?bool
+    {
+        return $this->isRead;
     }
 }

@@ -42,6 +42,7 @@ security:
     access_control:
         - {path: ^/admin, roles: ROLE_ADMIN }
         - {path: ^/connexion, role: PUBLIC_ACCESS }
+        - {path: ^/verify, role: PUBLIC_ACCESS }
         - {path: ^/inscription, role: PUBLIC_ACCESS }
         - {path: ^/, role: IS_AUTHENTICATED_FULLY }
 

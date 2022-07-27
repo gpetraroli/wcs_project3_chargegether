@@ -86,6 +86,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     private ?UserImage $image = null;
 
+    #[ORM\Column]
+    private ?bool $isVerified = false;
+
     public function __construct()
     {
         $this->createdAt = new DateTime();
@@ -399,5 +402,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function eraseCredentials(): void
     {
+    }
+
+    public function getIsVerified(): ?bool
+    {
+        return $this->isVerified;
+    }
+
+    public function setIsVerified(bool $isVerified): self
+    {
+        $this->isVerified = $isVerified;
+
+        return $this;
     }
 }

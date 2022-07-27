@@ -1,0 +1,19 @@
+{% extends 'base_no_menu.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="login-form bg-light mt-4 p-4">
+                <h1 class="h3 mb-3 font-weight-normal">Verify your Email</h1>
+                <p>
+                    A verification email was sent - please click it to enable your
+                    account before logging in.
+                </p>
+                <form method="post" action="{{ path('app_verify_resend_email') }}">
+                    <input type="email" required name="email" id="email">
+                    <button type="submit" class="btn btn-primary">Re-send Email</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

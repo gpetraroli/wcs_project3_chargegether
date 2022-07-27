@@ -71,7 +71,6 @@ class ProfilController extends AbstractController
         Request $request,
         UserPasswordHasherInterface $hasher,
         EntityManagerInterface $manager,
-        UsersRepository $usersRepository
     ): Response {
 
         /** @var User $user */

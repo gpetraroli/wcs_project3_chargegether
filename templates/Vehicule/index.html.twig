@@ -6,7 +6,7 @@
 
     {% include 'components/_header.html.twig' with { 'title': 'Véhicule', 'route': 'app_profil_index' } %}
 
-    {% if app.user.vehicles.count < 2 %}
+    {% if app.user.vehicles.count < 4 %}
         <div class="d-flex justify-content-center">
             <a
                 class="m-4 text-center col-6 d-flex align-items-center justify-content-center rounded-pill bg-primary
@@ -19,7 +19,7 @@
             </a>
         </div>
     {% endif %}
-    <p class="text-center">2 maximum</p>
+    <p class="text-center">4 maximum</p>
 
     <hr class="mx-3">
 

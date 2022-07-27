@@ -30,4 +30,8 @@ function updateView() {
             document.querySelector('#price').innerHTML = data['price'].toFixed(2) +' €';
             document.querySelector('#total').innerHTML = `${(data['price'] + data['fees']).toFixed(2)} €`;
         });
+
+    document.querySelector('button').addEventListener('click', (event)=>{
+        event.target.classList.add('disabled');
+    });
 }

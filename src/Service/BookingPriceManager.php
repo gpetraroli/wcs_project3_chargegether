@@ -5,7 +5,7 @@ namespace App\Service;
 class BookingPriceManager
 {
     private int $fees = 1;
-    private float $coefficient = 2.5;
+    private float $coefficient = 2;
     private float $electricityPrice = 0.3;
 
 

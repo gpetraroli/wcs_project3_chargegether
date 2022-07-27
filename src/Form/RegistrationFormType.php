@@ -91,6 +91,7 @@ class RegistrationFormType extends AbstractType
                     new Assert\Length(['min' => 2, 'max' => 80])
                 ],
                 'label' => 'Pays',
+                'preferred_choices' => ['FR'],
             ])
             ->add('gender', ChoiceType::class, [
                 'choices'  => [

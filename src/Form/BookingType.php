@@ -55,17 +55,11 @@ class BookingType extends AbstractType
                 'choices' => $user->getVehicles(),
                 'choice_label' => 'model',
                 'label' => 'Véhicule pris en charge',
-                'constraints' => [
-                    new Assert\GreaterThan(),
-                ],
             ])
             ->add('station', EntityType::class, [
                 'class' => Station::class,
                 'choice_label' => 'id',
                 'attr' => ['class' => 'd-none'],
-                'constraints' => [
-                    new Assert\GreaterThan(),
-                ],
             ]);
     }
 

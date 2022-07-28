@@ -155,7 +155,7 @@ class AppFixtures extends Fixture
         $user->setZipcode($faker->postcode);
         $user->setCountry($faker->country);
         $user->setEmail("admin@admin.fr");
-        $user->setPassword($this->hasher->hashPassword($user, 'password'));
+        $user->setPassword($this->hasher->hashPassword($user, 'NC$68^cdk@fp'));
         $user->addVehicle($this->getReference('focus'));
 
         $manager->persist($user);

@@ -15,6 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class BookingType extends AbstractType
 {
@@ -34,24 +35,36 @@ class BookingType extends AbstractType
             ->add('startRes', DateTimeType::class, [
                 'input' => 'datetime_immutable',
                 'label' => 'Début de la réservation',
-                'data' => new DateTimeImmutable()
+                'data' => new DateTimeImmutable(),
+                'constraints' => [
+                    new Assert\GreaterThan(),
+                ],
             ])
 
             ->add('endRes', DateTimeType::class, [
                 'input' => 'datetime_immutable',
                 'label' => 'Fin de la réservation',
-                'data' => new DateTimeImmutable()
+                'data' => new DateTimeImmutable(),
+                'constraints' => [
+                    new Assert\GreaterThan(),
+                ],
             ])
             ->add('vehicle', EntityType::class, [
                 'class' => Vehicle::class,
                 'choices' => $user->getVehicles(),
                 'choice_label' => 'model',
                 'label' => 'Véhicule pris en charge',
+                'constraints' => [
+                    new Assert\GreaterThan(),
+                ],
             ])
             ->add('station', EntityType::class, [
                 'class' => Station::class,
                 'choice_label' => 'id',
                 'attr' => ['class' => 'd-none'],
+                'constraints' => [
+                    new Assert\GreaterThan(),
+                ],
             ]);
     }
 

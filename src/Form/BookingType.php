@@ -9,13 +9,13 @@ use App\Entity\Vehicle;
 use DateTimeImmutable;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Security;
-use Symfony\Component\Validator\Constraints as Assert;
 
 class BookingType extends AbstractType
 {
@@ -37,7 +37,7 @@ class BookingType extends AbstractType
                 'label' => 'Début de la réservation',
                 'data' => new DateTimeImmutable(),
                 'constraints' => [
-                    new Assert\GreaterThan(),
+                    new Assert\GreaterThan('now', null, 'La date sélectionnée est dépassés.'),
                 ],
             ])
 
@@ -46,8 +46,9 @@ class BookingType extends AbstractType
                 'label' => 'Fin de la réservation',
                 'data' => new DateTimeImmutable(),
                 'constraints' => [
-                    new Assert\GreaterThan(),
+                    new Assert\GreaterThan('now', null, 'La date sélectionnée est dépassés.'),
                 ],
+
             ])
             ->add('vehicle', EntityType::class, [
                 'class' => Vehicle::class,

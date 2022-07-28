@@ -149,6 +149,8 @@ class ProfilController extends AbstractController
             }
             $this->getUser()->setImage($userImage);
 
+            $manager->flush();
+
             $this->addFlash('success', 'L\'image a bien été modifiée');
 
             return $this->redirectToRoute('app_profil_index');

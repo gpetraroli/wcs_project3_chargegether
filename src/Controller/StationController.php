@@ -68,7 +68,7 @@ class StationController extends AbstractController
         $stationsData = [];
 
         foreach ($stations as $station) {
-            if ($station->getOwner() !== $this->getUser() ) {
+            if ($station->getOwner() !== $this->getUser()) {
                 $coords = explode(',', $station->getCoordinates());
                 $stationsData[] = [
                     'id' => $station->getId(),

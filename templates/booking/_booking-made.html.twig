@@ -58,7 +58,7 @@
                 {# si la location n'a pas démarrée #}
             {% else %}
                 {# on vérifie qu'on est bien dans le crénaux horraire #}
-                {% if date("now") > booking.startRes and date("now") < booking.endRes %}
+                {% if date("now") >= booking.startRes and date("now") <= booking.endRes %}
                     <div class="text-center">
                         <a href="{{ path('booking_startloc', {'id': booking.id}) }}">
                             <button type="button" class="btn btn-primary ">Démarrer la location</button>

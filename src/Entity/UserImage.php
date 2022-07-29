@@ -5,7 +5,6 @@ namespace App\Entity;
 use App\Repository\UserImageRepository;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
-use Serializable;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 

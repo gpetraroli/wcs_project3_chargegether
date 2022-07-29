@@ -1,7 +1,6 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Profil - Chargether{% endblock %}
-
 {% block body %}
     <header class="bg-primary d-flex justify-content-center">
         <h4 class="text-white my-3">
@@ -17,8 +16,8 @@
                     {% else %}
                         src="/images/default_images/default_Users_Profile.png"
                     {% endif %}
-
-                    alt="Image de profil de {{ app.user.firstName ~ ' ' ~ app.user.lastName }}" class="bd-placeholder-img rounded-circle border border-2 border-info" width="100" height="100" style="object-fit: cover">
+                        alt="Image de profil de {{ app.user.firstName ~ ' ' ~ app.user.lastName }}" class="bd-placeholder-img rounded-circle border border-2 border-info" width="100" height="100" style="object-fit: cover"
+                />
             </a>
 
             <h1 class="text-secondary fs-5 fw-bold">
@@ -70,6 +69,16 @@
                     <h4 class="m-0">FaQ</h4>
                 </a>
             </div>
+            {% if "ROLE_ADMIN" in app.user.roles %}
+                <div class="d-flex align-items-center gap-3">
+                    <div class="d-flex justify-content-center align-items-center" style="width: 45px">
+                        <i class="bi bi-gear fs-1"></i>
+                    </div>
+                    <a class="text-center link-secondary text-decoration-none" href="{{ path('admin_index') }}">
+                        <h4 class="m-0">Admin</h4>
+                    </a>
+                </div>
+            {% endif %}
         </div>
 
         <div class="d-flex justify-content-center">
@@ -92,10 +101,6 @@
                 </a>
             </div>
 
-            <div class="d-flex align-items-center gap-2 text-secondary">
-                <i class="bi bi-share-fill fs-2"></i>
-                <h5 class="text-center m-0 text-secondary">Partagez</h5>
-            </div>
         </div>
         <hr class="border border-secondary">
         <div class="d-flex flex-column gap-4">

@@ -16,12 +16,16 @@ export function renderStationInfo(station)
             <i id='btn-close' class="bi bi-x-circle fs-2"></i>
         </div>
         <div class="d-flex justify-content-between w-100">
-            <img style="height: 70px" src="/images/stations/plugs/${station.type}.png">
-            <div>
-            <img style="height: 60px" src="/images/parking.png">
+            <div class="col-4 d-flex justify-content-start">
+                <img style="height: 70px" src="/images/stations/plugs/${station.type}.png">
+            </div>
+            <div class="col-4 d-flex flex-column align-items-center">
+                <img style="height: 60px" src="/images/parking.png">
                 <p class="text-center text-secondary fw-bold">privé</p>
             </div>
-            <img style="height: 70px" src="images/stations/power/borne${station.power}kw.png">
+            <div class="col-4 d-flex justify-content-end">
+                <img style="height: 70px" src="images/stations/power/borne${station.power}kw.png">
+            </div>
         </div>
         <a href="/hote/reserver/${station.id}" class="btn btn-secondary fs-2 rounded-pill col-6">Réserver</a>
     `;
